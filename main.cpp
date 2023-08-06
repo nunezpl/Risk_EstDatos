@@ -1,44 +1,128 @@
+/*Lorena Nunez Pava - Brayan Ocampo - Laura Ceballos*/
 #include <iostream>
-#include "risk.h"
 
+#include "Jugador.h"
+#include "Continente.h"
 using namespace std;
+
+/*
+// Template
+template <class T>
+T separaComandoP2(string c){
+    size_t posEspacio = c.find(' ');
+    string palabraStr = c.substr(posEspacio + 1);
+    if (is_same<T, long>::value){
+        return stol(palabraStr); // Convertir a entero
+    }else{
+        return palabraStr;
+    }
+}*/
+
+// Variables globales
+bool juegoIniciado = false;
+bool ganador = false;
+int numJugadores=0;
+list<Jugador> jugadores;
+
+// Declaracion de metodos
+string separaComandoP2String(string c);
+long separaComandoP2Long(string c);
+void ayuda();
+bool iniciarJuego();
+void infoJugadores();
+Jugador* encontrarJugador(long id_jugador);
 
 int main() {
   cout << "Bienvenido a Risk!\n";
-  string comando;
+  string comando, comandoAux, auxS;
 
   bool aux;
 
   do{
     cout<< "$ ";
-    cin >> comando;
+    getline(cin, comando);
+    comandoAux = comando;
 
-      if (comando == "ayuda") {
-        ayuda();
-      } else if (comando == "inicializar") {
-        // Código para inicializar
-        aux = iniciarJuego();
-        if(aux == true){
-          infoJugadores();
+    // Separar comando ej: turno xx -> return turno
+    size_t posEspacio = comando.find(' '); // Encontrar la posición del primer espacio
+    if (posEspacio != string::npos) // Si no se encontró espacio, toma el string completo como el comando
+        comando = comando.substr(0, posEspacio);
+
+    // Evaluar comando
+        if (comando == "ayuda") {
+            ayuda();
         }
-      } else if (comando == "turno") {
+        else if (comando == "inicializar") {
+            // Código para inicializar
+            bool aux = iniciarJuego();
+            if(aux == true){
+              infoJugadores();
+            }
+        }
+        else if (comando == "turno") {
           // Código para turno
-      } else if (comando == "guardar <nombre_archivo>") {
+          if(ganador == true){
+            cout << "Esta partida ya tuvo un ganador."<<endl;
+          }else if(juegoIniciado == false){
+            cout << "Esta partida no ha sido inicializada correctamente."<<endl;
+          }else{
+              long id_jugador = separaComandoP2Long(comandoAux);
+              Jugador* aux = encontrarJugador(id_jugador);
+              if(aux != nullptr){
+                aux->turno();
+                cout << " El turno del jugador "<< id_jugador << " ha terminado. "<<endl;
+              }else{
+                // Turno incorrecto
+              }
+          }
+        }
+        else if (comando == "guardar") { //  <nombre_archivo>
           // Código para guardar partida en <nombre_archivo> texto
-      } else if (comando == "guardar_comprimido <nombre_archivo>") {
+          auxS = separaComandoP2String(comandoAux);
+          if(juegoIniciado == false){
+            cout << "Esta partida no ha sido inicializada correctamente."<<endl;
+          }
+        }
+        else if (comando == "guardar_comprimido") { // <nombre_archivo>
           // Código para guardar partida en <nombre_archivo> bin
-      } else if (comando == "inicializar <nombre_archivo>") {
+          auxS = separaComandoP2String(comandoAux);
+
+        }
+        else if (comando == "inicializar" && (posEspacio+ 1) != 0) { // <nombre_archivo>
           // Código para cargar partida de <nombre_archivo>
-      } else if (comando == "costo_conquista <territorio>") {
+          auxS = separaComandoP2String(comandoAux);
+
+        }
+        else if (comando == "costo_conquista") { // <territorio>
           // Código para calcular el costo_conquista <territorio>
-      } else if (comando == "conquista_mas_barata") {
+          auxS = separaComandoP2String(comandoAux);
+
+        }
+        else if (comando == "conquista_mas_barata") {
           // Código para calcular la conquista mas barata
-      }else if (comando == "salir") {
+
+        }
+        else if (comando == "salir") {
           cout << "Adios!";
-      }
+        }
 
   }while(comando != "salir");
 
+}
+
+
+// Separa y retorna la segunda palabra del comando
+string separaComandoP2String(string c){
+    size_t posEspacio = c.find(' ');// Encontrar la posición del primer espacio
+    string palabraStr = c.substr(posEspacio + 1);
+    return palabraStr;
+}
+
+// Separa y retorna la segunda parte del comando que sea un numero long
+long separaComandoP2Long(string c){
+    size_t posEspacio = c.find(' ');
+    string palabraStr = c.substr(posEspacio + 1);
+    return stol(palabraStr); // Convertir a entero
 }
 
 // Funcion que muestra la descripcion de todos los comandos
@@ -63,72 +147,51 @@ void ayuda(){
 
 }
 
-// Funcion que verifica si el juego ha sido iniciado previamente
+// Funcion que verifica si el juego ha sido iniciado previamente, retorna true si no esta iniciado para pedir infoJugadores
 bool iniciarJuego(){
-  if(inicio == true){
+  if(juegoIniciado == true){
     cout << "El juego ya ha sido inicializado.\n";
     return false;
   }else
     cout << "El juego se ha inicializado correctamente.\n";
-  inicio = true;
+  juegoIniciado = true;
   return true;
 }
 
-// Funcion que
+// Funcion que pide la cantidad y la informacion de todos los jugadores
 void infoJugadores(){
   Jugador aux;
   string auxS;
+  long i;
 
   do{
-    cout << "Cuantos jugadores? (maximo 6): ";
+    cout << "Cuantos jugadores? (minimo 2, maximo 6): ";
     cin >> numJugadores;
   }while (numJugadores < 2 || numJugadores > 6);
 
-  for(int i=0; i<numJugadores; i++){
-    cout << "Nombre: ";
+  for(int i=0; i<numJugadores+1; i++){
+    cout << " Nombre: ";
     cin >> auxS;
-      aux.setNombre(auxS);
-    cout << "Id: ";
-    cin >> auxS;
-      aux.setId(auxS);
+    aux.setNombre(auxS);
+    cout << " Id: ";
+    cin >> i;
+    aux.setId(i);
     jugadores.push_back(aux);
   }
 
   cout << "Jugadores guardados con exito" <<endl;
 }
 
+// Encuentra el jugador por su id
+Jugador* encontrarJugador(long id_jugador){
+    Jugador aux;
+    list<Jugador>::iterator itJ;
 
-void crearTablero(){
-  Continente aux;
-
-  aux.setNombre("America del Norte");
-  aux.setColor("Amarillo");
-  aux.setUnidades(5);
-  tablero.push_back(aux);
-
-  aux.setNombre("America del sur");
-  aux.setColor("Rojo");
-  aux.setUnidades(2);
-  tablero.push_back(aux);
-
-  aux.setNombre("Europa");
-  aux.setColor("Azul");
-  aux.setUnidades(5);
-  tablero.push_back(aux);
-
-  aux.setNombre("Africa");
-  aux.setColor("Naranja");
-  aux.setUnidades(3);
-  tablero.push_back(aux);
-
-  aux.setNombre("Asia");
-  aux.setColor("Verde");
-  aux.setUnidades(7);
-  tablero.push_back(aux);
-
-  aux.setNombre("Oceania/Australia");
-  aux.setColor("Rosado");
-  aux.setUnidades(2);
-  tablero.push_back(aux);
+    for (itJ = jugadores.begin(); itJ != jugadores.end(); itJ++) {
+        if (itJ->getId() == id_jugador) {
+            return &(*itJ);
+        }
+    }
+    cout<< "El jugador "<< id_jugador<< " no forma parte de esta partida."<<endl;
+    return nullptr;
 }
-
