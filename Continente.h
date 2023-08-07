@@ -16,7 +16,9 @@ class Continente {
     void setColor(string c);
     void setUnidades(int u);
     // otros metodos ...
-    void crearTablero();
+    static void crearTablero();
+    static void evaluarCostoConquistaBarata();
+    static list<Continente> tablero;
   protected:
     string nombre;
     string color;
