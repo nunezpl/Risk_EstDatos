@@ -50,6 +50,7 @@ Realiza las operaciones descritas dentro del turno de un jugador (obtener nuevas
   - preguntar al jugador los territorios vecinos que desea seleccionar para la fortificación, así como la cantidad de unidades que se trasladarán de uno al otro.
 */
 void Jugador::turno(){
+    cout << "\n Ejecucion del turno de " << id << " ..."<<endl;
     // Nuevas unidades
 
     // Atacar

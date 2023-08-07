@@ -23,6 +23,7 @@ bool juegoIniciado = false;
 bool ganador = false;
 int numJugadores=0;
 list<Jugador> jugadores;
+Jugador* proxTurno; // Se actualiza cada vez que se acabe un turno
 
 // Declaracion de metodos
 string separaComandoP2String(string c);
@@ -31,6 +32,11 @@ void ayuda();
 bool iniciarJuego();
 void infoJugadores();
 Jugador* encontrarJugador(long id_jugador);
+void comandoTurno(long id_jugador);
+void actualizarTurno(Jugador* jugadorActual);
+
+void comandoConquistaBarata();
+
 
 int main() {
   cout << "Bienvenido a Risk!\n";
@@ -61,20 +67,8 @@ int main() {
         }
         else if (comando == "turno") {
           // Código para turno
-          if(ganador == true){
-            cout << "Esta partida ya tuvo un ganador."<<endl;
-          }else if(juegoIniciado == false){
-            cout << "Esta partida no ha sido inicializada correctamente."<<endl;
-          }else{
-              long id_jugador = separaComandoP2Long(comandoAux);
-              Jugador* aux = encontrarJugador(id_jugador);
-              if(aux != nullptr){
-                aux->turno();
-                cout << " El turno del jugador "<< id_jugador << " ha terminado. "<<endl;
-              }else{
-                // Turno incorrecto
-              }
-          }
+          long id_jugador = separaComandoP2Long(comandoAux);
+          comandoTurno(id_jugador);
         }
         else if (comando == "guardar") { //  <nombre_archivo>
           // Código para guardar partida en <nombre_archivo> texto
@@ -100,16 +94,17 @@ int main() {
         }
         else if (comando == "conquista_mas_barata") {
           // Código para calcular la conquista mas barata
-
+          comandoConquistaBarata();
         }
         else if (comando == "salir") {
           cout << "Adios!";
         }
-
+        cout<<endl;
   }while(comando != "salir");
 
 }
 
+/*            IMPLEMENTACION DE METODOS                */
 
 // Separa y retorna la segunda palabra del comando
 string separaComandoP2String(string c){
@@ -128,21 +123,21 @@ long separaComandoP2Long(string c){
 // Funcion que muestra la descripcion de todos los comandos
 void ayuda(){
   cout << " --------------------- \n";
-  cout << "\n inicializar \nDescripción: Realiza las operaciones necesarias para inicializar el juego, de acuerdo a las instrucciones entregadas. De esta forma, el comando pregunta la informacion de los jugadores y luego, por turnos, preguntar a cada jugador en qué territorio desea ubicar sus unidades de ejército. "<< endl;
+  cout << "\n inicializar \nDescripcion: Realiza las operaciones necesarias para inicializar el juego, de acuerdo a las instrucciones entregadas. De esta forma, el comando pregunta la informacion de los jugadores y luego, por turnos, preguntar a cada jugador en que territorio desea ubicar sus unidades de ejercito. "<< endl;
   cout << "\n --------------------- \n";
-  cout << "\n turno <id_jugador> \nDescripción: Realiza las operaciones descritas dentro del turno de un jugador (obtener nuevas unidades,atacar y fortificar)."<<endl;
+  cout << "\n turno <id_jugador> \nDescripcion: Realiza las operaciones descritas dentro del turno de un jugador (obtener nuevas unidades,atacar y fortificar)."<<endl;
   cout << "\n --------------------- \n";
-  cout << "\n guardar <nombre_archivo> \nDescripción: El estado actual del juego es guardado en un archivo de texto plano, sin codificación. "<< endl;
+  cout << "\n guardar <nombre_archivo> \nDescripcion: El estado actual del juego es guardado en un archivo de texto plano, sin codificacion. "<< endl;
   cout << "\n --------------------- \n";
-  cout << "\n guardar_comprimido <nombre_archivo> \nDescripción: El estado actual del juego es guardado en un archivo binario (con extensión .bin) con la información comprimida, utilizando la codificación de Huffman."<< endl;
+  cout << "\n guardar_comprimido <nombre_archivo> \nDescripcion: El estado actual del juego es guardado en un archivo binario (con extension .bin) con la informacion comprimida, utilizando la codificacion de Huffman."<< endl;
   cout << "\n --------------------- \n";
-  cout << "\n inicializar <nombre_archivo> \nDescripción: Inicializa el juego con los datos contenidos en el archivo identificado por <nombre_archivo>. Inicializa el juego desde un archivo de juego normal o un archivo binario con los datos comprimidos."<< endl;
+  cout << "\n inicializar <nombre_archivo> \nDescripcion: Inicializa el juego con los datos contenidos en el archivo identificado por <nombre_archivo>. Inicializa el juego desde un archivo de juego normal o un archivo binario con los datos comprimidos."<< endl;
   cout << "\n --------------------- \n";
-  cout << "\n costo_conquista <territorio> \nDescripción: El programa debe calcular el costo y la secuencia de territorios a ser conquistados para lograr controlar el territorio dado por el usuario. El territorio desde donde debe atacar debe ser aquel que el jugador tenga controlado más cerca al dado por el jugador."<< endl;
+  cout << "\n costo_conquista <territorio> \nDescripcion: El programa debe calcular el costo y la secuencia de territorios a ser conquistados para lograr controlar el territorio dado por el usuario. El territorio desde donde debe atacar debe ser aquel que el jugador tenga controlado mas cerca al dado por el jugador."<< endl;
   cout << "\n --------------------- \n";
-  cout << " conquista_mas_barata \nDescripción: De todos los territorios posibles, calcular aquel que pueda implicar un menor número de unidades de ejército perdidas."<< endl;
+  cout << " conquista_mas_barata \nDescripcion: De todos los territorios posibles, calcular aquel que pueda implicar un menor numero de unidades de ejercito perdidas."<< endl;
   cout << "\n --------------------- \n";
-  cout << "\n salir \nDescripción: Termina la ejecución de la aplicación"<<endl;
+  cout << "\n salir \nDescripcion: Termina la ejecucion de la aplicacion"<<endl;
   cout << "\n --------------------- \n";
 
 }
@@ -158,6 +153,8 @@ bool iniciarJuego(){
   return true;
 }
 
+
+/*          IMPLEMENTACION DE METODOS JUGADORES        */
 // Funcion que pide la cantidad y la informacion de todos los jugadores
 void infoJugadores(){
   Jugador aux;
@@ -169,7 +166,7 @@ void infoJugadores(){
     cin >> numJugadores;
   }while (numJugadores < 2 || numJugadores > 6);
 
-  for(int i=0; i<numJugadores+1; i++){
+  for(int i=1; i<numJugadores+1; i++){
     cout << " Nombre: ";
     cin >> auxS;
     aux.setNombre(auxS);
@@ -177,6 +174,10 @@ void infoJugadores(){
     cin >> i;
     aux.setId(i);
     jugadores.push_back(aux);
+    if(i ==1){
+        list<Jugador>::iterator itJ = jugadores.begin();
+        proxTurno = &(*itJ);
+    }
   }
 
   cout << "Jugadores guardados con exito" <<endl;
@@ -194,4 +195,69 @@ Jugador* encontrarJugador(long id_jugador){
     }
     cout<< "El jugador "<< id_jugador<< " no forma parte de esta partida."<<endl;
     return nullptr;
+}
+
+// Funcion que evalua las condiciones para ejecutar el turno del jugador
+void comandoTurno(long id_jugador){
+
+    // (Juego no inicializado)
+    if(juegoIniciado == false){
+        cout << "Esta partida no ha sido inicializada correctamente."<<endl;
+    }
+    // (Juego terminado)
+    else if(ganador == true){
+        cout << "Esta partida ya tuvo un ganador."<<endl;
+    }
+    else{
+      Jugador* aux = encontrarJugador(id_jugador);
+      // (Jugador no válido)
+      if(aux != nullptr){
+        // (Jugador fuera de turno)
+        if( proxTurno != aux ){
+            cout << "\n No es el turno del jugador "<< id_jugador << ", sigue " << proxTurno->getId() <<endl;
+        }
+        // (Turno terminado correctamente)
+        else {
+            aux->turno();
+            cout << "\n El turno del jugador "<< id_jugador << " ha terminado. "<<endl;
+            actualizarTurno(aux);
+        }
+      }
+    }
+}
+
+// Funcion que actualiza el proximo jugador para ser comparado posteriormente
+void actualizarTurno(Jugador* jugadorActual) {
+    list<Jugador>::iterator itJ = jugadores.begin();
+    while (itJ != jugadores.end()) {
+        if (&(*itJ) == jugadorActual) {
+            ++itJ; // Siguiente posicion del iterador
+            if (itJ == jugadores.end()) {
+                itJ = jugadores.begin();  // Ciclo circular: si se llega al final, vuelve al principio
+            }
+            proxTurno = &(*itJ);
+            //cout << " prox = "<< proxTurno->getId() <<endl;
+            break;
+        }
+        ++itJ;
+    }
+}
+
+
+
+/*          IMPLEMENTACION DE METODOS CONQUISTAS        */
+// Funcion que evalua las condiciones para poder calcular la conquista mas barata para un jugador
+void comandoConquistaBarata(){
+
+    // (Juego no inicializado)
+    if(juegoIniciado == false){
+        cout << "Esta partida no ha sido inicializada correctamente."<<endl;
+    }
+    // (Juego terminado)
+    else if(ganador == true){
+        cout << "Esta partida ya tuvo un ganador."<<endl;
+    }
+    else{
+        Continente::evaluarCostoConquistaBarata();
+    }
 }

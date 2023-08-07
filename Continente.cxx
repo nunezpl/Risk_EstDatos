@@ -3,7 +3,8 @@
 
 using namespace std;
 
-list<Continente> tablero;
+// Definición de la variable estática
+list<Continente> Continente::tablero;
 
 // Setters
 string Continente::getNombre(){
@@ -36,30 +37,36 @@ void Continente::crearTablero(){
     aux.setNombre("America del Norte");
     aux.setColor("Amarillo");
     aux.setUnidades(5);
-    tablero.push_back(aux);
+    Continente::tablero.push_back(aux);
 
     aux.setNombre("America del sur");
     aux.setColor("Rojo");
     aux.setUnidades(2);
-    tablero.push_back(aux);
+    Continente::tablero.push_back(aux);
 
     aux.setNombre("Europa");
     aux.setColor("Azul");
     aux.setUnidades(5);
-    tablero.push_back(aux);
+    Continente::tablero.push_back(aux);
 
     aux.setNombre("Africa");
     aux.setColor("Naranja");
     aux.setUnidades(3);
-    tablero.push_back(aux);
+    Continente::tablero.push_back(aux);
 
     aux.setNombre("Asia");
     aux.setColor("Verde");
     aux.setUnidades(7);
-    tablero.push_back(aux);
+    Continente::tablero.push_back(aux);
 
     aux.setNombre("Oceania/Australia");
     aux.setColor("Rosado");
     aux.setUnidades(2);
-    tablero.push_back(aux);
+    Continente::tablero.push_back(aux);
+}
+
+void Continente::evaluarCostoConquistaBarata(){
+    cout << "Evaluando ..." << endl;
+    // Codigo para evaluar a conquista mas barata
+    cout << "La conquista más barata es avanzar sobre el territorio .... Debe conquistar <n>unidades de ejército" << endl;
 }
