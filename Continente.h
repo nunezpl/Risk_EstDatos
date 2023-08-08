@@ -17,6 +17,7 @@ class Continente {
     void setUnidades(int u);
     // otros metodos ...
     static void crearTablero();
+    static void evaluarCostoConquista ();
     static void evaluarCostoConquistaBarata();
     static list<Continente> tablero;
   protected:

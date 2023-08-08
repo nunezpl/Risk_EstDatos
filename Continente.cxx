@@ -65,6 +65,11 @@ void Continente::crearTablero(){
     Continente::tablero.push_back(aux);
 }
 
+void Continente::evaluarCostoConquista (){
+
+    cout << "Para conquistar el territorio <territorio>, debe atacar desde <territorio_1>, pasando por los territorios <territorio_2>, <territorio_3>, ..., <territorio_m>. Debe conquistar <n> unidades de ejército." << endl;
+
+}
 void Continente::evaluarCostoConquistaBarata(){
     cout << "Evaluando ..." << endl;
     // Codigo para evaluar a conquista mas barata

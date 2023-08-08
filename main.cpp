@@ -34,7 +34,9 @@ void infoJugadores();
 Jugador* encontrarJugador(long id_jugador);
 void comandoTurno(long id_jugador);
 void actualizarTurno(Jugador* jugadorActual);
-
+void comandoInicializarArchivo (string nombreArchivo);
+bool inicializarArchivo (string nombreArchivo);
+void comandoCostoConquista (string terri);
 void comandoConquistaBarata();
 
 
@@ -58,7 +60,7 @@ int main() {
         if (comando == "ayuda") {
             ayuda();
         }
-        else if (comando == "inicializar") {
+        else if (comando == "inicializar" && (posEspacio+ 1) == 0) {
             // Código para inicializar
             bool aux = iniciarJuego();
             if(aux == true){
@@ -85,11 +87,13 @@ int main() {
         else if (comando == "inicializar" && (posEspacio+ 1) != 0) { // <nombre_archivo>
           // Código para cargar partida de <nombre_archivo>
           auxS = separaComandoP2String(comandoAux);
+          comandoInicializarArchivo (auxS);
 
         }
-        else if (comando == "costo_conquista") { // <territorio>
+        else if (comando == "costo_conquista" && (posEspacio+ 1) == 0) { // <territorio>
           // Código para calcular el costo_conquista <territorio>
           auxS = separaComandoP2String(comandoAux);
+          comandoCostoConquista (auxS);
 
         }
         else if (comando == "conquista_mas_barata") {
@@ -159,7 +163,7 @@ bool iniciarJuego(){
 void infoJugadores(){
   Jugador aux;
   string auxS;
-  long i;
+  long id;
 
   do{
     cout << "Cuantos jugadores? (minimo 2, maximo 6): ";
@@ -171,8 +175,8 @@ void infoJugadores(){
     cin >> auxS;
     aux.setNombre(auxS);
     cout << " Id: ";
-    cin >> i;
-    aux.setId(i);
+    cin >> id;
+    aux.setId(id);
     jugadores.push_back(aux);
     if(i ==1){
         list<Jugador>::iterator itJ = jugadores.begin();
@@ -243,9 +247,54 @@ void actualizarTurno(Jugador* jugadorActual) {
     }
 }
 
+void comandoInicializarArchivo (string nombreArchivo) {
 
+    bool aux;
+
+    if (juegoIniciado == true) {
+
+        cout << "El juego ya ha sido inicializado" << endl;
+    }
+
+    aux = inicializarArchivo (nombreArchivo);
+
+    if (aux == false) {
+
+        cout << nombreArchivo << " No contiene información válida para inicializar el juego." << endl;
+    }
+
+}
+
+bool inicializarArchivo (string nombreArchivo) {
+
+    // Codigo para iniciar la partida desde un archivo
+    // Retorna true si se abre el archivo correctamente
+    // Retorna false si hay algun problema en el archivo
+    return true;
+}
 
 /*          IMPLEMENTACION DE METODOS CONQUISTAS        */
+
+void comandoCostoConquista (string terri) {
+
+    if (juegoIniciado == false){
+
+
+        cout << "Esta partida no ha sido inicializada correctamente" << endl;
+    }
+
+    else if (ganador == true) {
+
+        cout << " Esta partida ya tuvo un ganador." << endl;
+    }
+
+    else {
+
+        Continente::evaluarCostoConquista ();
+
+    }
+}
+
 // Funcion que evalua las condiciones para poder calcular la conquista mas barata para un jugador
 void comandoConquistaBarata(){
 
