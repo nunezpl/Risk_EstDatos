@@ -3,22 +3,23 @@
 
 using namespace std;
 #include <iostream>
-#include <list>
+#include <vector>
 
 class Territorio {
   public:
     // Getters y setters
     void setNombre(string n);
-    void setContinente(string c);
-    void agregarVecinos(Territorio t);
+    void addVecino(Territorio& t);
+    void setOcupado(bool b);
+
     string getNombre();
-    string getContinente();
-    list<Territorio> getVecinos();
+    vector<Territorio> getVecinos();
+    bool getOcupado();
     // otros metodos
   protected:
     string nombre;
-    string continente;
-    list<Territorio> vecinos;
+    bool ocupado = false;
+    vector<Territorio> vecinos;
 };
 
 #endif

@@ -1,5 +1,4 @@
 #include <iostream>
-#include <list>
 #include "Territorio.h"
 using namespace std;
 
@@ -7,19 +6,19 @@ using namespace std;
 void Territorio::setNombre(string n){
     nombre = n;
 }
-void Territorio::setContinente(string c){
-    continente = c;
-}
-void Territorio::agregarVecinos(Territorio t){
+void Territorio::addVecino(Territorio& t){
     vecinos.push_back(t);
+}
+void Territorio::setOcupado(bool b){
+    ocupado = b;
 }
 
 string Territorio::getNombre(){
     return nombre;
 }
-string Territorio::getContinente(){
-    return continente;
-}
-list<Territorio> Territorio::getVecinos(){
+vector<Territorio> Territorio::getVecinos(){
     return vecinos;
+}
+bool Territorio::getOcupado(){
+    return ocupado;
 }

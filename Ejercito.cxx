@@ -9,3 +9,29 @@ Ejercito::Ejercito(){
     color = "";
     unidades = 0;
 }
+Ejercito::Ejercito(string ca, string co, int u){
+    categoria = ca;
+    color = co;
+    unidades = u;
+}
+
+// Getters y setters
+void Ejercito::setCategoria(string c){
+    categoria=c;
+}
+void Ejercito::setColor(string c){
+    color=c;
+}
+void Ejercito::setUnidades(int u){
+    unidades=u;
+}
+
+string Ejercito::getCategoria(){
+    return categoria;
+}
+string Ejercito::getColor(){
+    return color;
+}
+int Ejercito::getUnidades(){
+    return unidades;
+}
