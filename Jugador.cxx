@@ -21,6 +21,9 @@ void Jugador::setNombre(string n) {
 void Jugador::setId(long i) {
     id = i;
 }
+void Jugador::setColor(string c){
+    color = c;
+}
 
 // Getters
 string Jugador::getNombre(){
@@ -29,7 +32,9 @@ string Jugador::getNombre(){
 long Jugador::getId(){
     return id;
 }
-
+string Jugador::getColor(){
+    return color;
+}
 // Metodos
 void Jugador::agregarTerritorioOcupado(Territorio t) {
     terrOcupados.push_back(t);
@@ -56,4 +61,13 @@ void Jugador::turno(){
     // Atacar
 
     // Fortificar
+}
+
+int Jugador::totalEjercito(){
+    int cant=0;
+    list<Ejercito>::iterator it;
+    for(it = ejercito.begin(); it != ejercito.end(); it++){
+        cant+= it->getUnidades();
+    }
+    return cant;
 }

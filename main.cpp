@@ -3,6 +3,7 @@
 
 #include "Jugador.h"
 #include "Continente.h"
+#include "Tablero.h"
 using namespace std;
 
 /*
@@ -19,6 +20,7 @@ T separaComandoP2(string c){
 }*/
 
 // Variables globales
+//Tablero tablero;
 bool juegoIniciado = false;
 bool ganador = false;
 int numJugadores=0;
@@ -29,11 +31,14 @@ Jugador* proxTurno; // Se actualiza cada vez que se acabe un turno
 string separaComandoP2String(string c);
 long separaComandoP2Long(string c);
 void ayuda();
+
 bool iniciarJuego();
 void infoJugadores();
 Jugador* encontrarJugador(long id_jugador);
 void comandoTurno(long id_jugador);
+void ocuparTerritorios();
 void actualizarTurno(Jugador* jugadorActual);
+
 void comandoInicializarArchivo (string nombreArchivo);
 bool inicializarArchivo (string nombreArchivo);
 void comandoCostoConquista (string terri);
@@ -43,6 +48,8 @@ void comandoConquistaBarata();
 int main() {
   cout << "Bienvenido a Risk!\n";
   string comando, comandoAux, auxS;
+
+  Tablero::crearTablero();
 
   bool aux;
 
@@ -100,6 +107,9 @@ int main() {
           // Código para calcular la conquista mas barata
           comandoConquistaBarata();
         }
+        else if (comando == "tablero") {
+          Tablero::imprimirTablero();
+        }
         else if (comando == "salir") {
           cout << "Adios!";
         }
@@ -139,7 +149,9 @@ void ayuda(){
   cout << "\n --------------------- \n";
   cout << "\n costo_conquista <territorio> \nDescripcion: El programa debe calcular el costo y la secuencia de territorios a ser conquistados para lograr controlar el territorio dado por el usuario. El territorio desde donde debe atacar debe ser aquel que el jugador tenga controlado mas cerca al dado por el jugador."<< endl;
   cout << "\n --------------------- \n";
-  cout << " conquista_mas_barata \nDescripcion: De todos los territorios posibles, calcular aquel que pueda implicar un menor numero de unidades de ejercito perdidas."<< endl;
+  cout << "\n conquista_mas_barata \nDescripcion: De todos los territorios posibles, calcular aquel que pueda implicar un menor numero de unidades de ejercito perdidas."<< endl;
+  cout << "\n --------------------- \n";
+  cout << "\n tablero \nDescripcion: Imprime el tablero de juego"<<endl;
   cout << "\n --------------------- \n";
   cout << "\n salir \nDescripcion: Termina la ejecucion de la aplicacion"<<endl;
   cout << "\n --------------------- \n";
@@ -172,20 +184,87 @@ void infoJugadores(){
 
   for(int i=1; i<numJugadores+1; i++){
     cout << " Nombre: ";
-    cin >> auxS;
-    aux.setNombre(auxS);
+        cin >> auxS;
+        aux.setNombre(auxS);
     cout << " Id: ";
-    cin >> id;
-    aux.setId(id);
+        cin >> id;
+        aux.setId(id);
+    cout << " Color (verde, azul, rojo, amarillo, negro y gris): ";
+        cin >> auxS;
+        aux.setColor(auxS);
     jugadores.push_back(aux);
     if(i ==1){
         list<Jugador>::iterator itJ = jugadores.begin();
         proxTurno = &(*itJ);
     }
   }
-
+  ocuparTerritorios();
   cout << "Jugadores guardados con exito" <<endl;
 }
+
+void ocuparTerritorios(){
+    int infanterias;
+    if(numJugadores <= 3){
+        infanterias = 35;
+    }
+    switch(numJugadores){
+        case 4 : infanterias = 30; break;
+        case 5 : infanterias = 25; break;
+        case 6 : infanterias = 20; break;
+    }
+    cout<<"Donde ubicaran tus "<< infanterias <<" infanterias? \n";
+
+    int c, t, e;
+    list<Jugador>::iterator itJ;
+
+    for(int i=0; i< infanterias; i++){
+        for(itJ = jugadores.begin(); itJ != jugadores.end(); itJ++){
+            // Si ya completaron el numero de ejercitos
+            if( itJ->totalEjercito() >= infanterias){
+                cout<<"El jugador "<<itJ->getNombre()<<" ya completo sus infanterias"<<endl;
+                itJ++;
+                if( itJ == jugadores.end())
+                    break;
+            }
+
+            cout << "Jugador "<< itJ->getNombre() <<endl;
+
+            // Escoger el territorio
+            for (int i=0; i < Tablero::tablero.size(); i++) {
+                cout << i <<":" << Tablero::tablero[i].getNombre() << "   ";
+            }
+            cout << "\n Continente: ";
+            cin >> c;
+            Tablero::tablero[c].imprimirTerritorios();
+            cout << "Territorio: ";
+            cin >> t;
+            Territorio* terri = &(Tablero::tablero[c].getTerritorios()[t]);
+
+            if(terri->getOcupado() == false){
+                // Escoger el tipo de ejercito a poner
+                cout << "Que clase de ejercito desea poner? 1.Infanteria 2.Caballeria 3.Artilleria: ";
+                cin>> e;
+                Ejercito ejer;
+                string color = itJ->getColor();
+                if (e == 1)
+                    ejer = Ejercito("Infanteria", color, 1);
+                else if (e == 2)
+                    ejer = Ejercito("Caballeria", color, 5);
+                else if (e == 3)
+                    ejer = Ejercito("Artilleria", color, 10);
+
+                terri->setOcupado(true);
+                itJ->agregarTerritorioOcupado(*terri);
+                itJ->agregarEjercito(ejer);
+            }
+            else{
+                cout << "Territorio ya ocupado!"<<endl;
+            }
+
+        }
+    }
+}
+
 
 // Encuentra el jugador por su id
 Jugador* encontrarJugador(long id_jugador){
@@ -310,3 +389,4 @@ void comandoConquistaBarata(){
         Continente::evaluarCostoConquistaBarata();
     }
 }
+

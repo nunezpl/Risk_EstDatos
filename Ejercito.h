@@ -8,7 +8,15 @@ using namespace std;
 class Ejercito {
   public:
     Ejercito();
+    Ejercito(string ca, string co, int u);
     // Getters y setters
+    void setCategoria(string c);
+    void setColor(string c);
+    void setUnidades(int u);
+
+    string getCategoria();
+    string getColor();
+    int getUnidades();
     // otros metodos
   protected:
     string categoria; // infanteria, caballeria y artilleria
