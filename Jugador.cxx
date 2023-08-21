@@ -169,6 +169,8 @@ void Jugador::turno(){
 
     // Atacar
 
+    cout << "Atacar" << endl;
+
     // Fortificar
 
 }
