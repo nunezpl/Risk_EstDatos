@@ -5,19 +5,25 @@ using namespace std;
 #include <iostream>
 #include <list>
 #include "Territorio.h"
+#include "Jugador.h"
+
+class Jugador;  // Declaración adelantada de la clase
 
 class Continente {
   public:
     string getNombre();
     string getColor();
     int getUnidades();
-    vector<Territorio> getTerritorios();
+    vector<Territorio>& getTerritorios();
+
     void setNombre(string n);
     void setColor(string c);
     void setUnidades(int u);
     void setTerritorio(Territorio t);
+
     // otros metodos ...
     void imprimirTerritorios();
+    bool ocupadoPorJugador(Jugador& jugador);
     static void evaluarCostoConquista ();
     static void evaluarCostoConquistaBarata();
   protected:

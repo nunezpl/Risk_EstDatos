@@ -6,26 +6,14 @@
 #include "Tablero.h"
 using namespace std;
 
-/*
-// Template
-template <class T>
-T separaComandoP2(string c){
-    size_t posEspacio = c.find(' ');
-    string palabraStr = c.substr(posEspacio + 1);
-    if (is_same<T, long>::value){
-        return stol(palabraStr); // Convertir a entero
-    }else{
-        return palabraStr;
-    }
-}*/
 
 // Variables globales
-//Tablero tablero;
 bool juegoIniciado = false;
 bool ganador = false;
 int numJugadores=0;
 list<Jugador> jugadores;
 Jugador* proxTurno; // Se actualiza cada vez que se acabe un turno
+
 
 // Declaracion de metodos
 string separaComandoP2String(string c);
@@ -170,6 +158,7 @@ bool iniciarJuego(){
 }
 
 
+
 /*          IMPLEMENTACION DE METODOS JUGADORES        */
 // Funcion que pide la cantidad y la informacion de todos los jugadores
 void infoJugadores(){
@@ -202,69 +191,33 @@ void infoJugadores(){
   cout << "Jugadores guardados con exito" <<endl;
 }
 
+// Funcion que reparte las infanterias iniciales a cada jugador y les da la posibilidad de escoger su posicion
 void ocuparTerritorios(){
-    int infanterias;
-    if(numJugadores <= 3){
-        infanterias = 35;
+    // Define el numero de infanterias segun el numero de jugadores
+    int infanterias = 10;
+    switch (numJugadores) {
+        case 3: infanterias = 35; break;
+        case 4: infanterias = 30; break;
+        case 5: infanterias = 25; break;
+        case 6: infanterias = 20; break;
     }
-    switch(numJugadores){
-        case 4 : infanterias = 30; break;
-        case 5 : infanterias = 25; break;
-        case 6 : infanterias = 20; break;
-    }
-    cout<<"Donde ubicaran tus "<< infanterias <<" infanterias? \n";
 
-    int c, t, e;
+    // Da la posibilidad de escoger la posicion de cada una a cada jugador
+    cout<<"Donde ubicaran sus "<< infanterias <<" infanterias? \n";
+
     list<Jugador>::iterator itJ;
 
     for(int i=0; i< infanterias; i++){
         for(itJ = jugadores.begin(); itJ != jugadores.end(); itJ++){
-            // Si ya completaron el numero de ejercitos
-            if( itJ->totalEjercito() >= infanterias){
-                cout<<"El jugador "<<itJ->getNombre()<<" ya completo sus infanterias"<<endl;
-                itJ++;
-                if( itJ == jugadores.end())
-                    break;
+            // Validar que el jugador no haya alcanzado su límite de ejércitos
+            if (itJ->totalEjercito() >= infanterias) {
+                cout << "El jugador " << itJ->getNombre() << " ya completo sus infanterias" << endl;
+                continue;
             }
-
-            cout << "Jugador "<< itJ->getNombre() <<endl;
-
-            // Escoger el territorio
-            for (int i=0; i < Tablero::tablero.size(); i++) {
-                cout << i <<":" << Tablero::tablero[i].getNombre() << "   ";
-            }
-            cout << "\n Continente: ";
-            cin >> c;
-            Tablero::tablero[c].imprimirTerritorios();
-            cout << "Territorio: ";
-            cin >> t;
-            Territorio* terri = &(Tablero::tablero[c].getTerritorios()[t]);
-
-            if(terri->getOcupado() == false){
-                // Escoger el tipo de ejercito a poner
-                cout << "Que clase de ejercito desea poner? 1.Infanteria 2.Caballeria 3.Artilleria: ";
-                cin>> e;
-                Ejercito ejer;
-                string color = itJ->getColor();
-                if (e == 1)
-                    ejer = Ejercito("Infanteria", color, 1);
-                else if (e == 2)
-                    ejer = Ejercito("Caballeria", color, 5);
-                else if (e == 3)
-                    ejer = Ejercito("Artilleria", color, 10);
-
-                terri->setOcupado(true);
-                itJ->agregarTerritorioOcupado(*terri);
-                itJ->agregarEjercito(ejer);
-            }
-            else{
-                cout << "Territorio ya ocupado!"<<endl;
-            }
-
+            itJ->ubicarInfanterias();
         }
     }
 }
-
 
 // Encuentra el jugador por su id
 Jugador* encontrarJugador(long id_jugador){
@@ -309,6 +262,8 @@ void comandoTurno(long id_jugador){
     }
 }
 
+
+
 // Funcion que actualiza el proximo jugador para ser comparado posteriormente
 void actualizarTurno(Jugador* jugadorActual) {
     list<Jugador>::iterator itJ = jugadores.begin();
@@ -351,6 +306,8 @@ bool inicializarArchivo (string nombreArchivo) {
     // Retorna false si hay algun problema en el archivo
     return true;
 }
+
+
 
 /*          IMPLEMENTACION DE METODOS CONQUISTAS        */
 
