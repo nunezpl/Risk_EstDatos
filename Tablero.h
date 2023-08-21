@@ -4,9 +4,9 @@
 using namespace std;
 #include <iostream>
 #include <vector>
-#include "Territorio.h"
 #include "Continente.h"
-#include "Territorio.h"
+
+class Continente;
 
 class Tablero {
   public:
@@ -14,8 +14,7 @@ class Tablero {
     static void crearTablero();
     static void imprimirTablero();
     static void crearTerritorios();
-  protected:
-
+    static void enlazarVecinos();
 };
 
 #endif

@@ -7,11 +7,14 @@ using namespace std;
 #include "Territorio.h"
 #include "Ejercito.h"
 #include "Tarjeta.h"
+#include "Tablero.h"
+
+class Territorio;
 
 class Jugador {
   public:
     Jugador();
-    Jugador(string n, long i);
+    Jugador(string n, long i, string c);
 
     void setNombre(string n);
     void setId(long i);
@@ -23,10 +26,13 @@ class Jugador {
 
     void agregarTerritorioOcupado(Territorio t);
     void agregarEjercito(Ejercito e);
-    void agregarCarta(Tarjeta t);
+    void agregarTarjeta(Tarjeta t);
 
     void turno();
     int totalEjercito();
+    int totalUnidadesTarjetas();
+    void ubicarInfanterias();
+    int calcularNuevasUnidades();
   protected:
     string nombre;
     long id;
