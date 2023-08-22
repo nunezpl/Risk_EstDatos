@@ -3,6 +3,9 @@
 #include "Territorio.h"
 using namespace std;
 
+// Definición de la variable estática
+int Tarjeta::intercambios = 0;
+
 // Implementacion de metodos
 
 Tarjeta::Tarjeta(){
@@ -30,4 +33,3 @@ void Tarjeta::setEjercito(Ejercito e) {
 void Tarjeta::setMision(string m) {
     mision = m;
 }
-

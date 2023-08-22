@@ -19,7 +19,7 @@ class Ejercito {
     int getUnidades();
     // otros metodos
   protected:
-    string categoria; // infanteria, caballeria y artilleria
+    string categoria; // Infanteria, Caballeria y Artilleria (Comodin)
     string color;
     int unidades;
 };
