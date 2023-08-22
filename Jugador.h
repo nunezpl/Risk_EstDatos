@@ -33,6 +33,12 @@ class Jugador {
     int totalUnidadesTarjetas();
     void ubicarInfanterias();
     int calcularNuevasUnidades();
+
+    void atacarTerritorios(Jugador& jugador);
+    void realizarAtaque (Territorio& atacante, Territorio& defensor);
+    int lanzarDado ();
+    vector<int> seleccionarDosMasGrandes(vector<int>& dados);
+
   protected:
     string nombre;
     long id;

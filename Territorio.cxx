@@ -17,16 +17,22 @@ void Territorio::setOcupante(Jugador* jugador) {
     ocupante = jugador;
 }
 
-string Territorio::getNombre(){
+void Territorio::setCantiEjercitos(int c) {
+    cantiEjercitos = c;
+}
+
+string Territorio::getNombre() const{
     return nombre;
 }
 vector<Territorio> Territorio::getVecinos(){
     return vecinos;
 }
-bool Territorio::getOcupado(){
+bool Territorio::getOcupado() const{
     return ocupado;
 }
 Jugador* Territorio::getOcupante() {
     return ocupante;
 }
-
+int Territorio::getCantiEjercitos() {
+    return cantiEjercitos;
+}
