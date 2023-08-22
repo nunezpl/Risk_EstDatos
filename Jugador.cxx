@@ -60,16 +60,54 @@ int Jugador::totalEjercito(){
     return cant;
 }
 int Jugador::totalUnidadesTarjetas(){
-    int total=0;
+    int total=0, inf=0, cab=0, art=0, com=0;
+
     list<Tarjeta>::iterator it;
     for(it = tarjetas.begin(); it != tarjetas.end(); it++){
-
+        if (it->getEjercito().getCategoria() == "Infanteria")
+            inf++;
+        else if(it->getEjercito().getCategoria() == "Caballeria")
+            cab++;
+        else if(it->getEjercito().getCategoria() == "Artilleria")
+            art++;
+        else if(it->getEjercito().getCategoria() == "Comodin")
+            com++;
     }
-    //con el mismo dibujo de ejército,
-    // con los tres dibujos de ejército
-    // cualquiera de los dos dibujos junto con una carta comodín;
 
-    return total;
+    // Determinar la cantidad de unidades de ejercito que se pueden dar;
+    switch(Tarjeta::intercambios){
+        case 1 : total = 4; break;
+        case 2 : total = 6; break;
+        case 3 : total = 8; break;
+        case 4 : total = 10; break;
+        case 5 : total = 12; break;
+        case 6 : total = 15; break;
+        default: total = (5 * (Tarjeta::intercambios - 6))+ 15; // nuevas + 15 de base
+            break;
+    }
+
+    //con el mismo dibujo de ejército
+    if(inf == 3 || cab == 3 || art == 3){
+        cout << "Se tienen 3 cartas del mismo ejercito\n";
+        Tarjeta::intercambios++;
+        return total;
+    }
+    // con los tres dibujos de ejército
+    else if(inf >= 1 && cab >= 1 && art >= 1){
+        cout << "Se tienen 3 cartas con cada ejercito\n";
+        Tarjeta::intercambios++;
+        return total;
+    }
+    // cualquiera de los dos dibujos junto con una carta comodín
+    else if(com >= 1){
+        if( (inf >= 1 && cab >= 1) || (cab >= 1 && art >= 1) || (inf >= 1 && art >= 1) ) {
+            cout << "Se tienen 2 cartas con cada ejercito y un comodin\n";
+            Tarjeta::intercambios++;
+            return total;
+        }
+    }
+
+    return 0;
 }
 
 void Jugador::ubicarInfanterias(){

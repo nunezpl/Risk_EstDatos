@@ -22,6 +22,7 @@ class Tarjeta {
     void setMision(string m);
 
     static int intercambios;
+
     // Otros metodos
   protected:
     Territorio territorio;// pais
