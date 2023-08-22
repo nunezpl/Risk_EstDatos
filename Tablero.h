@@ -8,6 +8,7 @@ using namespace std;
 #include "Tarjeta.h"
 
 class Continente;
+class Tarjeta;
 
 class Tablero {
   public:
