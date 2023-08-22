@@ -21,8 +21,9 @@ class Territorio {
     bool getOcupado() const;
     Jugador* getOcupante();
     int getCantiEjercitos();
-    // otros metodos
 
+    // otros metodos
+    void imprimirVecinos();
   protected:
     string nombre;
     bool ocupado;

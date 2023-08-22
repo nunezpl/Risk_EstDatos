@@ -36,3 +36,9 @@ Jugador* Territorio::getOcupante() {
 int Territorio::getCantiEjercitos() {
     return cantiEjercitos;
 }
+
+void Territorio::imprimirVecinos(){
+    for(int i=0; i< vecinos.size(); i++){
+        cout << i << ": " << vecinos[i].nombre << endl;
+    }
+}

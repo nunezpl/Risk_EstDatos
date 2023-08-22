@@ -327,24 +327,84 @@ void Tablero::enlazarVecinos(){
 
     // 4. Asia
         //          1. Afghanistán
+        (tablero[4].getTerritorios()[0]).addVecino(tablero[4].getTerritorios()[1]);
+        (tablero[4].getTerritorios()[0]).addVecino(tablero[4].getTerritorios()[2]);
+        (tablero[4].getTerritorios()[0]).addVecino(tablero[4].getTerritorios()[6]);
+        (tablero[4].getTerritorios()[0]).addVecino(tablero[4].getTerritorios()[10]);
+        (tablero[4].getTerritorios()[0]).addVecino(tablero[2].getTerritorios()[5]); // Europa
         //          2. China
+        (tablero[4].getTerritorios()[1]).addVecino(tablero[4].getTerritorios()[0]);
+        (tablero[4].getTerritorios()[1]).addVecino(tablero[4].getTerritorios()[2]);
+        (tablero[4].getTerritorios()[1]).addVecino(tablero[4].getTerritorios()[7]);
+        (tablero[4].getTerritorios()[1]).addVecino(tablero[4].getTerritorios()[8]);
+        (tablero[4].getTerritorios()[1]).addVecino(tablero[4].getTerritorios()[9]);
+        (tablero[4].getTerritorios()[1]).addVecino(tablero[4].getTerritorios()[10]);
         //          3. India
+        (tablero[4].getTerritorios()[2]).addVecino(tablero[4].getTerritorios()[0]);
+        (tablero[4].getTerritorios()[2]).addVecino(tablero[4].getTerritorios()[1]);
+        (tablero[4].getTerritorios()[2]).addVecino(tablero[4].getTerritorios()[6]);
+        (tablero[4].getTerritorios()[2]).addVecino(tablero[4].getTerritorios()[8]);
         //          4. Irkutsk
+        (tablero[4].getTerritorios()[3]).addVecino(tablero[4].getTerritorios()[5]);
+        (tablero[4].getTerritorios()[3]).addVecino(tablero[4].getTerritorios()[7]);
+        (tablero[4].getTerritorios()[3]).addVecino(tablero[4].getTerritorios()[9]);
+        (tablero[4].getTerritorios()[3]).addVecino(tablero[4].getTerritorios()[11]);
         //          5. Japón
+        (tablero[4].getTerritorios()[4]).addVecino(tablero[4].getTerritorios()[5]);
+        (tablero[4].getTerritorios()[4]).addVecino(tablero[4].getTerritorios()[7]);
         //          6. Kamchatka
+        (tablero[4].getTerritorios()[5]).addVecino(tablero[4].getTerritorios()[3]);
+        (tablero[4].getTerritorios()[5]).addVecino(tablero[4].getTerritorios()[4]);
+        (tablero[4].getTerritorios()[5]).addVecino(tablero[4].getTerritorios()[7]);
+        (tablero[4].getTerritorios()[5]).addVecino(tablero[4].getTerritorios()[11]);
+        (tablero[4].getTerritorios()[5]).addVecino(tablero[0].getTerritorios()[0]); // America del Norte
         //          7. Medio Oriente
+        (tablero[4].getTerritorios()[6]).addVecino(tablero[4].getTerritorios()[0]);
+        (tablero[4].getTerritorios()[6]).addVecino(tablero[4].getTerritorios()[2]);
+        (tablero[4].getTerritorios()[6]).addVecino(tablero[2].getTerritorios()[5]); // Europa
+        (tablero[4].getTerritorios()[6]).addVecino(tablero[2].getTerritorios()[4]); // Europa
+        (tablero[4].getTerritorios()[6]).addVecino(tablero[3].getTerritorios()[2]); // Africa
         //          8. Mongolia
+        (tablero[4].getTerritorios()[7]).addVecino(tablero[4].getTerritorios()[1]);
+        (tablero[4].getTerritorios()[7]).addVecino(tablero[4].getTerritorios()[3]);
+        (tablero[4].getTerritorios()[7]).addVecino(tablero[4].getTerritorios()[4]);
+        (tablero[4].getTerritorios()[7]).addVecino(tablero[4].getTerritorios()[5]);
         //          9. Siam
+        (tablero[4].getTerritorios()[8]).addVecino(tablero[4].getTerritorios()[1]);
+        (tablero[4].getTerritorios()[8]).addVecino(tablero[4].getTerritorios()[2]);
+        (tablero[4].getTerritorios()[8]).addVecino(tablero[5].getTerritorios()[1]); // Oceania
         //          10. Siberia
+        (tablero[4].getTerritorios()[9]).addVecino(tablero[4].getTerritorios()[1]);
+        (tablero[4].getTerritorios()[9]).addVecino(tablero[4].getTerritorios()[3]);
+        (tablero[4].getTerritorios()[9]).addVecino(tablero[4].getTerritorios()[10]);
+        (tablero[4].getTerritorios()[9]).addVecino(tablero[4].getTerritorios()[11]);
         //          11. Ural
+        (tablero[4].getTerritorios()[10]).addVecino(tablero[4].getTerritorios()[0]);
+        (tablero[4].getTerritorios()[10]).addVecino(tablero[4].getTerritorios()[1]);
+        (tablero[4].getTerritorios()[10]).addVecino(tablero[4].getTerritorios()[9]);
+        (tablero[4].getTerritorios()[10]).addVecino(tablero[2].getTerritorios()[5]); // Europa
         //          12. Yakutsk
+        (tablero[4].getTerritorios()[11]).addVecino(tablero[4].getTerritorios()[3]);
+        (tablero[4].getTerritorios()[11]).addVecino(tablero[4].getTerritorios()[5]);
+        (tablero[4].getTerritorios()[11]).addVecino(tablero[4].getTerritorios()[11]);
 
     // 5. Oceania/Australia
         //          1. Australia Oriental
-        (tablero[3].getTerritorios()[5]).addVecino(tablero[3].getTerritorios()[0]);
+        (tablero[5].getTerritorios()[0]).addVecino(tablero[5].getTerritorios()[2]);
+        (tablero[5].getTerritorios()[0]).addVecino(tablero[5].getTerritorios()[3]);
         //          2. Indonesia
+        (tablero[5].getTerritorios()[1]).addVecino(tablero[5].getTerritorios()[2]);
+        (tablero[5].getTerritorios()[1]).addVecino(tablero[5].getTerritorios()[3]);
+        (tablero[5].getTerritorios()[1]).addVecino(tablero[4].getTerritorios()[8]); // Asia
         //          3. Nueva Guinea
+        (tablero[5].getTerritorios()[2]).addVecino(tablero[5].getTerritorios()[0]);
+        (tablero[5].getTerritorios()[2]).addVecino(tablero[5].getTerritorios()[1]);
+        (tablero[5].getTerritorios()[2]).addVecino(tablero[5].getTerritorios()[3]);
         //          4. Australia Occidental
+        (tablero[5].getTerritorios()[3]).addVecino(tablero[5].getTerritorios()[0]);
+        (tablero[5].getTerritorios()[3]).addVecino(tablero[5].getTerritorios()[1]);
+        (tablero[5].getTerritorios()[3]).addVecino(tablero[5].getTerritorios()[2]);
+
 }
 
 vector<Tarjeta> Tablero::maso;
