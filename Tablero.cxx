@@ -646,3 +646,15 @@ void Tablero::crearTarjetas(){
         maso.push_back(t);
 
 }
+
+Tarjeta Tablero::sacarTarjeta() {
+    Tarjeta aux;
+    if (maso.size() == 0) {
+        cout << "No hay cartas en el maso." << endl;
+        return aux;
+    }
+    aux = maso[0];
+    maso.erase(maso.begin());
+    return aux;
+
+}

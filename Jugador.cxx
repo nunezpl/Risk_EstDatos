@@ -214,6 +214,87 @@ void Jugador::turno(){
 
 }
 
+void Jugador::realizarAtaque (Territorio& atacante, Territorio& defensor) {
+
+    // verificar si el teritorio defensor esta desocupado
+    if (defensor.getOcupado() == false) {
+        cout << "El territorio esta vacio" << endl;
+        // Gana el atacante
+        defensor.setOcupado(true);
+        defensor.setOcupante(&(*this));
+        defensor.setCantiEjercitos(1);
+
+        agregarTerritorioOcupado(defensor);
+        Ejercito e ("Infanteria", color, 1);
+        agregarEjercito(e);
+        agregarTarjeta(Tablero::sacarTarjeta());
+        cout << nombre << " Se queda con " << defensor.getNombre() << endl;
+        return;
+    }
+
+
+    Jugador* jDefensor= defensor.getOcupante(); // apuntador al jugador defensor
+
+    if (jDefensor) {
+        cout << " jDefensor tot ejer: " << jDefensor->totalEjercito() << endl;
+    } else {
+        cout << " jDefensor es nulo." << endl;
+        return;
+    }
+    vector<int> rojo(3);
+    vector<int> blanco(2);
+    char s;
+    do {
+        //   Dados atacante
+        rojo[0] = lanzarDado ();
+        rojo[1] = lanzarDado ();
+        rojo[2] = lanzarDado ();
+        //   Dados defensor
+        blanco[0] = lanzarDado ();
+        blanco[1] = lanzarDado ();
+
+        // Seleccionar los dos valores más grandes para el atacante
+            rojo = seleccionarDosMasGrandes(rojo); // preguntarle al atacante que dados quiere usar debe seleccionar
+
+        cout<< "Dados rojos: " << rojo[0]<<" , "<< rojo[1]<<endl;
+        cout<< "Dados blanco: " << blanco[0]<<" , "<< blanco[1]<<endl;
+
+        // Evaluar condiciones
+            // Atacante gana, defensor pierde una unidad de ejército
+            if (rojo[0] > blanco[0] || rojo[1] > blanco[1]) {
+                cout<<"Atacante gana!"<< endl;
+
+                if (jDefensor->eliminarInfanteria(jDefensor)) {
+                    defensor.setCantiEjercitos(defensor.getCantiEjercitos() - 1);
+                }
+            }
+            // Defensor gana, atacante pierde una unidad de ejército
+            else if (rojo[0] < blanco[0] || rojo[1] < blanco[1]) {
+                cout<<"Defensor gana!"<< endl;
+                eliminarInfanteria(this);
+                atacante.setCantiEjercitos(atacante.getCantiEjercitos() - 1);
+            }
+            // Empate, defensor gana y atacante pierde una unidad de ejército
+            else {
+                cout<<"Empate!"<< endl;
+                eliminarInfanteria(this);
+                atacante.setCantiEjercitos(atacante.getCantiEjercitos() - 1);
+            }
+
+        // Territorio vacio
+        if (defensor.getCantiEjercitos() == 0) {
+            cout << defensor.getNombre() << " Esta vacio." << endl;
+            // El atacante puede reclamarlo moviendo algunas de sus piezas de ejército allí.
+            defensor.setOcupante(this);
+        }
+
+        cout << "Desea seguir? (si = s) ";
+        cin >> s;
+
+    } while ('s' == s);
+
+}
+
 void Jugador::atacarTerritorios () {
     cout << "\nTerritorios disponibles para iniciar el ataque: " << endl;
     list<Territorio>::iterator it;
@@ -247,7 +328,7 @@ void Jugador::atacarTerritorios () {
         cout << "Seleccione el numero del territorio vecino para atacar: ";
         cin >> seleccionVecino;
 
-        if (seleccionVecino <= 0 || seleccionVecino > territorioAtacar.getVecinos().size()) {
+        if (seleccionVecino < 0 || seleccionVecino > territorioAtacar.getVecinos().size()) {
             cout << "La seleccion es invalida." << endl;
             return;
         }
@@ -261,61 +342,7 @@ void Jugador::atacarTerritorios () {
 
 }
 
-void Jugador::realizarAtaque (Territorio& atacante, Territorio& defensor) {
 
-    Jugador* jDefensor= defensor.getOcupante(); // apuntador al jugador defensor
-
-    vector<int> rojo(3);
-    vector<int> blanco(2);
-    char s;
-    do {
-        //   Dados atacante
-        rojo[0] = lanzarDado ();
-        rojo[1] = lanzarDado ();
-        rojo[2] = lanzarDado ();
-        //   Dados defensor
-        blanco[0] = lanzarDado ();
-        blanco[1] = lanzarDado ();
-
-        // Seleccionar los dos valores más grandes para el atacante
-            rojo = seleccionarDosMasGrandes(rojo);
-        cout<< "Dados rojos: " << rojo[0]<<" , "<< rojo[1]<<endl;
-        cout<< "Dados blanco: " << blanco[0]<<" , "<< blanco[1]<<endl;
-
-        // Evaluar condiciones
-            // Atacante gana, defensor pierde una unidad de ejército
-            if (rojo[0] > blanco[0] || rojo[1] > blanco[1]) {
-                cout<<"Atacante gana!"<< endl;
-                if (jDefensor->eliminarInfanteria(jDefensor)) {
-                    defensor.setCantiEjercitos(defensor.getCantiEjercitos() - 1);
-                }
-            }
-            // Defensor gana, atacante pierde una unidad de ejército
-            else if (rojo[0] < blanco[0] || rojo[1] < blanco[1]) {
-                cout<<"Defensor gana!"<< endl;
-                eliminarInfanteria(this);
-                atacante.setCantiEjercitos(atacante.getCantiEjercitos() - 1);
-            }
-            // Empate, defensor gana y atacante pierde una unidad de ejército
-            else {
-                cout<<"Empate!"<< endl;
-                eliminarInfanteria(this);
-                atacante.setCantiEjercitos(atacante.getCantiEjercitos() - 1);
-            }
-
-        // Territorio vacio
-        if (defensor.getCantiEjercitos() == 0) {
-            cout << defensor.getNombre() << " Esta vacio." << endl;
-            // El atacante puede reclamarlo moviendo algunas de sus piezas de ejército allí.
-            defensor.setOcupante(this);
-        }
-
-        cout << "Desea seguir? (si = s) ";
-        cin >> s;
-
-    } while ('s' == s);
-
-}
 
 int Jugador::lanzarDado () {
     return rand() % 6 + 1; // Número aleatorio entre 1 y 6
@@ -351,13 +378,18 @@ int Jugador::calcularNuevasUnidades() {
 }
 
 bool Jugador::eliminarInfanteria(Jugador* j) {
-    list<Ejercito>::iterator it;
-    for (it = j->ejercito.begin(); it != j->ejercito.end(); it++) {
+    list<Ejercito>::iterator it = j->ejercito.begin(); // Inicializamos el iterador
+    cout << "Item: " << it->getCategoria() << endl;
+    while (it != j->ejercito.end()) {
+        cout << "Categoria actual: " << it->getCategoria() << endl; // Depuración
         if (it->getCategoria() == "Infanteria") {
-            j->ejercito.erase(it);
+            it = j->ejercito.erase(it); // Borrar y atualizar el iterador
             return true;
+        } else {
+            ++it;
         }
     }
-    cout << "No hay más infanterías para eliminar" << endl;
+
+    cout << "No hay mas infanterias para eliminar" << endl;
     return false;
-}
+   }

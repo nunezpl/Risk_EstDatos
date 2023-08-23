@@ -29,7 +29,7 @@ class Territorio {
     bool ocupado;
     vector<Territorio> vecinos;
     Jugador* ocupante; // Apuntador al jugador ocupante del territorio
-    int cantiEjercitos; // Aca podemos saber la cantidad de ejercitos encima.
+    int cantiEjercitos=0; // Aca podemos saber la cantidad de ejercitos encima.
 };
 
 #endif
