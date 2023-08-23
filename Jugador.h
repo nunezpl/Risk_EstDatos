@@ -40,6 +40,7 @@ class Jugador {
     vector<int> seleccionarDosMasGrandes(vector<int>& dados);
     bool eliminarInfanteria(Jugador* j);
 
+
   protected:
     string nombre;
     long id;
