@@ -34,9 +34,9 @@ void Continente::setTerritorio(Territorio t){
 
 // Otros metodos
 void Continente::imprimirTerritorios(){
-    cout << "  #  Ocupado   #Vecinos   Nombre"<< endl;
+    cout << "  #  Ocupado   #Vecinos   #Ejercito   Nombre"<< endl;
     for (int i = 0; i < territorios.size(); i++) {
-        cout << "  "<< i << ":    " << territorios[i].getOcupado()<< "        " << territorios[i].getVecinos().size()<< "        " << territorios[i].getNombre()<< endl;
+        cout << "  "<< i << ":    " << territorios[i].getOcupado()<< "        " << territorios[i].getVecinos().size()<< "            " <<territorios[i].getCantiEjercitos()<< "        " << territorios[i].getNombre()<< endl;
     }
 }
 

@@ -7,7 +7,7 @@ using namespace std;
 void Territorio::setNombre(string n){
     nombre = n;
 }
-void Territorio::addVecino(Territorio& t){
+void Territorio::addVecino(Territorio* t){
     vecinos.push_back(t);
 }
 void Territorio::setOcupado(bool b){
@@ -24,7 +24,7 @@ void Territorio::setCantiEjercitos(int c) {
 string Territorio::getNombre() const{
     return nombre;
 }
-vector<Territorio> Territorio::getVecinos(){
+vector<Territorio*>& Territorio::getVecinos(){
     return vecinos;
 }
 bool Territorio::getOcupado() const{
@@ -39,12 +39,12 @@ int Territorio::getCantiEjercitos() {
 
 void Territorio::imprimirVecinos(){
     for(int i=0; i< vecinos.size(); i++){
-        cout << i << ": " << vecinos[i].nombre << endl;
+        cout << i << ": " << vecinos[i]->nombre << endl;
     }
 }
 bool Territorio::esVecino(const Territorio& otroTerritorio) const {
-    for (const Territorio& vecino : vecinos) {
-        if (vecino.getNombre() == otroTerritorio.getNombre()) {
+    for (Territorio* vecino : vecinos) {
+        if (vecino->getNombre() == otroTerritorio.getNombre()) {
             return true; // Encontramos un territorio vecino con el mismo nombre
         }
     }

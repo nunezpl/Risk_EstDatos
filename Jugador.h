@@ -35,10 +35,11 @@ class Jugador {
     int calcularNuevasUnidades();
 
     void atacarTerritorios();
-    void realizarAtaque (Territorio& atacante, Territorio& defensor);
+    void realizarAtaque (Territorio* atacante, Territorio* defensor);
     int lanzarDado ();
     vector<int> seleccionarDosMasGrandes(vector<int>& dados);
     bool eliminarInfanteria(Jugador* j);
+    void fortificar();
 
 
   protected:
