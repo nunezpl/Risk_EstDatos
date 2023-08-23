@@ -250,12 +250,12 @@ void comandoTurno(long id_jugador){
       if(aux != nullptr){
         // (Jugador fuera de turno)
         if( proxTurno != aux ){
-            cout << "\n No es el turno del jugador "<< id_jugador << ", sigue " << proxTurno->getId() <<endl;
+            cout << "\nNo es el turno del jugador "<< id_jugador << ", sigue " << proxTurno->getId() <<endl;
         }
         // (Turno terminado correctamente)
         else {
             aux->turno();
-            cout << "\n El turno del jugador "<< id_jugador << " ha terminado. "<<endl;
+            cout << "\nEl turno del jugador "<< id_jugador << " ha terminado. "<<endl;
             actualizarTurno(aux);
         }
       }
