@@ -39,6 +39,7 @@ class Jugador {
     int lanzarDado ();
     vector<int> seleccionarDosMasGrandes(vector<int>& dados);
     bool eliminarInfanteria(Jugador* j);
+    void fortificar();
 
   protected:
     string nombre;

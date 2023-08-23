@@ -195,12 +195,12 @@ void Jugador::turno(){
     int nUnidades = calcularNuevasUnidades();
 
     if(nUnidades > 0){
-        cout << "Puedes reclamar " << nUnidades<<" unidades adicionales"<<endl;
+        cout << "\nPuedes reclamar " << nUnidades<<" unidades adicionales"<<endl;
         do{
             ubicarInfanterias();
             if(totalEjercito() >= aux + nUnidades)
                 break;
-            cout << "Deseas continuar poniendo unidades? (s/n) " <<endl;
+            cout << "\nDeseas continuar poniendo unidades? (s/n) " <<endl;
             cin >> s;
         }while( s == 's');
     }else{
@@ -208,9 +208,10 @@ void Jugador::turno(){
     }
 
     // Funcion atacar
-    atacarTerritorios();
+    //atacarTerritorios();
 
     // Fortificar
+    fortificar();
 
 }
 
@@ -219,7 +220,7 @@ void Jugador::atacarTerritorios () {
     list<Territorio>::iterator it;
 
     // Muestran los territorios ocupados del jugador (desde donde ataca)
-        int enumerar = 1; // Enumera las opciones de los territorios ocupados
+        int enumerar = 0; // Enumera las opciones de los territorios ocupados
         for (it= terrOcupados.begin(); it != terrOcupados.end(); it++) {
             cout << enumerar << ". " << it->getNombre() << endl;
             enumerar++;
@@ -360,4 +361,62 @@ bool Jugador::eliminarInfanteria(Jugador* j) {
     }
     cout << "No hay más infanterías para eliminar" << endl;
     return false;
+}
+
+void Jugador::fortificar(){
+    list<Territorio>::iterator it;
+
+    // Mostrar los territorios ocupados del jugador (desde donde se puede mover)
+    cout << "\nTerritorios disponibles para origen: " << endl;
+    int enumerar = 0; // Enumera las opciones de los territorios ocupados
+    for (it = terrOcupados.begin(); it != terrOcupados.end(); it++) {
+        cout << enumerar << ". " << it->getNombre() << endl;
+        enumerar++;
+    }
+
+    int seleccionOrigen;
+    cout << "\nSeleccione el número del territorio de origen: ";
+    cin >> seleccionOrigen;
+
+    if (seleccionOrigen < 0 || seleccionOrigen >= terrOcupados.size()) {
+        cout << "La selección es inválida." << endl;
+        return;
+    }
+
+    it = terrOcupados.begin();
+    advance(it, seleccionOrigen - 1); // Avanza el iterador hasta la selección del jugador
+    Territorio territorioOrigen = *it;
+
+
+    // Mostrar los territorios vecinos disponibles para mover unidades
+        cout << "Territorios vecinos disponibles para mover unidades: " << endl;
+        enumerar = 1;
+        territorioOrigen.imprimirVecinos(); // Mostrar los vecinos disponibles
+
+        int seleccionDestino;
+        cout << "Seleccione el numero del territorio vecino de destino: ";
+        cin >> seleccionDestino;
+
+        if (seleccionDestino < 0 || seleccionDestino > territorioOrigen.getVecinos().size()) {
+            cout << "La seleccion es invalida." << endl;
+            return;
+        }
+
+        // Avanza el iterador hasta la selección del jugador
+        Territorio territorioDestino = territorioOrigen.getVecinos()[seleccionDestino];
+
+    int unidadesAMover;
+    cout << "Ingrese la cantidad de unidades a mover (1, 5, 10): ";
+    cin >> unidadesAMover;
+    cout << "   nom ter origen: "<<territorioOrigen.getNombre();
+    cout << "   canti ejerci: "<< territorioOrigen.getCantiEjercitos() - unidadesAMover <<endl;
+    territorioOrigen.setCantiEjercitos(territorioOrigen.getCantiEjercitos() - unidadesAMover);
+    if(!territorioDestino.getOcupado()){
+        territorioDestino.setOcupado(true);
+        territorioDestino.setOcupante(&(*this));
+    }
+    territorioDestino.setCantiEjercitos(territorioDestino.getCantiEjercitos() + unidadesAMover);
+
+    cout << "Movimiento de unidades completado!" << endl;
+
 }
