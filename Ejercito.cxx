@@ -26,7 +26,7 @@ void Ejercito::setUnidades(int u){
     unidades=u;
 }
 
-string Ejercito::getCategoria(){
+string Ejercito::getCategoria() const {
     return categoria;
 }
 string Ejercito::getColor(){
