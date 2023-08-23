@@ -21,6 +21,7 @@ class Tablero {
     // Maso de tarjetas
     static vector<Tarjeta> maso;
     static void crearTarjetas();
+    static Tarjeta sacarTarjeta();
 };
 
 #endif

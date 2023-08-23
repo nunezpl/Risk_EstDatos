@@ -14,7 +14,7 @@ class Ejercito {
     void setColor(string c);
     void setUnidades(int u);
 
-    string getCategoria();
+    string getCategoria() const;
     string getColor();
     int getUnidades();
     // otros metodos
