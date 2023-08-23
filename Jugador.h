@@ -41,6 +41,7 @@ class Jugador {
     bool eliminarInfanteria(Jugador* j);
     void fortificar();
 
+
   protected:
     string nombre;
     long id;

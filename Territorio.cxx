@@ -42,3 +42,11 @@ void Territorio::imprimirVecinos(){
         cout << i << ": " << vecinos[i]->nombre << endl;
     }
 }
+bool Territorio::esVecino(const Territorio& otroTerritorio) const {
+    for (Territorio* vecino : vecinos) {
+        if (vecino->getNombre() == otroTerritorio.getNombre()) {
+            return true; // Encontramos un territorio vecino con el mismo nombre
+        }
+    }
+    return false; // No se encontro el territorio como vecino
+}

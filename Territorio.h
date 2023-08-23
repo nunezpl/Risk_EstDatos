@@ -24,6 +24,8 @@ class Territorio {
 
     // otros metodos
     void imprimirVecinos();
+    bool esVecino (const Territorio& otroTerritorio) const;
+
   protected:
     string nombre;
     bool ocupado;
