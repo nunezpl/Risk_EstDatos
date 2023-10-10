@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Tarjeta.h"
-#include "Territorio.h"
+#include "../h/Tarjeta.h"
+#include "../h/Territorio.h"
 using namespace std;
 
 // Definición de la variable estática
@@ -22,6 +22,9 @@ Ejercito Tarjeta::getEjercito() {
 string Tarjeta::getMision() {
     return mision;
 }
+int Tarjeta::getId(){
+    return id;
+}
 
 // Setters
 void Tarjeta::setTerritorio(Territorio t) {
@@ -32,4 +35,7 @@ void Tarjeta::setEjercito(Ejercito e) {
 }
 void Tarjeta::setMision(string m) {
     mision = m;
+}
+void Tarjeta::setId(int i){
+    id = i;
 }

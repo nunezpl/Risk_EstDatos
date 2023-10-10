@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Continente.h"
-#include "Territorio.h"
+#include "../h/Continente.h"
+#include "../h/Territorio.h"
 
 using namespace std;
 

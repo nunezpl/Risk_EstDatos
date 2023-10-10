@@ -1,8 +1,8 @@
 #include <iostream>
 #include <algorithm>
-#include "Jugador.h"
-#include "Territorio.h"
-#include "Tablero.h"
+#include "../h/Jugador.h"
+#include "../h/Territorio.h"
+#include "../h/Tablero.h"
 using namespace std;
 
 // constructor vacio
@@ -39,6 +39,15 @@ long Jugador::getId(){
 string Jugador::getColor(){
     return color;
 }
+list<Territorio> Jugador::getOcupados(){
+    return terrOcupados;
+}
+list<Ejercito> Jugador::getEjercito(){
+    return ejercito;
+}
+list<Tarjeta> Jugador::getTarjetas(){
+    return tarjetas;
+}
 
 void Jugador::agregarTerritorioOcupado(Territorio t) {
     terrOcupados.push_back(t);
@@ -51,6 +60,43 @@ void Jugador::agregarTarjeta(Tarjeta t){
 }
 
 // OTROS METODOS...
+
+void Jugador::imprimirJugador(){
+    cout<<"Id: "<< id<< " - "<<nombre << " - "<<color<<endl;
+
+    cout<<"\n     Territorios Ocupados: \n";
+    if(terrOcupados.size()>0){
+        list<Territorio>::iterator it;
+        cout<< "#Ejercito  -  Nombre\n";
+        for(it= terrOcupados.begin(); it != terrOcupados.end(); it++){
+            cout<<" ->"<<it->getCantiEjercitos()<< "  "<< it->getNombre() <<endl;
+        }
+    }else{
+        cout << " No tiene territorios ocupados.\n";
+    }
+
+    cout<<"\n     Ejercito: \n";
+    if(ejercito.size()>0){
+        list<Ejercito>::iterator itE;
+        cout<< "Categoria: \n";
+        for(itE = ejercito.begin(); itE != ejercito.end(); itE++){
+            cout<<" ->"<<itE->getCategoria() <<endl;
+        }
+    }else{
+        cout << " No tiene ejercitos en su poder.\n";
+    }
+
+    cout<<"\n     Tarjetas: \n";
+    if(tarjetas.size()>0){
+        list<Tarjeta>::iterator itT;
+        cout<< "Territorio  -  Categoria Ejercito   -  Mision\n";
+        for(itT= tarjetas.begin(); itT != tarjetas.end(); itT++){
+            cout<<" ->" << itT->getTerritorio().getNombre() << "  " << itT->getEjercito().getCategoria() << "  " << itT->getMision() << endl;
+        }
+    }else{
+        cout << " No tiene tarjetas en su poder.\n";
+    }
+}
 
 int Jugador::totalEjercito(){
     int cant=0;
@@ -179,14 +225,8 @@ void Jugador::ubicarInfanterias(){
 }
 
 
-/*
-Realiza las operaciones descritas dentro del turno de un jugador (obtener nuevas unidades, atacar y fortificar).
-   - informar al jugador cuántas unidades adicionales puede reclamar, para luego preguntarle en cuáles de sus territorios las quiere asignar y en qué cantidad.
-   - preguntar la configuración del ataque, desde cuál territorio y hacia cuál territorio,
-   - informar los valores obtenidos con los dados, y la cantidad de unidades que se ganan o pierden.
-  Este proceso se repite hasta que alguno de los dos territorios se quede sin unidades, o hasta que el atacante decida detenerse.
-  - preguntar al jugador los territorios vecinos que desea seleccionar para la fortificación, así como la cantidad de unidades que se trasladarán de uno al otro.
-*/
+//Realiza las operaciones descritas dentro del turno de un jugador (obtener nuevas unidades, atacar y fortificar).
+
 void Jugador::turno(){
     cout << "\nEjecucion del turno de " << id << " ..."<<endl;
 
@@ -246,7 +286,7 @@ void Jugador::realizarAtaque (Territorio* atacante, Territorio* defensor) {
     Jugador *jDefensor = defensor->getOcupante(); // apuntador al jugador defensor
 
     if (jDefensor) {
-        cout << " jDefensor tot ejer: " << jDefensor->totalEjercito() << endl;
+        cout << " jDefensor tot ejer: " << jDefensor->totalEjercito() << " nom: "<< jDefensor->getNombre()<< endl;
     } else {
         cout << " jDefensor es nulo." << endl;
         return;
@@ -275,23 +315,29 @@ void Jugador::realizarAtaque (Territorio* atacante, Territorio* defensor) {
             cout << "\nAtacante gana!" << endl;
 
             if (jDefensor->eliminarInfanteria(jDefensor)) {
+                cout << "\nDefensor pierde 1 unidad de ejercito" << endl;
                 defensor->setCantiEjercitos(defensor->getCantiEjercitos() - 1);
             }
         }
             // Defensor gana, atacante pierde una unidad de ejército
         else if (rojo[0] < blanco[0] || rojo[1] < blanco[1]) {
             cout << "\nDefensor gana!" << endl;
-            eliminarInfanteria(this);
-            atacante->setCantiEjercitos(atacante->getCantiEjercitos() - 1);
+
+            if (eliminarInfanteria(this)) {
+                cout << "\nAtacante pierde 1 unidad de ejercito" << endl;
+                atacante->setCantiEjercitos(atacante->getCantiEjercitos() - 1);
+            }
         }
             // Empate, defensor gana y atacante pierde una unidad de ejército
         else {
             cout << "\n¡Empate!" << endl;
-            eliminarInfanteria(this);
-            atacante->setCantiEjercitos(atacante->getCantiEjercitos() - 1);
+            if (eliminarInfanteria(this)) {
+                cout << "\nAtacante pierde 1 unidad de ejercito" << endl;
+                atacante->setCantiEjercitos(atacante->getCantiEjercitos() - 1);
+            }
         }
 
-        // Territorio vacio
+        // Territorio vacio- defensor=territorio
         if (defensor->getCantiEjercitos() == 0) {
             cout << defensor->getNombre() << " Quedo vacio." << endl;
 
@@ -310,6 +356,7 @@ void Jugador::realizarAtaque (Territorio* atacante, Territorio* defensor) {
             // Agregar una tarjeta al jugador atacante
             agregarTarjeta(Tablero::sacarTarjeta());
             cout << nombre << " Se queda con " << defensor->getNombre() << endl;
+            break;
         }
 
         cout << "Desea seguir? (si = s) ";
@@ -341,7 +388,7 @@ void Jugador::atacarTerritorios() {
     }
 
     it = terrOcupados.begin();
-    advance(it, seleccion - 1); // Avanza el iterador hasta la seleccion del jugador
+    advance(it, seleccion); // Avanza el iterador hasta la seleccion del jugador
     Territorio* territorioAtacar = &(*it);
 
     // Muestra los territorios que se pueden atacar
@@ -406,9 +453,7 @@ int Jugador::calcularNuevasUnidades() {
 
 bool Jugador::eliminarInfanteria(Jugador* j) {
     list<Ejercito>::iterator it = j->ejercito.begin(); // Inicializamos el iterador
-    cout << "Item: " << it->getCategoria() << endl;
     while (it != j->ejercito.end()) {
-        cout << "Categoria actual: " << it->getCategoria() << endl; // Depuración
         if (it->getCategoria() == "Infanteria") {
             it = j->ejercito.erase(it); // Borrar y atualizar el iterador
             return true;
@@ -433,7 +478,7 @@ void Jugador::fortificar() {
     }
 
     int seleccionOrigen;
-    cout << "\nSeleccione el número del territorio de origen: ";
+    cout << "\nSeleccione el numero del territorio de origen: ";
     cin >> seleccionOrigen;
     // Validar territorio válido
     if (seleccionOrigen < 0 || seleccionOrigen >= terrOcupados.size()) {
@@ -452,7 +497,6 @@ void Jugador::fortificar() {
     int seleccionDestino;
     cout << "Seleccione el numero del territorio vecino de destino: ";
     cin >> seleccionDestino;
-
     // Validar territorio válido
     if (seleccionDestino < 0 || seleccionDestino >= territorioOrigen->getVecinos().size()) {
         cout << "Opcion invalida." << endl;
@@ -465,9 +509,6 @@ void Jugador::fortificar() {
     int unidadesAMover;
     cout << "Ingrese la cantidad de unidades a mover (1, 5, 10): ";
     cin >> unidadesAMover;
-
-    cout << "   nom ter origen: " << territorioOrigen->getNombre();
-    cout << " ||||  canti ejerci: " << territorioOrigen->getCantiEjercitos() - unidadesAMover << endl;
 
     territorioOrigen->setCantiEjercitos(territorioOrigen->getCantiEjercitos() - unidadesAMover);
     if (!territorioDestino->getOcupado()) {

@@ -23,11 +23,15 @@ class Jugador {
     string getNombre();
     string getColor();
     long getId();
+    list<Territorio> getOcupados();
+    list<Ejercito> getEjercito();
+    list<Tarjeta> getTarjetas();
 
     void agregarTerritorioOcupado(Territorio t);
     void agregarEjercito(Ejercito e);
     void agregarTarjeta(Tarjeta t);
 
+    void imprimirJugador();
     void turno();
     int totalEjercito();
     int totalUnidadesTarjetas();
