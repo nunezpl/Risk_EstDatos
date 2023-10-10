@@ -1,9 +1,10 @@
 /*Lorena Nunez Pava - Brayan Ocampo - Laura Ceballos*/
 #include <iostream>
+#include <fstream>
 
-#include "Jugador.h"
-#include "Continente.h"
-#include "Tablero.h"
+#include "h/Jugador.h"
+#include "h/Continente.h"
+#include "h/Tablero.h"
 using namespace std;
 
 
@@ -23,12 +24,18 @@ void ayuda();
 bool iniciarJuego();
 void infoJugadores();
 Jugador* encontrarJugador(long id_jugador);
+void mostrarJugadores();
 void comandoTurno(long id_jugador);
 void ocuparTerritorios();
 void actualizarTurno(Jugador* jugadorActual);
 
 void comandoInicializarArchivo (string nombreArchivo);
 bool inicializarArchivo (string nombreArchivo);
+void comandoGuardarArchivoTxt (string nombreArchivo);
+bool guardarArchivo (string nombreArchivo);
+void comandoGuardarArchivoComprimido (string nombreArchivo);
+bool comprimirArchivo (string nombreArchivo);
+
 void comandoCostoConquista (string terri);
 void comandoConquistaBarata();
 
@@ -62,7 +69,7 @@ int main() {
               infoJugadores();
             }
         }
-        else if (comando == "turno") {
+        else if (comando == "turno" && (posEspacio+ 1) == 0) {
           // Código para turno
           long id_jugador = separaComandoP2Long(comandoAux);
           comandoTurno(id_jugador);
@@ -73,11 +80,12 @@ int main() {
           if(juegoIniciado == false){
             cout << "Esta partida no ha sido inicializada correctamente."<<endl;
           }
+          comandoGuardarArchivoTxt(auxS);
         }
         else if (comando == "guardar_comprimido") { // <nombre_archivo>
           // Código para guardar partida en <nombre_archivo> bin
           auxS = separaComandoP2String(comandoAux);
-
+            comandoGuardarArchivoComprimido(auxS);
         }
         else if (comando == "inicializar" && (posEspacio+ 1) != 0) { // <nombre_archivo>
           // Código para cargar partida de <nombre_archivo>
@@ -97,6 +105,9 @@ int main() {
         }
         else if (comando == "tablero") {
           Tablero::imprimirTablero();
+        }
+        else if (comando == "jugadores") {
+            mostrarJugadores();
         }
         else if (comando == "salir") {
           cout << "Adios!";
@@ -140,6 +151,8 @@ void ayuda(){
   cout << "\n conquista_mas_barata \nDescripcion: De todos los territorios posibles, calcular aquel que pueda implicar un menor numero de unidades de ejercito perdidas."<< endl;
   cout << "\n --------------------- \n";
   cout << "\n tablero \nDescripcion: Imprime el tablero de juego"<<endl;
+  cout << "\n --------------------- \n";
+  cout << "\n jugadores \nDescripcion: Imprime la imformacion completa de todos los jugadores registrados"<<endl;
   cout << "\n --------------------- \n";
   cout << "\n salir \nDescripcion: Termina la ejecucion de la aplicacion"<<endl;
   cout << "\n --------------------- \n";
@@ -206,13 +219,17 @@ void ocuparTerritorios(){
     cout<<"Donde ubicaran sus "<< infanterias <<" infanterias? \n";
 
     list<Jugador>::iterator itJ;
-
+    int completa=0;
     for(int i=0; i< infanterias; i++){
         for(itJ = jugadores.begin(); itJ != jugadores.end(); itJ++){
             // Validar que el jugador no haya alcanzado su límite de ejércitos
             if (itJ->totalEjercito() >= infanterias) {
                 cout << "El jugador " << itJ->getNombre() << " ya completo sus infanterias" << endl;
+                completa++;
                 continue;
+            }
+            if(completa == numJugadores){
+                cout << " \n todos los jugadores han terminado de ubicar sus infateriass. \n";
             }
             itJ->ubicarInfanterias();
         }
@@ -231,6 +248,14 @@ Jugador* encontrarJugador(long id_jugador){
     }
     cout<< "El jugador "<< id_jugador<< " no forma parte de esta partida."<<endl;
     return nullptr;
+}
+
+void mostrarJugadores(){
+    list<Jugador>::iterator it;
+    for(it= jugadores.begin(); it != jugadores.end(); it++){
+        it->imprimirJugador();
+        cout<<endl;
+    }
 }
 
 // Funcion que evalua las condiciones para ejecutar el turno del jugador
@@ -262,8 +287,6 @@ void comandoTurno(long id_jugador){
     }
 }
 
-
-
 // Funcion que actualiza el proximo jugador para ser comparado posteriormente
 void actualizarTurno(Jugador* jugadorActual) {
     list<Jugador>::iterator itJ = jugadores.begin();
@@ -281,19 +304,81 @@ void actualizarTurno(Jugador* jugadorActual) {
     }
 }
 
+
+
+/*          IMPLEMENTACION DE METODOS ARCHIVOS        */
+
+void comandoGuardarArchivoTxt (string nombreArchivo){
+    bool aux;
+
+    if (juegoIniciado == false) {
+        cout << "El juego no ha sido inicializado" << endl;
+    }
+
+    aux = guardarArchivo (nombreArchivo);
+
+    if (aux == false) {
+        cout << nombreArchivo << " La partida no ha sido guardada correctamente.." << endl;
+    }else{
+        cout << "La partida ha sido guardada correctamente"<<endl;
+    }
+}
+bool guardarArchivo(string nombreArchivo) {
+    ofstream file(nombreArchivo);
+
+    if (file.is_open()) {
+
+        for (list<Jugador>::iterator itJ = jugadores.begin(); itJ != jugadores.end(); itJ++) {
+            cout << "nn: "<<itJ->getNombre();
+            file << "n:" << itJ->getNombre();
+            file << "c:" << itJ->getColor();
+            file << "p:" << itJ->getOcupados().size();
+
+
+            if (!itJ->getOcupados().empty()) {
+                list<Territorio>::iterator itT = itJ->getOcupados().begin();
+                while (itT != itJ->getOcupados().end()) {
+                    if(itT->getNombre().empty()){
+                        cout << "Nombre de territorio nulo o vacío" << endl;
+                    } else {
+                        cout << "Terr: " << itT->getNombre() << ", Ej: " << itT->getCantiEjercitos() << endl;
+                    }
+                    // Actualizar el iterador
+                    itT++;
+                }
+            }
+/*
+            file << "p:" << itJ->getTarjetas().size();
+
+            if (itJ->getTarjetas().size() > 0) {
+                for (list<Tarjeta>::iterator itTa = itJ->getTarjetas().begin();
+                     itTa != itJ->getTarjetas().end(); itTa++) {
+                    file << itTa->getId() << " ";
+                }
+            }
+*/
+            file << endl;
+        }
+
+        file.close();
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 void comandoInicializarArchivo (string nombreArchivo) {
 
     bool aux;
 
     if (juegoIniciado == true) {
-
         cout << "El juego ya ha sido inicializado" << endl;
     }
 
     aux = inicializarArchivo (nombreArchivo);
 
     if (aux == false) {
-
         cout << nombreArchivo << " No contiene información válida para inicializar el juego." << endl;
     }
 
@@ -307,6 +392,12 @@ bool inicializarArchivo (string nombreArchivo) {
     return true;
 }
 
+void comandoGuardarArchivoComprimido (string nombreArchivo){
+
+}
+bool comprimirArchivo (string nombreArchivo){
+
+}
 
 
 /*          IMPLEMENTACION DE METODOS CONQUISTAS        */

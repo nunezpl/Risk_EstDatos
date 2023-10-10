@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Tablero.h"
+#include "../h/Tablero.h"
 
 using namespace std;
 
@@ -433,215 +433,269 @@ void Tablero::crearTarjetas(){
         //          1. Alaska
         t.setTerritorio(tablero[0].getTerritorios()[0]);
             t.setEjercito(inf);
+            t.setId(1);
             maso.push_back(t);
         //          2.Alberta
         t.setTerritorio(tablero[0].getTerritorios()[1]);
             t.setEjercito(inf);
+            t.setId(2);
             maso.push_back(t);
         //          3.America Central
         t.setTerritorio(tablero[0].getTerritorios()[2]);
             t.setEjercito(art);
+            t.setId(3);
             maso.push_back(t);
         //          4. Estados Unidos Orientales
         t.setTerritorio(tablero[0].getTerritorios()[3]);
             t.setEjercito(art);
+            t.setId(4);
             maso.push_back(t);
         //          5. Groenlandia
         t.setTerritorio(tablero[0].getTerritorios()[4]);
             t.setEjercito(cab);
+            t.setId(5);
             maso.push_back(t);
         //          6. Territorio Noroccidental
         t.setTerritorio(tablero[0].getTerritorios()[5]);
             t.setEjercito(art);
+            t.setId(6);
             maso.push_back(t);
         //          7. Ontario
         t.setTerritorio(tablero[0].getTerritorios()[6]);
             t.setEjercito(cab);
+            t.setId(7);
             maso.push_back(t);
         //          8. Quebec
         t.setTerritorio(tablero[0].getTerritorios()[7]);
             t.setEjercito(cab);
+            t.setId(8);
             maso.push_back(t);
         //          9. Estados Unidos Occidentales
         t.setTerritorio(tablero[0].getTerritorios()[8]);
             t.setEjercito(art);
+            t.setId(9);
             maso.push_back(t);
 
     // 1. America del Sur
         //          1. Argentina
         t.setTerritorio(tablero[1].getTerritorios()[0]);
             t.setEjercito(inf);
+            t.setId(10);
             maso.push_back(t);
         //          2. Brasil
         t.setTerritorio(tablero[1].getTerritorios()[1]);
             t.setEjercito(art);
+            t.setId(11);
             maso.push_back(t);
         //          3. Perú
         t.setTerritorio(tablero[1].getTerritorios()[2]);
             t.setEjercito(inf);
+            t.setId(12);
             maso.push_back(t);
         //          4. Venezuela
         t.setTerritorio(tablero[1].getTerritorios()[3]);
             t.setEjercito(inf);
+            t.setId(13);
             maso.push_back(t);
 
     // 2. Europa
         //          1. Gran Bretaña
         t.setTerritorio(tablero[2].getTerritorios()[0]);
             t.setEjercito(art);
+            t.setId(14);
             maso.push_back(t);
         //          2. Islandia
         t.setTerritorio(tablero[2].getTerritorios()[1]);
             t.setEjercito(inf);
+            t.setId(15);
             maso.push_back(t);
         //          3. Europa del Norte
         t.setTerritorio(tablero[2].getTerritorios()[2]);
             t.setEjercito(art);
+            t.setId(16);
             maso.push_back(t);
         //          4. Escandinavia
         t.setTerritorio(tablero[2].getTerritorios()[3]);
             t.setEjercito(cab);
+            t.setId(17);
             maso.push_back(t);
         //          5. Europa del Sur
         t.setTerritorio(tablero[2].getTerritorios()[4]);
             t.setEjercito(art);
+            t.setId(18);
             maso.push_back(t);
         //          6. Ucrania
         t.setTerritorio(tablero[2].getTerritorios()[5]);
             t.setEjercito(cab);
+            t.setId(19);
             maso.push_back(t);
         //          7. Europa Occidental
         t.setTerritorio(tablero[2].getTerritorios()[6]);
             t.setEjercito(art);
+            t.setId(20);
             maso.push_back(t);
 
     // 3. Africa
         //          1. Congo
         t.setTerritorio(tablero[3].getTerritorios()[0]);
             t.setEjercito(inf);
+            t.setId(21);
             maso.push_back(t);
         //          2. África Oriental
         t.setTerritorio(tablero[3].getTerritorios()[1]);
-            t.setEjercito(inf);
-            maso.push_back(t);
+        t.setEjercito(inf);
+        t.setId(22);
+        maso.push_back(t);
         //          3. Egipto
         t.setTerritorio(tablero[3].getTerritorios()[2]);
-            t.setEjercito(inf);
-            maso.push_back(t);
+        t.setEjercito(inf);
+        t.setId(23);
+        maso.push_back(t);
         //          4. Madagascar
         t.setTerritorio(tablero[3].getTerritorios()[3]);
-            t.setEjercito(cab);
-            maso.push_back(t);
+        t.setEjercito(cab);
+        t.setId(24);
+        maso.push_back(t);
         //          5. África del Norte
         t.setTerritorio(tablero[3].getTerritorios()[4]);
-            t.setEjercito(cab);
-            maso.push_back(t);
+        t.setEjercito(cab);
+        t.setId(25);
+        maso.push_back(t);
         //          6. África del Sur
         t.setTerritorio(tablero[3].getTerritorios()[5]);
-            t.setEjercito(art);
-            maso.push_back(t);
+        t.setEjercito(art);
+        t.setId(26);
+        maso.push_back(t);
 
     // 4. Asia
         //          1. Afghanistán
         t.setTerritorio(tablero[4].getTerritorios()[0]);
-            t.setEjercito(cab);
-            maso.push_back(t);
+        t.setEjercito(cab);
+        t.setId(27);
+        maso.push_back(t);
         //          2. China
         t.setTerritorio(tablero[4].getTerritorios()[1]);
-            t.setEjercito(inf);
-            maso.push_back(t);
+        t.setEjercito(inf);
+        t.setId(28);
+        maso.push_back(t);
         //          3. India
         t.setTerritorio(tablero[4].getTerritorios()[2]);
-            t.setEjercito(cab);
-            maso.push_back(t);
+        t.setEjercito(cab);
+        t.setId(29);
+        maso.push_back(t);
         //          4. Irkutsk
         t.setTerritorio(tablero[4].getTerritorios()[3]);
-            t.setEjercito(cab);
-            maso.push_back(t);
+        t.setEjercito(cab);
+        t.setId(30);
+        maso.push_back(t);
         //          5. Japón
         t.setTerritorio(tablero[4].getTerritorios()[4]);
-            t.setEjercito(art);
-            maso.push_back(t);
+        t.setEjercito(art);
+        t.setId(31);
+        maso.push_back(t);
         //          6. Kamchatka
         t.setTerritorio(tablero[4].getTerritorios()[5]);
-            t.setEjercito(inf);
-            maso.push_back(t);
+        t.setEjercito(inf);
+        t.setId(32);
+        maso.push_back(t);
         //          7. Medio Oriente
         t.setTerritorio(tablero[4].getTerritorios()[6]);
-            t.setEjercito(inf);
-            maso.push_back(t);
+        t.setEjercito(inf);
+        t.setId(33);
+        maso.push_back(t);
         //          8. Mongolia
         t.setTerritorio(tablero[4].getTerritorios()[7]);
-            t.setEjercito(inf);
-            maso.push_back(t);
+        t.setEjercito(inf);
+        t.setId(34);
+        maso.push_back(t);
         //          9. Siam
         t.setTerritorio(tablero[4].getTerritorios()[8]);
-            t.setEjercito(inf);
-            maso.push_back(t);
+        t.setEjercito(inf);
+        t.setId(35);
+        maso.push_back(t);
         //          10. Siberia
         t.setTerritorio(tablero[4].getTerritorios()[9]);
-            t.setEjercito(cab);
-            maso.push_back(t);
+        t.setEjercito(cab);
+        t.setId(36);
+        maso.push_back(t);
         //          11. Ural
         t.setTerritorio(tablero[4].getTerritorios()[10]);
-            t.setEjercito(cab);
-            maso.push_back(t);
+        t.setEjercito(cab);
+        t.setId(37);
+        maso.push_back(t);
         //          12. Yakutsk
         t.setTerritorio(tablero[4].getTerritorios()[11]);
-            t.setEjercito(cab);
-            maso.push_back(t);
+        t.setEjercito(cab);
+        t.setId(38);
+        maso.push_back(t);
 
     // 5. Oceania/Australia
         //          1. Australia Oriental
         t.setTerritorio(tablero[5].getTerritorios()[0]);
-            t.setEjercito(art);
-            maso.push_back(t);
+        t.setEjercito(art);
+        t.setId(39);
+        maso.push_back(t);
         //          2. Indonesia
         t.setTerritorio(tablero[5].getTerritorios()[1]);
-            t.setEjercito(art);
-            maso.push_back(t);
+        t.setEjercito(art);
+        t.setId(40);
+        maso.push_back(t);
         //          3. Nueva Guinea
         t.setTerritorio(tablero[5].getTerritorios()[2]);
-            t.setEjercito(inf);
-            maso.push_back(t);
+        t.setEjercito(inf);
+        t.setId(41);
+        maso.push_back(t);
         //          4. Australia Occidental
         t.setTerritorio(tablero[5].getTerritorios()[3]);
-            t.setEjercito(art);
-            maso.push_back(t);
+        t.setEjercito(art);
+        t.setId(42);
+        maso.push_back(t);
 
     // Tarjetas de mision (12)
     t.setTerritorio(tNull);
-    t.setEjercito(null);
+        t.setEjercito(null);
 
     t.setMision("Conquista Asia y America del sur");
-    maso.push_back(t);
+        t.setId(43);
+        maso.push_back(t);
 
     t.setMision("Conquista Asia y Africa");
+        t.setId(44);
         maso.push_back(t);
 
     t.setMision("Conquista Oceania y America del norte");
+        t.setId(45);
         maso.push_back(t);
 
     t.setMision("Conquista Africa y America del norte");
+        t.setId(46);
         maso.push_back(t);
 
     t.setMision("Conquista 18 territorios de tu preferencia con almenos 2 ejercitos");
+        t.setId(47);
         maso.push_back(t);
 
     t.setMision("Conquista 24 territorios de tu preferencia");
+        t.setId(48);
         maso.push_back(t);
 
     t.setMision("Destruye al ejercito amarillo. En caso de ser tu, conquista 24 territorios de tu preferencia con almenos 2 ejercitos");
+        t.setId(49);
         maso.push_back(t);
     t.setMision("Destruye al ejercito azul. En caso de ser tu, conquista 24 territorios de tu preferencia con almenos 2 ejercitos");
+        t.setId(50);
         maso.push_back(t);
     t.setMision("Destruye al ejercito verde. En caso de ser tu, conquista 24 territorios de tu preferencia con almenos 2 ejercitos");
+        t.setId(51);
         maso.push_back(t);
     t.setMision("Destruye al ejercito negro. En caso de ser tu, conquista 24 territorios de tu preferencia con almenos 2 ejercitos");
+        t.setId(52);
         maso.push_back(t);
     t.setMision("Destruye al ejercito rojo. En caso de ser tu, conquista 24 territorios de tu preferencia con almenos 2 ejercitos");
+        t.setId(53);
         maso.push_back(t);
     t.setMision("Destruye al ejercito gris. En caso de ser tu, conquista 24 territorios de tu preferencia con almenos 2 ejercitos");
+        t.setId(54);
         maso.push_back(t);
 
 }
@@ -654,6 +708,7 @@ Tarjeta Tablero::sacarTarjeta() {
     }
     aux = maso[0];
     maso.erase(maso.begin());
+    cout << "Tienes una carta mas." << endl;
     return aux;
 
 }

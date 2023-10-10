@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Territorio.h"
-#include "Jugador.h"
+#include "../h/Territorio.h"
+#include "../h/Jugador.h"
 using namespace std;
 
 // Implementacion de metodos
@@ -21,13 +21,13 @@ void Territorio::setCantiEjercitos(int c) {
     cantiEjercitos = c;
 }
 
-string Territorio::getNombre() const{
+string Territorio::getNombre(){
     return nombre;
 }
 vector<Territorio*>& Territorio::getVecinos(){
     return vecinos;
 }
-bool Territorio::getOcupado() const{
+bool Territorio::getOcupado(){
     return ocupado;
 }
 Jugador* Territorio::getOcupante() {
@@ -42,7 +42,7 @@ void Territorio::imprimirVecinos(){
         cout << i << ": " << vecinos[i]->nombre << endl;
     }
 }
-bool Territorio::esVecino(const Territorio& otroTerritorio) const {
+bool Territorio::esVecino( Territorio& otroTerritorio) {
     for (Territorio* vecino : vecinos) {
         if (vecino->getNombre() == otroTerritorio.getNombre()) {
             return true; // Encontramos un territorio vecino con el mismo nombre

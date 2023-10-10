@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Ejercito.h"
+#include "../h/Ejercito.h"
 using namespace std;
 
 // Implementacion de metodos

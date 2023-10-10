@@ -16,15 +16,15 @@ class Territorio {
     void setOcupante(Jugador* j);
     void setCantiEjercitos(int c);
 
-    string getNombre() const;
+    string getNombre();
     vector<Territorio*>& getVecinos();
-    bool getOcupado() const;
+    bool getOcupado();
     Jugador* getOcupante();
     int getCantiEjercitos();
 
     // otros metodos
     void imprimirVecinos();
-    bool esVecino (const Territorio& otroTerritorio) const;
+    bool esVecino ( Territorio& otroTerritorio);
 
   protected:
     string nombre;
