@@ -1,6 +1,7 @@
 /*Lorena Nunez Pava - Brayan Ocampo - Laura Ceballos*/
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 #include "h/Jugador.h"
 #include "h/Continente.h"
@@ -29,12 +30,14 @@ void comandoTurno(long id_jugador);
 void ocuparTerritorios();
 void actualizarTurno(Jugador* jugadorActual);
 
+
 void comandoInicializarArchivo (string nombreArchivo);
 bool inicializarArchivo (string nombreArchivo);
 void comandoGuardarArchivoTxt (string nombreArchivo);
 bool guardarArchivo (string nombreArchivo);
 void comandoGuardarArchivoComprimido (string nombreArchivo);
 bool comprimirArchivo (string nombreArchivo);
+vector<string> infoJugadoresString();
 
 void comandoCostoConquista (string terri);
 void comandoConquistaBarata();
@@ -69,7 +72,7 @@ int main() {
               infoJugadores();
             }
         }
-        else if (comando == "turno" && (posEspacio+ 1) == 0) {
+        else if (comando == "turno" && (posEspacio+ 1) != 0) {
           // Código para turno
           long id_jugador = separaComandoP2Long(comandoAux);
           comandoTurno(id_jugador);
@@ -77,9 +80,6 @@ int main() {
         else if (comando == "guardar") { //  <nombre_archivo>
           // Código para guardar partida en <nombre_archivo> texto
           auxS = separaComandoP2String(comandoAux);
-          if(juegoIniciado == false){
-            cout << "Esta partida no ha sido inicializada correctamente."<<endl;
-          }
           comandoGuardarArchivoTxt(auxS);
         }
         else if (comando == "guardar_comprimido") { // <nombre_archivo>
@@ -224,14 +224,16 @@ void ocuparTerritorios(){
         for(itJ = jugadores.begin(); itJ != jugadores.end(); itJ++){
             // Validar que el jugador no haya alcanzado su límite de ejércitos
             if (itJ->totalEjercito() >= infanterias) {
-                cout << "El jugador " << itJ->getNombre() << " ya completo sus infanterias" << endl;
+                cout << "El jugador " << itJ->getNombre() << " ya completo sus infanterias" << "   com: "<<completa<< "  j; "<<numJugadores<< endl;
                 completa++;
                 continue;
             }
-            if(completa == numJugadores){
-                cout << " \n todos los jugadores han terminado de ubicar sus infateriass. \n";
-            }
             itJ->ubicarInfanterias();
+        }
+
+        // Si ya todos los jugadores han completado sus infanterías, salir del bucle exterior
+        if (completa >= numJugadores) {
+            break;
         }
     }
 }
@@ -313,6 +315,7 @@ void comandoGuardarArchivoTxt (string nombreArchivo){
 
     if (juegoIniciado == false) {
         cout << "El juego no ha sido inicializado" << endl;
+        return;
     }
 
     aux = guardarArchivo (nombreArchivo);
@@ -320,44 +323,19 @@ void comandoGuardarArchivoTxt (string nombreArchivo){
     if (aux == false) {
         cout << nombreArchivo << " La partida no ha sido guardada correctamente.." << endl;
     }else{
-        cout << "La partida ha sido guardada correctamente"<<endl;
+        cout << "\nLa partida ha sido guardada correctamente"<<endl;
     }
 }
 bool guardarArchivo(string nombreArchivo) {
+    // nombre color cantTerritorios nomTerrTi cantEjerTi cantTarjetas tarIdi
+
     ofstream file(nombreArchivo);
 
     if (file.is_open()) {
+        vector<string> infoGuardar = infoJugadoresString();
 
-        for (list<Jugador>::iterator itJ = jugadores.begin(); itJ != jugadores.end(); itJ++) {
-            cout << "nn: "<<itJ->getNombre();
-            file << "n:" << itJ->getNombre();
-            file << "c:" << itJ->getColor();
-            file << "p:" << itJ->getOcupados().size();
-
-
-            if (!itJ->getOcupados().empty()) {
-                list<Territorio>::iterator itT = itJ->getOcupados().begin();
-                while (itT != itJ->getOcupados().end()) {
-                    if(itT->getNombre().empty()){
-                        cout << "Nombre de territorio nulo o vacío" << endl;
-                    } else {
-                        cout << "Terr: " << itT->getNombre() << ", Ej: " << itT->getCantiEjercitos() << endl;
-                    }
-                    // Actualizar el iterador
-                    itT++;
-                }
-            }
-/*
-            file << "p:" << itJ->getTarjetas().size();
-
-            if (itJ->getTarjetas().size() > 0) {
-                for (list<Tarjeta>::iterator itTa = itJ->getTarjetas().begin();
-                     itTa != itJ->getTarjetas().end(); itTa++) {
-                    file << itTa->getId() << " ";
-                }
-            }
-*/
-            file << endl;
+        for (int i = 0; i < infoGuardar.size(); i++) {
+            file << infoGuardar[i] << endl;
         }
 
         file.close();
@@ -367,6 +345,37 @@ bool guardarArchivo(string nombreArchivo) {
     }
 }
 
+vector<string> infoJugadoresString(){
+    vector<string> info;
+    for (list<Jugador>::iterator itJ = jugadores.begin(); itJ != jugadores.end(); itJ++) {
+        string cadena = "";
+        cadena = itJ->getNombre() + " " + itJ->getColor();
+
+        // Territorios
+        cadena += " " + to_string(itJ->getOcupados().size());
+
+        if (!itJ->getOcupados().empty()) {
+            list<Territorio> aux = itJ->getOcupados();
+            for (list<Territorio>::iterator itT = aux.begin(); itT != aux.end(); itT++) {
+                cadena += " " + itT->getNombre();
+                cadena += " " + to_string(itT->getCantiEjercitos());
+            }
+        }
+
+        // Tarjetas
+        cadena += " " + to_string(itJ->getTarjetas().size());
+
+        if (itJ->getTarjetas().size() > 0) {
+            list<Tarjeta> aux = itJ->getTarjetas();
+            for (list<Tarjeta>::iterator itTa = aux.begin(); itTa != aux.end(); itTa++) {
+                cadena += " " + to_string(itTa->getId());
+            }
+        }
+        // Agrega al vector
+        info.push_back(cadena);
+    }
+    return info;
+}
 
 void comandoInicializarArchivo (string nombreArchivo) {
 
@@ -383,8 +392,8 @@ void comandoInicializarArchivo (string nombreArchivo) {
     }
 
 }
-
 bool inicializarArchivo (string nombreArchivo) {
+// nombre color cantTerritorios nomTerrTi cantEjerTi cantTarjetas tarIdi
 
     // Codigo para iniciar la partida desde un archivo
     // Retorna true si se abre el archivo correctamente
@@ -392,12 +401,49 @@ bool inicializarArchivo (string nombreArchivo) {
     return true;
 }
 
-void comandoGuardarArchivoComprimido (string nombreArchivo){
 
+void comandoGuardarArchivoComprimido (string nombreArchivo){
+    bool aux;
+
+    if (juegoIniciado == false) {
+        cout << "El juego no ha sido inicializado" << endl;
+        return;
+    }
+
+    aux = guardarArchivo (nombreArchivo);
+
+    if (aux == false) {
+        cout << nombreArchivo << " La partida no ha sido guardada correctamente.." << endl;
+    }else{
+        cout << "\nLa partida ha sido guardada correctamente"<<endl;
+    }
 }
 bool comprimirArchivo (string nombreArchivo){
 
+    // Separar texo en char
+    vector<string> texo = infoJugadoresString();
+
+    //vector<char> textoDividido = texto[i].split("");
+
+    // Hallar la frecuencia de las letras
+
+    // Traducir las letras a ascii
+
+    // Crear arbol huffman
+
+    // Guardar en archivo
+
+    ofstream file(nombreArchivo, ios::binary);
+
+    if (file.is_open()) {
+
+        file.close();
+        return true;
+    } else {
+        return false;
+    }
 }
+
 
 
 /*          IMPLEMENTACION DE METODOS CONQUISTAS        */

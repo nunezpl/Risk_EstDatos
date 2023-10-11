@@ -3,6 +3,17 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="Risk_EstDatos" targetName="Risk_EstDatos" />
+    </generated>
+  </component>
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
@@ -10,31 +21,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="76551913-65fa-4448-87c7-ef9466885784" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Arbol/ArbolHuffman.cxx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arbol/ArbolHuffman.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arbol/Nodo.cxx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Arbol/Nodo.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Risk_EstDatos.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Risk_EstDatos.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Continente.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/c/Continente.cxx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Continente.h" beforeDir="false" afterPath="$PROJECT_DIR$/h/Continente.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ejercito.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/c/Ejercito.cxx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ejercito.h" beforeDir="false" afterPath="$PROJECT_DIR$/h/Ejercito.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jugador.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/c/Jugador.cxx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jugador.h" beforeDir="false" afterPath="$PROJECT_DIR$/h/Jugador.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tablero.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/c/Tablero.cxx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tablero.h" beforeDir="false" afterPath="$PROJECT_DIR$/h/Tablero.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tarjeta.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/c/Tarjeta.cxx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tarjeta.h" beforeDir="false" afterPath="$PROJECT_DIR$/h/Tarjeta.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Territorio.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/c/Territorio.cxx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Territorio.h" beforeDir="false" afterPath="$PROJECT_DIR$/h/Territorio.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arbol/ArbolHuffman.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/ArbolHuffman.cxx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arbol/ArbolHuffman.h" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/ArbolHuffman.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arbol/Nodo.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/Nodo.cxx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arbol/Nodo.h" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/Nodo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/Jugador.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/c/Jugador.cxx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/Tablero.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/c/Tablero.cxx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/risk.exe" beforeDir="false" afterPath="$PROJECT_DIR$/risk.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,11 +40,17 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2023" />
+    <option name="minorVersion" value="2" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -84,6 +86,30 @@
       <recent name="C:\Lorett\Lorena\4 Semestre\Estructuras de datos\Proyecto\Risk_EstDatos\h" />
     </key>
   </component>
+  <component name="RunManager" selected="CMake Debug.Risk_EstDatos">
+    <configuration name="Risk_EstDatos" type="CMakeListConfigurationType" factoryName="CMakeListConfigurationFactory" temporary="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="Risk_EstDatos" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Risk_EstDatos" TARGET_NAME="Risk_EstDatos" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Risk_EstDatos" RUN_TARGET_NAME="Risk_EstDatos">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.Risk_EstDatos" />
+      <item itemvalue="CMake Debug.Risk_EstDatos" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="CMake Debug.Risk_EstDatos" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -95,11 +121,24 @@
       <workItem from="1692825850973" duration="14000" />
       <workItem from="1692835125552" duration="39000" />
       <workItem from="1696884057218" duration="15850000" />
-      <workItem from="1696915009556" duration="303000" />
+      <workItem from="1696915009556" duration="813000" />
+      <workItem from="1696955740424" duration="11270000" />
+      <workItem from="1696978160273" duration="13242000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

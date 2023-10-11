@@ -11,7 +11,12 @@ class ArbolHuffman {
         Nodo getRaiz();
 
         bool repetidos();
-        bool traduccionAscii();
+
+        bool codificar();
+        bool  decodificar();
+
+        ArbolHuffman ordenarListFrecuencias(list<Nodo> nodosPorFrecuencia);
+        ArbolHuffman construirArbolHuffman(list<Nodo> nodosPorFrecuencia);
 
     protected:
         Nodo* raiz;
