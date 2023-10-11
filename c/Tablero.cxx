@@ -423,8 +423,10 @@ void Tablero::crearTarjetas(){
     t.setMision("");
     // Tarjetas comodin (2)
     t.setTerritorio(tNull);
+    t.setId(55);
     t.setEjercito(com);
     maso.push_back(t);
+    t.setId(56);
     maso.push_back(t);
 
     // Tarjetas Territorios (42)

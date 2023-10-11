@@ -13,9 +13,13 @@ class Nodo {
 
         void addHijo(int lado);
 
+        vector<string> obtenerBitCode();
+        long convertirABinario(string letra);
+
     protected:
         char valor;
         int frecuencia;
+        int ascii;
         Nodo* hijoDer;
         Nodo* hijoIzq;
 };

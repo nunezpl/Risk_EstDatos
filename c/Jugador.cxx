@@ -62,7 +62,7 @@ void Jugador::agregarTarjeta(Tarjeta t){
 // OTROS METODOS...
 
 void Jugador::imprimirJugador(){
-    cout<<"Id: "<< id<< " - "<<nombre << " - "<<color<<endl;
+    cout<<"\nId: "<< id<< " - "<<nombre << " - "<<color<<endl;
 
     cout<<"\n     Territorios Ocupados: \n";
     if(terrOcupados.size()>0){
@@ -91,7 +91,7 @@ void Jugador::imprimirJugador(){
         list<Tarjeta>::iterator itT;
         cout<< "Territorio  -  Categoria Ejercito   -  Mision\n";
         for(itT= tarjetas.begin(); itT != tarjetas.end(); itT++){
-            cout<<" ->" << itT->getTerritorio().getNombre() << "  " << itT->getEjercito().getCategoria() << "  " << itT->getMision() << endl;
+            cout<< itT->getId() << " ->" << itT->getTerritorio().getNombre() << "  " << itT->getEjercito().getCategoria() << "  " << itT->getMision() << endl;
         }
     }else{
         cout << " No tiene tarjetas en su poder.\n";

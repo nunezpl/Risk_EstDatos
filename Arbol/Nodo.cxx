@@ -15,3 +15,10 @@ char Nodo::getValor(){
 int Nodo::getFrecuencia(){
     return frecuencia;
 }
+
+
+string convertirABinario(string letra){
+    string binCode= bitset<8>(number).to_string();;
+
+    return binCode;
+}
