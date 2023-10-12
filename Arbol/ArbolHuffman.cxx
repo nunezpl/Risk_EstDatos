@@ -105,7 +105,7 @@ ArbolHuffman ArbolHuffman::construirArbolHuffman(vector<InfoNodo>& caracteres) {
     }
 
     // El único nodo restante en la cola de prioridad es la raíz del árbol de Huffman
-    this.setRaiz( colaPrioridad.top() );
+    this->raiz =colaPrioridad.top() ;
 
-    return ArbolHuffman;
+    return *this;
 }
