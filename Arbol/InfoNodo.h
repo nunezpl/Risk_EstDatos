@@ -20,5 +20,5 @@ protected:
     string ascii;
 };
 
-
+#include "InfoNodo.cpp"
 #endif //RISK_ESTDATOS_INFONODO_H

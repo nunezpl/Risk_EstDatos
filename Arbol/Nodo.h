@@ -37,5 +37,5 @@ class Nodo {
         Nodo* hijoIzq;
 };
 
-
+#include "Nodo.cxx"
 #endif //RISK_ESTDATOS_NODO_H
