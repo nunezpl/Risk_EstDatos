@@ -33,5 +33,5 @@ class ArbolHuffman {
         Nodo* raiz;
 };
 
-
+#include "ArbolHuffman.cxx"
 #endif //RISK_ESTDATOS_ARBOLHUFFMAN_H
