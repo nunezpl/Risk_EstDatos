@@ -1,0 +1,3 @@
+C:/Lorett/Lorena/4 Semestre/Estructuras de datos/Proyecto/Risk_EstDatos/cmake-build-debug/CMakeFiles/Risk_EstDatos.dir
+C:/Lorett/Lorena/4 Semestre/Estructuras de datos/Proyecto/Risk_EstDatos/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Lorett/Lorena/4 Semestre/Estructuras de datos/Proyecto/Risk_EstDatos/cmake-build-debug/CMakeFiles/rebuild_cache.dir

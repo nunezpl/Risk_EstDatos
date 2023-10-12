@@ -3,23 +3,35 @@
 
 using namespace std;
 #include <iostream>
+#include <vector>
+#include <bitset>
+#include "InfoNodo.h"
 
 class Nodo {
     public:
-        void setValor(char c);
-        void setFrecuencia(int f);
-        char getValor();
-        int getFrecuencia();
+        Nodo();
+        Nodo(InfoNodo data);
+        Nodo(Nodo* de, Nodo* iz);
+        ~Nodo();
+
+        void setInfo(InfoNodo v);
+        void setHijoDer(Nodo* n);
+        void setHijoIzq(Nodo* n);
+
+        InfoNodo getInfo();
+        Nodo* getHijoDer();
+        Nodo* getHijoIzq();
 
         void addHijo(int lado);
+        bool traduccionAscii();
+        string convertirABinario();
 
-        vector<string> obtenerBitCode();
-        long convertirABinario(string letra);
+        bool operator<(Nodo &otherBinaryNode);
+        bool operator>(Nodo &otherBinaryNode);
+        bool esHoja();
 
     protected:
-        char valor;
-        int frecuencia;
-        int ascii;
+        InfoNodo info;
         Nodo* hijoDer;
         Nodo* hijoIzq;
 };

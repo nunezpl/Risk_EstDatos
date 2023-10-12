@@ -3,20 +3,30 @@
 
 using namespace std;
 #include <iostream>
+#include <list>
+#include <queue>
+
 #include "Nodo.h"
+#include "InfoNodo.h"
 
 class ArbolHuffman {
     public:
-        void setRaiz(Nodo r);
-        Nodo getRaiz();
+        void setRaiz(Nodo* r);
+        Nodo* getRaiz();
 
         bool repetidos();
 
         bool codificar();
         bool  decodificar();
 
-        ArbolHuffman ordenarListFrecuencias(list<Nodo> nodosPorFrecuencia);
-        ArbolHuffman construirArbolHuffman(list<Nodo> nodosPorFrecuencia);
+        static ArbolHuffman construirArbolHuffman(vector<InfoNodo>& caracteres);
+
+        bool addNode(Nodo &data);
+        bool addNodeAux(Nodo &data, Nodo &node);
+
+        list<InfoNodo> preOrder();
+        void preOrderAux(Nodo* node, list<InfoNodo> &list);
+
 
     protected:
         Nodo* raiz;

@@ -24,4 +24,5 @@ add_executable(Risk_EstDatos
         h/Tablero.h
         h/Tarjeta.h
         h/Territorio.h
-        main.cpp)
+        main.cpp
+        Arbol/InfoNodo.cpp)
