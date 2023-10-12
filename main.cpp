@@ -47,6 +47,7 @@ bool comprimirArchivo (string nombreArchivo);
 vector<string> infoJugadoresString();
 vector<InfoNodo> informacionCaracteres(vector<string> t);
 string codificarMensaje(string mensaje, vector<InfoNodo>& caracteres);
+bool guardarEnFormatoBinario(string nombreArchivo, vector<InfoNodo> caracteres, vector<string> mensajeCodificado);
 
 void asignarCodigosBinariosRecursivo(Nodo* nodo, string codigo, vector<InfoNodo>& caracteres);
 void asignarCodigosBinarios(Nodo* raiz, string codigo, vector<InfoNodo>& caracteres);
@@ -236,7 +237,7 @@ void ocuparTerritorios(){
         for(itJ = jugadores.begin(); itJ != jugadores.end(); itJ++){
             // Validar que el jugador no haya alcanzado su límite de ejércitos
             if (itJ->totalEjercito() >= infanterias) {
-                cout << "El jugador " << itJ->getNombre() << " ya completo sus infanterias" << "   com: "<<completa<< "  j; "<<numJugadores<< endl;
+                cout << "El jugador " << itJ->getNombre() << " ya completo sus infanterias \n" << endl;
                 completa++;
                 continue;
             }
@@ -455,7 +456,7 @@ void comandoGuardarArchivoComprimido (string nombreArchivo){
         return;
     }
 
-    aux = guardarArchivo (nombreArchivo);
+    aux = comprimirArchivo (nombreArchivo);
 
     if (aux == false) {
         cout << nombreArchivo << " La partida no ha sido guardada correctamente.." << endl;
@@ -465,14 +466,18 @@ void comandoGuardarArchivoComprimido (string nombreArchivo){
 }
 bool comprimirArchivo (string nombreArchivo){
 
-    vector<string> texto;
+    vector<string> texto = infoJugadoresString();
 
+    cout << " Comprimiendo ... \n";
+    // inicializar p5.txt
+    // guardar_comprimido b5.bin
     // Separa caracteres, cuenta su frecuencia y los ordena
     vector<InfoNodo> infoDiv = informacionCaracteres(texto);
 
 
     // Construir el Árbol de Huffman
-    ArbolHuffman arbol = ArbolHuffman::construirArbolHuffman(infoDiv);
+    ArbolHuffman arbol;
+    arbol = arbol.construirArbolHuffman(infoDiv);
 
     // Asignar códigos binarios a cada carácter
     asignarCodigosBinarios(arbol.getRaiz(), "", infoDiv);
@@ -485,13 +490,13 @@ bool comprimirArchivo (string nombreArchivo){
 
 
     // Guardar en formato binario
-    if (guardarEnFormatoBinario(nombreArchivo, caracteres, mensajeCodificado)) {
+    if (guardarEnFormatoBinario(nombreArchivo, infoDiv, mensajeCodificado)) {
         cout << "(Comando correcto) La partida ha sido codificada y guardada correctamente.\n";
         return true;
-    } else {
+    } else
         cout << "(Error al codificar y/o guardar) La partida no ha sido codificada ni guardada correctamente.\n";
         return false;
-    }
+
 }
 
 
@@ -528,11 +533,12 @@ vector<string> infoJugadoresString(){
 }
 
 vector<InfoNodo> informacionCaracteres(vector<string> texto){
-
+    cout << " Separando ... \n";
     // Separar texo en char
     vector<char> textoDiv;
-    for (string& palabra : texto) {
+    for (string palabra : texto) {
         for (char c : palabra) {
+            cout << " c. "<<c<<endl;
             textoDiv.push_back(c);
         }
     }
@@ -547,6 +553,7 @@ vector<InfoNodo> informacionCaracteres(vector<string> texto){
         int frec = 0;
         for (int i = 0; i < textoDiv.size(); ++i) {
             if( letra == textoDiv[i]){
+                cout << " le: "<<letra<<" f: "<<frec<<endl;
                 frec++;
             }
         }
@@ -600,7 +607,7 @@ string codificarMensaje(string mensaje, vector<InfoNodo>& caracteres) {
 }
 
 
-bool guardarEnFormatoBinario(string& nombreArchivo, vector<InfoNodo>& caracteres, vector<string> mensajeCodificado) {
+bool guardarEnFormatoBinario(string nombreArchivo, vector<InfoNodo> caracteres, vector<string> mensajeCodificado) {
     // Abrir el archivo en modo binario
     ofstream file(nombreArchivo, ios::binary);
 

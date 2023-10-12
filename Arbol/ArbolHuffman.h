@@ -19,7 +19,7 @@ class ArbolHuffman {
         bool codificar();
         bool  decodificar();
 
-        static ArbolHuffman construirArbolHuffman(vector<InfoNodo>& caracteres);
+        ArbolHuffman construirArbolHuffman(vector<InfoNodo>& caracteres);
 
         bool addNode(Nodo &data);
         bool addNodeAux(Nodo &data, Nodo &node);
