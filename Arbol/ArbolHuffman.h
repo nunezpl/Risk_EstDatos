@@ -27,6 +27,7 @@ class ArbolHuffman {
         list<InfoNodo> preOrder();
         void preOrderAux(Nodo* node, list<InfoNodo> &list);
 
+        void imprimirArbolHuffman(Nodo* nodo, int nivel);
 
     protected:
         Nodo* raiz;

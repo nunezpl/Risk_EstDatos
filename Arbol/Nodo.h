@@ -12,6 +12,7 @@ class Nodo {
         Nodo();
         Nodo(InfoNodo data);
         Nodo(Nodo* de, Nodo* iz);
+        Nodo(Nodo* de, Nodo* iz, char va, string as);
         ~Nodo();
 
         void setInfo(InfoNodo v);
