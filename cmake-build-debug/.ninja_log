@@ -1,0 +1,20 @@
+# ninja log v5
+111	2449	7187307684653135	CMakeFiles/Risk_EstDatos.dir/c/Ejercito.cxx.obj	7b67b18e026f2acd
+8673	13130	7187342964725218	CMakeFiles/Risk_EstDatos.dir/c/Jugador.cxx.obj	41aca7b955fb6aff
+55	2695	7187488492833358	CMakeFiles/Risk_EstDatos.dir/Arbol/ArbolHuffman.cxx.obj	c9a3b98874354b4b
+12	8670	7187342918913372	CMakeFiles/Risk_EstDatos.dir/c/Continente.cxx.obj	380c19c4f76b9c47
+12362	14366	7187342977487690	CMakeFiles/Risk_EstDatos.dir/c/Territorio.cxx.obj	86901892d609a03a
+33	1464	7187487708893717	CMakeFiles/Risk_EstDatos.dir/Arbol/Nodo.cxx.obj	244dee5e0620059
+7	8514	7187490957965400	CMakeFiles/Risk_EstDatos.dir/main.cpp.obj	14ff596767f7851b
+4120	4853	7187348775523113	Risk_EstDatos.exe	f0c41da53d6d1106
+325	12362	7187342957518079	CMakeFiles/Risk_EstDatos.dir/c/Tarjeta.cxx.obj	11bbf41e91c3c139
+171	14631	7187342980323022	CMakeFiles/Risk_EstDatos.dir/c/Tablero.cxx.obj	e1783177f6418579
+11	3720	7187491814999365	CMakeFiles/Risk_EstDatos.dir/Arbol/InfoNodo.cpp.obj	1446bb0a574f4d28
+3721	5938	7187491838097568	Risk_EstDatos.exe	c9ba1223550e7bad
+16	5991	7187632105315808	CMakeFiles/Risk_EstDatos.dir/Arbol/Nodo.cxx.obj	244dee5e0620059
+17	7266	7187632634610412	CMakeFiles/Risk_EstDatos.dir/Arbol/ArbolHuffman.cxx.obj	c9a3b98874354b4b
+36	7340	7187632636371242	CMakeFiles/Risk_EstDatos.dir/Arbol/Nodo.cxx.obj	244dee5e0620059
+11	6673	7187633459478579	CMakeFiles/Risk_EstDatos.dir/main.cpp.obj	14ff596767f7851b
+134	6220	7187633817142223	CMakeFiles/Risk_EstDatos.dir/Arbol/Nodo.cxx.obj	244dee5e0620059
+6223	8010	7187633836075935	Risk_EstDatos.exe	c9ba1223550e7bad
+22	2217	7187789188801116	CMakeFiles/Risk_EstDatos.dir/Arbol/Nodo.cxx.obj	244dee5e0620059

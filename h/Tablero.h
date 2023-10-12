@@ -18,10 +18,13 @@ class Tablero {
     static void imprimirTablero();
     static void crearTerritorios();
     static void enlazarVecinos();
+    static Territorio* buscarTerritorioNom(int id, int e);
+
     // Maso de tarjetas
     static vector<Tarjeta> maso;
     static void crearTarjetas();
     static Tarjeta sacarTarjeta();
+    static Tarjeta* buscarTarjetaId(int id);
 };
 
 #endif

@@ -4,6 +4,11 @@
 using namespace std;
 
 // Implementacion de metodos
+
+Territorio::Territorio(){
+
+}
+
 void Territorio::setNombre(string n){
     nombre = n;
 }
@@ -21,6 +26,11 @@ void Territorio::setCantiEjercitos(int c) {
     cantiEjercitos = c;
 }
 
+void Territorio::setId(int i) {
+    id = i;
+}
+
+
 string Territorio::getNombre(){
     return nombre;
 }
@@ -36,6 +46,10 @@ Jugador* Territorio::getOcupante() {
 int Territorio::getCantiEjercitos() {
     return cantiEjercitos;
 }
+int Territorio::getId() {
+    return id;
+}
+
 
 void Territorio::imprimirVecinos(){
     for(int i=0; i< vecinos.size(); i++){

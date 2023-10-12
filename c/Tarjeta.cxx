@@ -8,7 +8,7 @@ int Tarjeta::intercambios = 0;
 
 // Implementacion de metodos
 
-Tarjeta::Tarjeta(){
+Tarjeta::Tarjeta() {
 
 }
 

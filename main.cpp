@@ -2,10 +2,16 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <sstream>
+#include <algorithm>
+#include <cstdint>
 
 #include "h/Jugador.h"
 #include "h/Continente.h"
 #include "h/Tablero.h"
+#include "Arbol/InfoNodo.h"
+#include "Arbol/ArbolHuffman.h"
+
 using namespace std;
 
 
@@ -32,12 +38,18 @@ void actualizarTurno(Jugador* jugadorActual);
 
 
 void comandoInicializarArchivo (string nombreArchivo);
-bool inicializarArchivo (string nombreArchivo);
+bool inicializarArchivoBin (string nombreArchivo);
+bool inicializarArchivoTxt (string nombreArchivo);
 void comandoGuardarArchivoTxt (string nombreArchivo);
 bool guardarArchivo (string nombreArchivo);
 void comandoGuardarArchivoComprimido (string nombreArchivo);
 bool comprimirArchivo (string nombreArchivo);
 vector<string> infoJugadoresString();
+vector<InfoNodo> informacionCaracteres(vector<string> t);
+string codificarMensaje(string mensaje, vector<InfoNodo>& caracteres);
+
+void asignarCodigosBinariosRecursivo(Nodo* nodo, string codigo, vector<InfoNodo>& caracteres);
+void asignarCodigosBinarios(Nodo* raiz, string codigo, vector<InfoNodo>& caracteres);
 
 void comandoCostoConquista (string terri);
 void comandoConquistaBarata();
@@ -345,37 +357,6 @@ bool guardarArchivo(string nombreArchivo) {
     }
 }
 
-vector<string> infoJugadoresString(){
-    vector<string> info;
-    for (list<Jugador>::iterator itJ = jugadores.begin(); itJ != jugadores.end(); itJ++) {
-        string cadena = "";
-        cadena = itJ->getNombre() + " " + itJ->getColor();
-
-        // Territorios
-        cadena += " " + to_string(itJ->getOcupados().size());
-
-        if (!itJ->getOcupados().empty()) {
-            list<Territorio> aux = itJ->getOcupados();
-            for (list<Territorio>::iterator itT = aux.begin(); itT != aux.end(); itT++) {
-                cadena += " " + itT->getNombre();
-                cadena += " " + to_string(itT->getCantiEjercitos());
-            }
-        }
-
-        // Tarjetas
-        cadena += " " + to_string(itJ->getTarjetas().size());
-
-        if (itJ->getTarjetas().size() > 0) {
-            list<Tarjeta> aux = itJ->getTarjetas();
-            for (list<Tarjeta>::iterator itTa = aux.begin(); itTa != aux.end(); itTa++) {
-                cadena += " " + to_string(itTa->getId());
-            }
-        }
-        // Agrega al vector
-        info.push_back(cadena);
-    }
-    return info;
-}
 
 void comandoInicializarArchivo (string nombreArchivo) {
 
@@ -385,20 +366,84 @@ void comandoInicializarArchivo (string nombreArchivo) {
         cout << "El juego ya ha sido inicializado" << endl;
     }
 
-    aux = inicializarArchivo (nombreArchivo);
+    // separar el nombre para saber la extension txt o bin
+    size_t posEspacio = nombreArchivo.find('.');// Encontrar la posición del punto
+    string ext = nombreArchivo.substr(posEspacio + 1);
+    if(ext == "txt"){
+        aux = inicializarArchivoTxt (nombreArchivo);
+    }else {
+        aux = inicializarArchivoBin (nombreArchivo);
+    }
 
     if (aux == false) {
         cout << nombreArchivo << " No contiene información válida para inicializar el juego." << endl;
     }
 
 }
-bool inicializarArchivo (string nombreArchivo) {
-// nombre color cantTerritorios nomTerrTi cantEjerTi cantTarjetas tarIdi
-
-    // Codigo para iniciar la partida desde un archivo
-    // Retorna true si se abre el archivo correctamente
-    // Retorna false si hay algun problema en el archivo
+bool inicializarArchivoBin (string nombreArchivo) {
     return true;
+}
+bool inicializarArchivoTxt (string nombreArchivo) {
+// nombre color cantTerritorios idTerri cantEjerTi cantTarjetas tarIdi
+
+    ifstream file(nombreArchivo);
+
+    if (file.is_open()) {
+        string linea;
+        int jug = 0;
+        while (getline(file, linea)) {
+            istringstream iss(linea);
+            string nombre, color;
+            int cantTerritorios;
+
+            // Leer nombre, color y cantidad de territorios
+            iss >> nombre >> color >> cantTerritorios;
+
+            // Crear jugador con nombre y color
+            Jugador nuevoJugador(nombre,jug + 1, color);
+
+            // Leer territorios
+            for (int i = 0; i < cantTerritorios; ++i) {
+                int idTerritorio, cantEjercitos;
+                iss >> idTerritorio;
+                iss >> cantEjercitos;
+
+                // Crear territorio y agregarlo al jugador
+                Territorio* nuevoTerritorio = Tablero::buscarTerritorioNom(idTerritorio, cantEjercitos);
+                nuevoJugador.agregarTerritorioOcupado(*nuevoTerritorio);
+            }
+
+            // Leer cantidad de tarjetas
+            int cantTarjetas;
+            iss >> cantTarjetas;
+
+            // Leer tarjetas
+            for (int i = 0; i < cantTarjetas; ++i) {
+                int tarjetaId;
+                iss >> tarjetaId;
+
+                // Crear tarjeta y agregarla al jugador
+                Tarjeta* nuevaTarjeta = Tablero::buscarTarjetaId(tarjetaId);
+                nuevoJugador.agregarTarjeta(*nuevaTarjeta);
+            }
+
+            // Agregar jugador a la lista de jugadores
+            jugadores.push_back(nuevoJugador);
+            jug++;
+
+            if(jug == 1){
+                list<Jugador>::iterator itJ = jugadores.begin();
+                proxTurno = &(*itJ);
+            }
+        }
+        numJugadores = jug;
+        juegoIniciado = true;
+        file.close();
+        cout << " Datos cargados y partida iniciada exitosamente!\n";
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
@@ -420,30 +465,177 @@ void comandoGuardarArchivoComprimido (string nombreArchivo){
 }
 bool comprimirArchivo (string nombreArchivo){
 
-    // Separar texo en char
-    vector<string> texo = infoJugadoresString();
+    vector<string> texto;
 
-    //vector<char> textoDividido = texto[i].split("");
+    // Separa caracteres, cuenta su frecuencia y los ordena
+    vector<InfoNodo> infoDiv = informacionCaracteres(texto);
 
-    // Hallar la frecuencia de las letras
 
-    // Traducir las letras a ascii
+    // Construir el Árbol de Huffman
+    ArbolHuffman arbol = ArbolHuffman::construirArbolHuffman(infoDiv);
 
-    // Crear arbol huffman
+    // Asignar códigos binarios a cada carácter
+    asignarCodigosBinarios(arbol.getRaiz(), "", infoDiv);
 
-    // Guardar en archivo
+    // Codificar el mensaje
+    vector<string> mensajeCodificado;
+    for (int i = 0; i < texto.size(); ++i) {
+        mensajeCodificado.push_back( codificarMensaje(texto[0], infoDiv) );
+    }
 
-    ofstream file(nombreArchivo, ios::binary);
 
-    if (file.is_open()) {
-
-        file.close();
+    // Guardar en formato binario
+    if (guardarEnFormatoBinario(nombreArchivo, caracteres, mensajeCodificado)) {
+        cout << "(Comando correcto) La partida ha sido codificada y guardada correctamente.\n";
         return true;
     } else {
+        cout << "(Error al codificar y/o guardar) La partida no ha sido codificada ni guardada correctamente.\n";
         return false;
     }
 }
 
+
+vector<string> infoJugadoresString(){
+    vector<string> info;
+    for (list<Jugador>::iterator itJ = jugadores.begin(); itJ != jugadores.end(); itJ++) {
+        string cadena = "";
+        cadena = itJ->getNombre() + " " + itJ->getColor();
+
+        // Territorios
+        cadena += " " + to_string(itJ->getOcupados().size());
+
+        if (!itJ->getOcupados().empty()) {
+            list<Territorio> aux = itJ->getOcupados();
+            for (list<Territorio>::iterator itT = aux.begin(); itT != aux.end(); itT++) {
+                cadena += " " + to_string(itT->getId());
+                cadena += " " + to_string(itT->getCantiEjercitos());
+            }
+        }
+
+        // Tarjetas
+        cadena += " " + to_string(itJ->getTarjetas().size());
+
+        if (itJ->getTarjetas().size() > 0) {
+            list<Tarjeta> aux = itJ->getTarjetas();
+            for (list<Tarjeta>::iterator itTa = aux.begin(); itTa != aux.end(); itTa++) {
+                cadena += " " + to_string(itTa->getId());
+            }
+        }
+        // Agrega al vector
+        info.push_back(cadena);
+    }
+    return info;
+}
+
+vector<InfoNodo> informacionCaracteres(vector<string> texto){
+
+    // Separar texo en char
+    vector<char> textoDiv;
+    for (string& palabra : texto) {
+        for (char c : palabra) {
+            textoDiv.push_back(c);
+        }
+    }
+
+    vector<InfoNodo> infoDiv;
+    InfoNodo aux;
+
+    for (char letra : textoDiv) {
+        aux.setValor(letra);
+
+        // Hallar la frecuencia de las letras
+        int frec = 0;
+        for (int i = 0; i < textoDiv.size(); ++i) {
+            if( letra == textoDiv[i]){
+                frec++;
+            }
+        }
+        cout << letra <<" -> "<<frec<<endl;
+        aux.setFrecuencia(frec);
+        infoDiv.push_back(aux);
+    }
+
+    return infoDiv;
+}
+
+
+void asignarCodigosBinarios(Nodo* raiz, string codigo, vector<InfoNodo>& caracteres) {
+    asignarCodigosBinariosRecursivo(raiz, codigo, caracteres);
+}
+void asignarCodigosBinariosRecursivo(Nodo* nodo, string codigo, vector<InfoNodo>& caracteres) {
+    if (nodo == nullptr) {
+        return;
+    }
+
+    // Si el nodo es una hoja, asigna el código binario al carácter correspondiente
+    if (nodo->esHoja()) {
+        char caracter = nodo->getInfo().getValor();
+        for (InfoNodo& info : caracteres) {
+            if (info.getValor() == caracter) {
+                info.setAscii(codigo);
+                break;
+            }
+        }
+    }
+
+    // Recorre hacia la izquierda con '0'
+    asignarCodigosBinariosRecursivo(nodo->getHijoIzq(), codigo + "0", caracteres);
+
+    // Recorre hacia la derecha con '1'
+    asignarCodigosBinariosRecursivo(nodo->getHijoDer(), codigo + "1", caracteres);
+}
+
+// Función para codificar un mensaje utilizando códigos binarios
+string codificarMensaje(string mensaje, vector<InfoNodo>& caracteres) {
+    string mensajeCodificado;
+    for (char caracter : mensaje) {
+        for (InfoNodo info : caracteres) {
+            if (info.getValor() == caracter) {
+                mensajeCodificado += info.getAscii();
+                break;
+            }
+        }
+    }
+    return mensajeCodificado;
+}
+
+
+bool guardarEnFormatoBinario(string& nombreArchivo, vector<InfoNodo>& caracteres, vector<string> mensajeCodificado) {
+    // Abrir el archivo en modo binario
+    ofstream file(nombreArchivo, ios::binary);
+
+    if (!file.is_open()) {
+        std::cerr << "Error al abrir el archivo binario para escritura.\n";
+        return false;
+    }
+
+    try {
+        // Escribir la cantidad de caracteres diferentes presentes en el archivo
+        uint16_t n = caracteres.size();
+        file.write(reinterpret_cast<char*>(&n), sizeof(n));
+
+        // Escribir la información de cada carácter (ci y fi)
+        for (InfoNodo& info : caracteres) {
+            file.write(reinterpret_cast<const char*>(&info), sizeof(info));
+        }
+
+        // Escribir la longitud del archivo
+        uint64_t longitudArchivo = mensajeCodificado.size();
+        file.write(reinterpret_cast<char*>(&longitudArchivo), sizeof(longitudArchivo));
+
+        // Escribir el mensaje codificado
+        for (int i = 0; i < longitudArchivo ; ++i) {
+            file.write(mensajeCodificado[i].c_str(), longitudArchivo);
+        }
+
+        file.close();
+        return true;
+    } catch (const std::exception& e) {
+        std::cerr << "Error al escribir en el archivo binario: " << e.what() << "\n";
+        file.close();
+        return false;
+    }
+}
 
 
 /*          IMPLEMENTACION DE METODOS CONQUISTAS        */
