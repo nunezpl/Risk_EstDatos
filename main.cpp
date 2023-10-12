@@ -48,6 +48,7 @@ vector<string> infoJugadoresString();
 vector<InfoNodo> informacionCaracteres(vector<string> t);
 string codificarMensaje(string mensaje, vector<InfoNodo>& caracteres);
 bool guardarEnFormatoBinario(string nombreArchivo, vector<InfoNodo> caracteres, vector<string> mensajeCodificado);
+bool guardarEnFormatoBinarioTxt(string nombreArchivo, vector<InfoNodo> caracteres, vector<string> mensajeCodificado);
 
 void asignarCodigosBinariosRecursivo(Nodo* nodo, string codigo, vector<InfoNodo>& caracteres);
 void asignarCodigosBinarios(Nodo* raiz, string codigo, vector<InfoNodo>& caracteres);
@@ -381,7 +382,23 @@ void comandoInicializarArchivo (string nombreArchivo) {
     }
 
 }
-bool inicializarArchivoBin (string nombreArchivo) {
+bool inicializarArchivoBin(string nombreArchivo) {
+    // Abrir el archivo binario
+    ifstream archivoBinario(nombreArchivo, ios::binary);
+    // Leer el encabezado del archivo
+    int numCaracteres;
+    archivoBinario.read((char*)&numCaracteres, sizeof(int));
+    // Leer los códigos binarios de los caracteres
+    vector<string> codigosBinarios(numCaracteres);
+    for (int i = 0; i < numCaracteres; ++i) {
+        archivoBinario.read((char*)&codigosBinarios[i], sizeof(string));
+    }
+    // Leer el mensaje codificado
+    string mensajeCodificado;
+    getline(archivoBinario, mensajeCodificado);
+    // Cerrar el archivo binario
+    archivoBinario.close();
+    // Devolver el mensaje codificado
     return true;
 }
 bool inicializarArchivoTxt (string nombreArchivo) {
@@ -464,18 +481,14 @@ void comandoGuardarArchivoComprimido (string nombreArchivo){
         cout << "\nLa partida ha sido guardada correctamente"<<endl;
     }
 }
-bool comprimirArchivo (string nombreArchivo){
-
+bool comprimirArchivo(string nombreArchivo) {
     vector<string> texto = infoJugadoresString();
+    cout << "Comprimiendo ... \n";
 
-    cout << " Comprimiendo ... \n";
-    // inicializar p5.txt
-    // guardar_comprimido b5.bin
     // Separa caracteres, cuenta su frecuencia y los ordena
     vector<InfoNodo> infoDiv = informacionCaracteres(texto);
 
-
-    // Construir el Árbol de Huffman
+    // Construir el árbol de Huffman
     ArbolHuffman arbol;
     arbol = arbol.construirArbolHuffman(infoDiv);
 
@@ -485,18 +498,19 @@ bool comprimirArchivo (string nombreArchivo){
     // Codificar el mensaje
     vector<string> mensajeCodificado;
     for (int i = 0; i < texto.size(); ++i) {
-        mensajeCodificado.push_back( codificarMensaje(texto[0], infoDiv) );
+        mensajeCodificado.push_back(codificarMensaje(texto[0], infoDiv));
     }
-
 
     // Guardar en formato binario
     if (guardarEnFormatoBinario(nombreArchivo, infoDiv, mensajeCodificado)) {
-        cout << "(Comando correcto) La partida ha sido codificada y guardada correctamente.\n";
+        cout << "(Comando correcto) .\n";
+        if (guardarEnFormatoBinarioTxt("2" + nombreArchivo, infoDiv, mensajeCodificado)) {
+            return true;
+        }
         return true;
     } else
         cout << "(Error al codificar y/o guardar) La partida no ha sido codificada ni guardada correctamente.\n";
-        return false;
-
+    return false;
 }
 
 
@@ -536,30 +550,40 @@ vector<InfoNodo> informacionCaracteres(vector<string> texto){
     cout << " Separando ... \n";
     // Separar texo en char
     vector<char> textoDiv;
+
     for (string palabra : texto) {
         for (char c : palabra) {
-            cout << " c. "<<c<<endl;
+            //cout << " c. "<<c<<endl;
             textoDiv.push_back(c);
         }
     }
 
     vector<InfoNodo> infoDiv;
     InfoNodo aux;
+    bool auxB = false;
 
     for (char letra : textoDiv) {
         aux.setValor(letra);
 
-        // Hallar la frecuencia de las letras
-        int frec = 0;
-        for (int i = 0; i < textoDiv.size(); ++i) {
-            if( letra == textoDiv[i]){
-                cout << " le: "<<letra<<" f: "<<frec<<endl;
-                frec++;
+        // Busca en el vector que se llena si ya esta la letra
+        for (int i = 0; i < infoDiv.size(); ++i) {
+            if (letra == infoDiv[i].getValor()){
+                auxB = true;
             }
         }
-        cout << letra <<" -> "<<frec<<endl;
-        aux.setFrecuencia(frec);
-        infoDiv.push_back(aux);
+
+        if(auxB == false) {
+            // Hallar la frecuencia de las letras
+            int frec = 0;
+            for (int i = 0; i < textoDiv.size(); ++i) {
+                if (letra == textoDiv[i])
+                    frec++;
+            }
+            cout << letra << " -> " << frec << endl;
+            aux.setFrecuencia(frec);
+            infoDiv.push_back(aux);
+        }
+        auxB = false;
     }
 
     return infoDiv;
@@ -606,10 +630,46 @@ string codificarMensaje(string mensaje, vector<InfoNodo>& caracteres) {
     return mensajeCodificado;
 }
 
-
 bool guardarEnFormatoBinario(string nombreArchivo, vector<InfoNodo> caracteres, vector<string> mensajeCodificado) {
     // Abrir el archivo en modo binario
     ofstream file(nombreArchivo, ios::binary);
+    if (!file.is_open()) {
+        cerr << "Error al abrir el archivo binario: " << nombreArchivo << endl;
+        return false;
+    }
+    try {
+        // Escribir la cantidad de caracteres diferentes presentes en el archivo
+        int n = caracteres.size();
+        file.write(reinterpret_cast<char*>(&n), sizeof(n));
+        // Escribir la información de cada carácter (ci y fi)
+        for (InfoNodo info : caracteres) {
+            // Convertir el ASCII a formato binario
+            string ascii = info.getAscii();
+            file.write(reinterpret_cast<const char *>(&ascii), sizeof(ascii));
+            // Escribir la frecuencia como binario
+            int frecuencia = info.getFrecuencia();
+            file.write(reinterpret_cast<char*>(&frecuencia), sizeof(frecuencia));
+        }
+        // Escribir la longitud del archivo
+        int longitudArchivo = mensajeCodificado.size();
+        file.write(reinterpret_cast<char*>(&longitudArchivo), sizeof(longitudArchivo));
+        // Escribir el mensaje codificado
+        for (int i = 0; i < longitudArchivo; ++i) {
+            file.write(mensajeCodificado[i].c_str(), longitudArchivo);
+        }
+
+        file.close();
+        return true;
+    } catch (exception& e) {
+        cerr << "Error al escribir en el archivo binario: " << e.what() << endl;
+        file.close();
+        return false;
+    }
+}
+
+bool guardarEnFormatoBinarioTxt(string nombreArchivo, vector<InfoNodo> caracteres, vector<string> mensajeCodificado) {
+    // Abrir el archivo en modo binario
+    ofstream file(nombreArchivo);
 
     if (!file.is_open()) {
         std::cerr << "Error al abrir el archivo binario para escritura.\n";
@@ -618,21 +678,21 @@ bool guardarEnFormatoBinario(string nombreArchivo, vector<InfoNodo> caracteres, 
 
     try {
         // Escribir la cantidad de caracteres diferentes presentes en el archivo
-        uint16_t n = caracteres.size();
-        file.write(reinterpret_cast<char*>(&n), sizeof(n));
+        uint8_t n = caracteres.size();
+        file << (reinterpret_cast<char*>(&n), sizeof(n));
 
         // Escribir la información de cada carácter (ci y fi)
         for (InfoNodo& info : caracteres) {
-            file.write(reinterpret_cast<const char*>(&info), sizeof(info));
+            file << info.getValor() << info.getFrecuencia();
         }
 
         // Escribir la longitud del archivo
-        uint64_t longitudArchivo = mensajeCodificado.size();
-        file.write(reinterpret_cast<char*>(&longitudArchivo), sizeof(longitudArchivo));
+        uint8_t longitudArchivo = mensajeCodificado.size();
+        file << (reinterpret_cast<char*>(&longitudArchivo), sizeof(longitudArchivo));
 
         // Escribir el mensaje codificado
         for (int i = 0; i < longitudArchivo ; ++i) {
-            file.write(mensajeCodificado[i].c_str(), longitudArchivo);
+            file << mensajeCodificado[i].c_str();
         }
 
         file.close();
@@ -643,6 +703,7 @@ bool guardarEnFormatoBinario(string nombreArchivo, vector<InfoNodo> caracteres, 
         return false;
     }
 }
+
 
 
 /*          IMPLEMENTACION DE METODOS CONQUISTAS        */

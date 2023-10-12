@@ -68,7 +68,16 @@ Nodo::Nodo(Nodo* de, Nodo* iz){
     this->hijoIzq = iz;
     this->hijoDer = de;
 }
+Nodo::Nodo(Nodo* de, Nodo* iz, char va, string as) {
+    this->hijoIzq = iz;
+    this->hijoDer = de;
+    this->info.setValor(va);
+    this->info.setAscii(as);
 
+    if (iz && de) {
+        this->info.setFrecuencia(iz->getInfo().getFrecuencia() + de->getInfo().getFrecuencia());
+    }
+}
 Nodo::~Nodo(){
     delete hijoDer;
     hijoDer = nullptr;
