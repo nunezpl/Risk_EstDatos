@@ -6,6 +6,9 @@ using namespace std;
 
 class InfoNodo {
 public:
+    InfoNodo();
+    InfoNodo(int f, int a);
+
     void setValor(char c);
     void setFrecuencia(int f);
     void setAscii(int a);
@@ -17,6 +20,7 @@ public:
     string getRuta();
 
     bool traduccionAscii();
+    bool traduccionNumAscii();
 
 protected:
     char valor;

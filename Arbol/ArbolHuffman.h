@@ -16,19 +16,14 @@ class ArbolHuffman {
         void setRaiz(Nodo* r);
         Nodo* getRaiz();
 
-        bool repetidos();
-
-        bool codificar();
-        bool  decodificar();
-
         ArbolHuffman construirArbolHuffman(vector<InfoNodo>& caracteres);
 
-        bool addNode(Nodo &data);
-        bool addNodeAux(Nodo &data, Nodo &node);
         //void guardarArbolTxt(string nombre_archivo);
 
         void imprimirArbolHuffman(Nodo* nodo, int nivel);
         string BuscarCharEnArbol(Nodo* nodo, char ch);
+        string traduceBinario(Nodo* nodo, vector<string> binario);
+
     protected:
         Nodo* raiz;
 };

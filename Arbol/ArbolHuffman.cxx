@@ -9,52 +9,6 @@ Nodo* ArbolHuffman::getRaiz(){
     return raiz;
 }
 
-bool ArbolHuffman::repetidos(){
-    return true;
-}
-
-bool ArbolHuffman::codificar(){
-    return true;
-}
-
-bool ArbolHuffman::decodificar(){
-    return true;
-}
-
-bool ArbolHuffman::addNode(Nodo &data) {
-    if (raiz == nullptr)
-    {
-        raiz = new Nodo(data);
-        return true;
-    }
-
-    return addNodeAux(data, *raiz);
-}
-
-bool ArbolHuffman::addNodeAux(Nodo &nuevo, Nodo &padre) {
-    if ( padre.esHoja())
-    {
-        Nodo* aux = new Nodo(*&nuevo);
-        nuevo = *aux;
-        return true;
-    }
-
-    else if (nuevo.getInfo().getFrecuencia() < (padre.getInfo()).getFrecuencia())
-    { // Si la frecuencia que llega es mejor al padre, se pone como derecho
-        return addNodeAux(nuevo, *(padre.getHijoDer()));
-    }
-    else if (nuevo.getInfo().getFrecuencia() > (padre.getInfo()).getFrecuencia())
-    { // si la frecuencia es mayor, se pone en el izq
-        return addNodeAux(nuevo, *(padre.getHijoIzq()));
-    }
-    else if (nuevo.getInfo().getFrecuencia() == (padre.getInfo()).getFrecuencia())
-    { // si la frecuencia es igual, se guarda en la derecha
-        return addNodeAux(nuevo, *(padre.getHijoDer()));
-    }
-
-    return false;
-}
-
 
 ArbolHuffman ArbolHuffman::construirArbolHuffman(vector<InfoNodo>& caracteres) {
 
@@ -126,15 +80,6 @@ void ArbolHuffman::imprimirArbolHuffman(Nodo* nodo, int nivel=0) {
     imprimirArbolHuffman(nodo->getHijoDer(), nivel + 1);
 }
 
-/*
- * void ArbolHuffman::guardarArbolTxt(string nombre_archivo) {
-    ofstream archivo(nombre_archivo);
-    if (archivo.is_open()) {
-        archivo << to_string();
-        archivo.close();
-    }
-}*/
-
 string ArbolHuffman::BuscarCharEnArbol(Nodo* nodo, char ch) {
     if (nodo == NULL) {
         return "";
@@ -153,3 +98,29 @@ string ArbolHuffman::BuscarCharEnArbol(Nodo* nodo, char ch) {
 
     return "";
 }
+
+string ArbolHuffman::traduceBinario(Nodo* nodo, vector<string> binario){
+    string resultado;
+    Nodo* nodoActual = nodo;
+
+    for (int i = 0; i < binario.size(); ++i) {
+        for (char c : binario[i]) {
+            if(c == '0'){
+                nodoActual = nodoActual->getHijoIzq();
+            }else if(c == '1'){
+                nodoActual = nodoActual->getHijoDer();
+            }
+
+            // Si llegamos a una hoja del árbol, añadimos el carácter al resultado
+            if (nodoActual->getHijoIzq() == nullptr && nodoActual->getHijoDer() == nullptr) {
+                cout << nodoActual->getInfo().getValor() ;
+                resultado += nodoActual->getInfo().getValor();
+                nodoActual = nodo;  // Reiniciar desde la raíz para el próximo código binario
+            }
+
+        }
+    }
+    cout << "\n";
+    return resultado;
+}
+
