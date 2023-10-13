@@ -10,6 +10,7 @@
 #include "h/Continente.h"
 #include "h/Tablero.h"
 #include "Arbol/InfoNodo.h"
+#include "Arbol/Nodo.h"
 #include "Arbol/ArbolHuffman.h"
 
 using namespace std;
@@ -21,11 +22,12 @@ bool ganador = false;
 int numJugadores=0;
 list<Jugador> jugadores;
 Jugador* proxTurno; // Se actualiza cada vez que se acabe un turno
-
+ArbolHuffman arbol;
 
 // Declaracion de metodos
 string separaComandoP2String(string c);
 long separaComandoP2Long(string c);
+vector<string> separaLineaEspacio(string l);
 void ayuda();
 
 bool iniciarJuego();
@@ -48,7 +50,7 @@ vector<string> infoJugadoresString();
 vector<InfoNodo> informacionCaracteres(vector<string> t);
 string codificarMensaje(string mensaje, vector<InfoNodo>& caracteres);
 bool guardarEnFormatoBinario(string nombreArchivo, vector<InfoNodo> caracteres, vector<string> mensajeCodificado);
-bool guardarEnFormatoBinarioTxt(string nombreArchivo, vector<InfoNodo> caracteres, vector<string> mensajeCodificado);
+vector<string> leerArchivoBinario(string nombreArchivo);
 
 void asignarCodigosBinariosRecursivo(Nodo* nodo, string codigo, vector<InfoNodo>& caracteres);
 
@@ -144,6 +146,19 @@ long separaComandoP2Long(string c){
     size_t posEspacio = c.find(' ');
     string palabraStr = c.substr(posEspacio + 1);
     return stol(palabraStr); // Convertir a entero
+}
+
+vector<string> separaLineaEspacio(string l) {
+    vector<string> linea;
+    istringstream iss(l);
+    do {
+        string palabra;
+        iss >> palabra;
+        if (!palabra.empty()) {
+            linea.push_back(palabra);
+        }
+    } while (iss);
+    return linea;
 }
 
 // Funcion que muestra la descripcion de todos los comandos
@@ -382,24 +397,131 @@ void comandoInicializarArchivo (string nombreArchivo) {
 
 }
 bool inicializarArchivoBin(string nombreArchivo) {
-    // Abrir el archivo binario
-    ifstream archivoBinario(nombreArchivo, ios::binary);
-    // Leer el encabezado del archivo
-    int numCaracteres;
-    archivoBinario.read((char*)&numCaracteres, sizeof(int));
-    // Leer los códigos binarios de los caracteres
-    vector<string> codigosBinarios(numCaracteres);
-    for (int i = 0; i < numCaracteres; ++i) {
-        archivoBinario.read((char*)&codigosBinarios[i], sizeof(string));
+
+    vector<string> bin = leerArchivoBinario(nombreArchivo);
+    vector<string> texto;
+
+    cout << " decodificado: \n";
+    for (int i = 0; i < bin.size(); ++i) {
+        cout <<bin[i] <<endl;
+        // Traducir lo binario
+
+        string aux = arbol.traduceBinario(arbol.getRaiz(), separaLineaEspacio(bin[i]));
+        texto.push_back(aux);
     }
-    // Leer el mensaje codificado
-    string mensajeCodificado;
-    getline(archivoBinario, mensajeCodificado);
-    // Cerrar el archivo binario
-    archivoBinario.close();
-    // Devolver el mensaje codificado
+
+
+    // Llenar estructura de datos de los jugadores
+    // Texto[i] es una linea con la info completa del jugador
+    for (int i = 0; i < texto.size(); ++i) {
+        // Separar cada dato del jugador i
+        vector<string> linea = separaLineaEspacio(texto[i]);
+
+        // Guardar la info de cada jugador
+        // Leer nombre, color y cantidad de territorios
+        string nombre = linea[0];
+        string color = linea[1];
+        int cantTerritorios = stoi(linea[2]);
+
+        // Crear jugador con nombre y color
+        Jugador nuevoJugador(nombre, i + 1, color);
+
+
+        // Leer territorios
+        for (int j = 3; j < 3 + cantTerritorios; ++j) {
+            int idTerritorio = stoi(linea[j]);
+            int cantEjercitos = stoi(linea[j]);
+
+            // Crear territorio y agregarlo al jugador
+            Territorio *nuevoTerritorio = Tablero::buscarTerritorioNom(idTerritorio, cantEjercitos);
+            nuevoJugador.agregarTerritorioOcupado(*nuevoTerritorio);
+        }
+
+        int pos = 3 + (cantTerritorios * 2); // Aux para saber la posicion de linea
+
+        // Leer cantidad de tarjetas
+        int cantTarjetas = stoi(linea[pos]);
+
+            // Leer tarjetas
+            for (int j = pos; j < cantTarjetas + pos; ++j) {
+                int tarjetaId = stoi(linea[j]);
+
+                // Crear tarjeta y agregarla al jugador
+                Tarjeta *nuevaTarjeta = Tablero::buscarTarjetaId(tarjetaId);
+                nuevoJugador.agregarTarjeta(*nuevaTarjeta);
+            }
+
+        // Agregar jugador a la lista de jugadores
+        jugadores.push_back(nuevoJugador);
+
+        if(i == 1){
+            list<Jugador>::iterator itJ = jugadores.begin();
+            proxTurno = &(*itJ);
+        }
+    }
+    numJugadores = texto.size();
+    juegoIniciado = true;
+
     return true;
 }
+
+vector<string> leerArchivoBinario(string nombreArchivo) {
+    // Abrir el archivo en modo binario
+    ifstream file(nombreArchivo, ios::binary);
+
+    if (!file.is_open()) {
+        cout << "Error al abrir el archivo binario: " << nombreArchivo << endl;
+        return vector<string>();
+    }
+
+    // Leer la cantidad de caracteres diferentes presentes en el archivo N
+    uint8_t n;
+    file.read(reinterpret_cast<char*>(&n), sizeof(n));
+    //cout << " n:" << n << endl;
+
+    // Leer la información de cada carácter (ci y fi)
+    vector<InfoNodo> caracteres;
+    for (int i = 0; i < n; ++i) {
+        // Leer el ASCII como binario C
+        int ascii;
+        file.read(reinterpret_cast<char*>(&ascii), sizeof(ascii));
+        file.ignore(1);
+        //out << "  as:" << ascii;
+
+        // Leer la frecuencia como binario F
+        int frecuencia;
+        file.read(reinterpret_cast<char*>(&frecuencia), sizeof(frecuencia));
+        file.ignore(1);
+        //cout << "  fr:" << frecuencia << endl;
+
+        caracteres.push_back(InfoNodo(frecuencia, ascii));
+    }
+
+    // Construir el arbol asociado a este archivo
+    arbol.construirArbolHuffman(caracteres);
+
+    // Leer la longitud del archivo W
+    int longitudArchivo;
+    file.read(reinterpret_cast<char*>(&longitudArchivo), sizeof(longitudArchivo));
+    file.ignore(1);
+    //cout << "   W:" << longitudArchivo << endl;
+    file.ignore(1); // Ignora el salto de linea
+
+    // Leer el mensaje codificado
+    vector<string> mensajeCodificado;
+    for (int i = 0; i < longitudArchivo; ++i) {
+
+        string linea;
+        getline(file, linea);
+        mensajeCodificado.push_back(linea);
+
+    }
+
+    file.close();
+    return mensajeCodificado;
+}
+
+
 bool inicializarArchivoTxt (string nombreArchivo) {
 // nombre color cantTerritorios idTerri cantEjerTi cantTarjetas tarIdi
 
@@ -508,13 +630,11 @@ bool comprimirArchivo(string nombreArchivo) {
     // Guardar en formato binario
     if (guardarEnFormatoBinario(nombreArchivo, infoDiv, mensajeCodificado)) {
         //cout << "(Comando correcto) .\n";
-        if (guardarEnFormatoBinarioTxt("2" + nombreArchivo, infoDiv, mensajeCodificado)) {
-            return true;
-        }
         return true;
     } else
         return false;
 }
+
 
 vector<string> infoJugadoresString(){
     vector<string> info;
@@ -547,6 +667,7 @@ vector<string> infoJugadoresString(){
     }
     return info;
 }
+
 
 vector<InfoNodo> informacionCaracteres(vector<string> texto){
     cout << " Separando ... \n";
@@ -617,8 +738,9 @@ void asignarCodigosBinariosRecursivo(Nodo* nodo, string codigo, vector<InfoNodo>
     asignarCodigosBinariosRecursivo(nodo->getHijoDer(), codigo + "1", caracteres);
 }
 
-// Función para codificar un mensaje utilizando códigos binarios
+
 string codificarMensaje(string mensaje, vector<InfoNodo>& caracteres) {
+    // Función para codificar un mensaje utilizando códigos binarios
     string mensajeCodificado = "";
     for (char caracter : mensaje) {
         for (InfoNodo info : caracteres) {
@@ -631,6 +753,7 @@ string codificarMensaje(string mensaje, vector<InfoNodo>& caracteres) {
     return mensajeCodificado;
 }
 
+
 bool guardarEnFormatoBinario(string nombreArchivo, vector<InfoNodo> caracteres, vector<string> mensajeCodificado) {
     // Abrir el archivo en modo binario
     ofstream file(nombreArchivo, ios::binary);
@@ -640,7 +763,8 @@ bool guardarEnFormatoBinario(string nombreArchivo, vector<InfoNodo> caracteres, 
     }
 
     // Escribir la cantidad de caracteres diferentes presentes en el archivo N
-    int n = caracteres.size();
+    uint8_t n = caracteres.size();
+    cout << " n:"<<n<<endl;
     file.write(reinterpret_cast<const char*>(&n), sizeof(n));
 
     // Escribir la información de cada carácter (ci y fi)
@@ -648,64 +772,31 @@ bool guardarEnFormatoBinario(string nombreArchivo, vector<InfoNodo> caracteres, 
 
         // Convertir el ASCII a formato binario C
         int ascii = info.getAscii();
+        cout<<"  as:"<<ascii;
         file.write(reinterpret_cast<char *>(&ascii), sizeof(ascii));
         file.write(" ", 1);
 
         // Escribir la frecuencia como binario F
         int frecuencia = info.getFrecuencia();
+        cout<<"  fr:"<<frecuencia<<endl;
         file.write(reinterpret_cast<char*>(&frecuencia), sizeof(frecuencia));
         file.write(" ", 1);
     }
 
     // Escribir la longitud del archivo W
     int longitudArchivo = mensajeCodificado.size();
+    cout << "   W:"<<longitudArchivo<<endl;
     file.write(reinterpret_cast<char*>(&longitudArchivo), sizeof(longitudArchivo));
     file.write(" ", 1);
 
     // Escribir el mensaje codificado
     for (int i = 0; i < longitudArchivo; ++i) {
+        file.write("\n", 1);
         file.write(mensajeCodificado[i].c_str(), mensajeCodificado[i].size());
     }
 
     file.close();
     return true;
-}
-
-bool guardarEnFormatoBinarioTxt(string nombreArchivo, vector<InfoNodo> caracteres, vector<string> mensajeCodificado) {
-    // Abrir el archivo en modo binario
-    ofstream file(nombreArchivo);
-
-    if (!file.is_open()) {
-        cout << "Error al abrir el archivo binario para escritura.\n";
-        return false;
-    }
-
-    try {
-        // Escribir la cantidad de caracteres diferentes presentes en el archivo
-        uint8_t n = caracteres.size();
-        file << (reinterpret_cast<char*>(&n), sizeof(n));
-
-        // Escribir la información de cada carácter (ci y fi)
-        for (InfoNodo& info : caracteres) {
-            file << info.getValor() << info.getFrecuencia();
-        }
-
-        // Escribir la longitud del archivo
-        uint8_t longitudArchivo = mensajeCodificado.size();
-        file << (reinterpret_cast<char*>(&longitudArchivo), sizeof(longitudArchivo));
-
-        // Escribir el mensaje codificado
-        for (int i = 0; i < longitudArchivo ; ++i) {
-            file << mensajeCodificado[i].c_str();
-        }
-
-        file.close();
-        return true;
-    } catch (const std::exception& e) {
-        std::cerr << "Error al escribir en el archivo binario: " << e.what() << "\n";
-        file.close();
-        return false;
-    }
 }
 
 

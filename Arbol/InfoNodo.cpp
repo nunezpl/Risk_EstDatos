@@ -1,5 +1,18 @@
 #include "InfoNodo.h"
 
+InfoNodo::InfoNodo() {
+    frecuencia = 0;
+    ascii = 0;
+    ruta = "";
+    valor = ' ';
+}
+InfoNodo::InfoNodo(int f, int a){
+    frecuencia = f;
+    ascii = a;
+    ruta = "";
+    traduccionNumAscii();
+}
+
 void InfoNodo::setValor(char c){
     valor = c;
 }
@@ -45,4 +58,16 @@ bool InfoNodo::traduccionAscii(){
         return true;
     }
     return false;
+}
+
+bool InfoNodo::traduccionNumAscii(){
+    // cambia el codigo ascii de una letra
+    if(ascii == 32) {
+        valor =  ' ';
+        return true;
+    }
+
+    valor =  static_cast<char>(ascii);
+    return true;
+
 }

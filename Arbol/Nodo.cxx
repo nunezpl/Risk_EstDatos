@@ -24,7 +24,8 @@ Nodo* Nodo::getHijoIzq(){
 
 
 Nodo::Nodo() {
-
+    this->hijoDer = nullptr;
+    this->hijoIzq = nullptr;
 }
 Nodo::Nodo(InfoNodo data){
     this->info = data;
