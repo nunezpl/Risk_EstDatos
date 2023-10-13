@@ -30,6 +30,7 @@ bool ArbolHuffman::addNode(Nodo &data) {
 
     return addNodeAux(data, *raiz);
 }
+
 bool ArbolHuffman::addNodeAux(Nodo &nuevo, Nodo &padre) {
     if ( padre.esHoja())
     {
@@ -52,28 +53,6 @@ bool ArbolHuffman::addNodeAux(Nodo &nuevo, Nodo &padre) {
     }
 
     return false;
-}
-
-list<InfoNodo> ArbolHuffman::preOrder() {
-    // Creamos una lista vacia para almacenar los datos del arbol
-    // en preorden.
-    list<InfoNodo> list;
-
-    // Llamamos a la funcion auxiliar para recorrer el arbol en preorden.
-    // Recibe por referencia la lista vacia para ir agregando los datos del arbol.
-    preOrderAux(raiz, list);
-
-    return list;
-}
-void ArbolHuffman::preOrderAux(Nodo* node, list<InfoNodo> &list) {
-    if (node == nullptr)
-    {
-        return;
-    }
-
-    list.push_back(node->getInfo());
-    preOrderAux(node->getHijoIzq(), list);
-    preOrderAux(node->getHijoDer(), list);
 }
 
 
@@ -112,16 +91,15 @@ ArbolHuffman ArbolHuffman::construirArbolHuffman(vector<InfoNodo>& caracteres) {
         colaPrioridad.pop();
         Nodo* derecho = colaPrioridad.top();
         colaPrioridad.pop();
-        cout<< "\n prob colanuev\n";
+
         // Crear un nuevo nodo interno con los dos nodos como hijos
-        Nodo* nuevoNodo = new Nodo(izquierdo, derecho, '\0', "0");
+        Nodo* nuevoNodo = new Nodo(izquierdo, derecho, '\0', 0, "");
 
         nuevoNodo->getInfo().setFrecuencia(izquierdo->getInfo().getFrecuencia() + derecho->getInfo().getFrecuencia());
 
         colaPrioridad.push(nuevoNodo);
     }
 
-cout<< " prob raiz\n";
     // El único nodo restante en la cola de prioridad es la raíz del árbol de Huffman
     this->raiz =colaPrioridad.top() ;
 
@@ -146,4 +124,32 @@ void ArbolHuffman::imprimirArbolHuffman(Nodo* nodo, int nivel=0) {
 
     // Recorrer hacia la derecha con '1'
     imprimirArbolHuffman(nodo->getHijoDer(), nivel + 1);
+}
+
+/*
+ * void ArbolHuffman::guardarArbolTxt(string nombre_archivo) {
+    ofstream archivo(nombre_archivo);
+    if (archivo.is_open()) {
+        archivo << to_string();
+        archivo.close();
+    }
+}*/
+
+string ArbolHuffman::BuscarCharEnArbol(Nodo* nodo, char ch) {
+    if (nodo == NULL) {
+        return "";
+    }
+    if (nodo->getInfo().getValor() == ch) {
+        return "";
+    }
+    string leftPath = BuscarCharEnArbol(nodo->getHijoIzq(), ch);
+    if (leftPath != "") {
+        return "0" + leftPath;
+    }
+    string rightPath = BuscarCharEnArbol(nodo->getHijoDer(), ch);
+    if (rightPath != "") {
+        return "1" + rightPath;
+    }
+
+    return "";
 }

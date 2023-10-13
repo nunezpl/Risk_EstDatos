@@ -12,7 +12,7 @@ class Nodo {
         Nodo();
         Nodo(InfoNodo data);
         Nodo(Nodo* de, Nodo* iz);
-        Nodo(Nodo* de, Nodo* iz, char va, string as);
+        Nodo(Nodo* de, Nodo* iz, char va, int as, string ru);
         ~Nodo();
 
         void setInfo(InfoNodo v);
@@ -24,8 +24,6 @@ class Nodo {
         Nodo* getHijoIzq();
 
         void addHijo(int lado);
-        bool traduccionAscii();
-        string convertirABinario();
 
         bool operator<(Nodo &otherBinaryNode);
         bool operator>(Nodo &otherBinaryNode);

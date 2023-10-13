@@ -8,16 +8,21 @@ class InfoNodo {
 public:
     void setValor(char c);
     void setFrecuencia(int f);
-    void setAscii(string a);
+    void setAscii(int a);
+    void setRuta(string r);
 
     char getValor();
     int getFrecuencia();
-    string getAscii();
+    int getAscii();
+    string getRuta();
+
+    bool traduccionAscii();
 
 protected:
     char valor;
     int frecuencia;
-    string ascii;
+    int ascii;
+    string ruta;
 };
 
 #include "InfoNodo.cpp"

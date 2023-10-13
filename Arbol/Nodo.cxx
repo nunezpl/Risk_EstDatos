@@ -23,39 +23,6 @@ Nodo* Nodo::getHijoIzq(){
 }
 
 
-bool Nodo::traduccionAscii(){
-    // cambia el codigo ascii de una letra
-
-    if ( isdigit(static_cast<unsigned char>( (info.getValor()) )) == 0 ) {
-        // Obtiene el carácter y calcula su código ASCII
-        char letra = info.getValor();
-        int codigoAscii = static_cast<int>(letra);
-
-        // Establece el código ASCII en la info del nodo
-        info.setAscii(reinterpret_cast<const char *>(codigoAscii));
-        cout << " Letra: "<<(info.getValor()) << " Ascii: "<<codigoAscii<<endl;
-        return true;
-    }else if ( isdigit(static_cast<unsigned char>( (info.getValor()) )) != 0 ){
-        // Establece el código ASCII en la info del nodo
-        info.setAscii(reinterpret_cast<const char *>(info.getValor()));
-        cout << " Num: "<<(info.getValor())<<endl;
-        return true;
-    } else {
-        // Manejar el caso en el que la info no sea un carácter válido
-        cout << " Error: no se reconoce si es letra o numero.\n";
-        return false;
-    }
-}
-
-string Nodo::convertirABinario(){
-    bool aux = traduccionAscii();
-    string a = info.getAscii();
-    string binCode= bitset<8>( a ).to_string();;
-
-    return binCode;
-}
-
-
 Nodo::Nodo() {
 
 }
@@ -68,12 +35,12 @@ Nodo::Nodo(Nodo* de, Nodo* iz){
     this->hijoIzq = iz;
     this->hijoDer = de;
 }
-Nodo::Nodo(Nodo* de, Nodo* iz, char va, string as) {
+Nodo::Nodo(Nodo* de, Nodo* iz, char va, int as, string ru) {
     this->hijoIzq = iz;
     this->hijoDer = de;
     this->info.setValor(va);
     this->info.setAscii(as);
-
+    this->info.setRuta(ru);
     if (iz && de) {
         this->info.setFrecuencia(iz->getInfo().getFrecuencia() + de->getInfo().getFrecuencia());
     }
