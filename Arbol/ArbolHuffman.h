@@ -5,6 +5,8 @@ using namespace std;
 #include <iostream>
 #include <list>
 #include <queue>
+#include <fstream>
+#include <string>
 
 #include "Nodo.h"
 #include "InfoNodo.h"
@@ -23,12 +25,10 @@ class ArbolHuffman {
 
         bool addNode(Nodo &data);
         bool addNodeAux(Nodo &data, Nodo &node);
-
-        list<InfoNodo> preOrder();
-        void preOrderAux(Nodo* node, list<InfoNodo> &list);
+        //void guardarArbolTxt(string nombre_archivo);
 
         void imprimirArbolHuffman(Nodo* nodo, int nivel);
-
+        string BuscarCharEnArbol(Nodo* nodo, char ch);
     protected:
         Nodo* raiz;
 };

@@ -51,7 +51,6 @@ bool guardarEnFormatoBinario(string nombreArchivo, vector<InfoNodo> caracteres, 
 bool guardarEnFormatoBinarioTxt(string nombreArchivo, vector<InfoNodo> caracteres, vector<string> mensajeCodificado);
 
 void asignarCodigosBinariosRecursivo(Nodo* nodo, string codigo, vector<InfoNodo>& caracteres);
-void asignarCodigosBinarios(Nodo* raiz, string codigo, vector<InfoNodo>& caracteres);
 
 void comandoCostoConquista (string terri);
 void comandoConquistaBarata();
@@ -485,7 +484,7 @@ bool comprimirArchivo(string nombreArchivo) {
     vector<string> texto = infoJugadoresString();
     cout << "Comprimiendo ... \n";
 
-    // Separa caracteres, cuenta su frecuencia y los ordena
+    // Separa caracteres, cuenta su frecuencia
     vector<InfoNodo> infoDiv = informacionCaracteres(texto);
 
     // Construir el árbol de Huffman
@@ -493,26 +492,29 @@ bool comprimirArchivo(string nombreArchivo) {
     arbol = arbol.construirArbolHuffman(infoDiv);
 
     // Asignar códigos binarios a cada carácter
-    asignarCodigosBinarios(arbol.getRaiz(), "", infoDiv);
+    asignarCodigosBinariosRecursivo(arbol.getRaiz(), "", infoDiv);
 
     // Codificar el mensaje
     vector<string> mensajeCodificado;
     for (int i = 0; i < texto.size(); ++i) {
-        mensajeCodificado.push_back(codificarMensaje(texto[0], infoDiv));
+        mensajeCodificado.push_back(codificarMensaje(texto[i], infoDiv));
+    }
+
+    cout << "Mensaje codificado: \n";
+    for (int i = 0; i < mensajeCodificado.size(); ++i) {
+        cout << mensajeCodificado[i] << endl;
     }
 
     // Guardar en formato binario
     if (guardarEnFormatoBinario(nombreArchivo, infoDiv, mensajeCodificado)) {
-        cout << "(Comando correcto) .\n";
+        //cout << "(Comando correcto) .\n";
         if (guardarEnFormatoBinarioTxt("2" + nombreArchivo, infoDiv, mensajeCodificado)) {
             return true;
         }
         return true;
     } else
-        cout << "(Error al codificar y/o guardar) La partida no ha sido codificada ni guardada correctamente.\n";
-    return false;
+        return false;
 }
-
 
 vector<string> infoJugadoresString(){
     vector<string> info;
@@ -590,9 +592,6 @@ vector<InfoNodo> informacionCaracteres(vector<string> texto){
 }
 
 
-void asignarCodigosBinarios(Nodo* raiz, string codigo, vector<InfoNodo>& caracteres) {
-    asignarCodigosBinariosRecursivo(raiz, codigo, caracteres);
-}
 void asignarCodigosBinariosRecursivo(Nodo* nodo, string codigo, vector<InfoNodo>& caracteres) {
     if (nodo == nullptr) {
         return;
@@ -602,8 +601,10 @@ void asignarCodigosBinariosRecursivo(Nodo* nodo, string codigo, vector<InfoNodo>
     if (nodo->esHoja()) {
         char caracter = nodo->getInfo().getValor();
         for (InfoNodo& info : caracteres) {
-            if (info.getValor() == caracter) {
-                info.setAscii(codigo);
+            if (info.getValor() == caracter ) {
+                info.setRuta(codigo);
+                info.traduccionAscii();
+                cout << " R: "<< info.getRuta() << " A: "<< info.getAscii() <<" V: "<<info.getValor()<<endl;
                 break;
             }
         }
@@ -618,11 +619,11 @@ void asignarCodigosBinariosRecursivo(Nodo* nodo, string codigo, vector<InfoNodo>
 
 // Función para codificar un mensaje utilizando códigos binarios
 string codificarMensaje(string mensaje, vector<InfoNodo>& caracteres) {
-    string mensajeCodificado;
+    string mensajeCodificado = "";
     for (char caracter : mensaje) {
         for (InfoNodo info : caracteres) {
             if (info.getValor() == caracter) {
-                mensajeCodificado += info.getAscii();
+                mensajeCodificado += info.getRuta() + " ";
                 break;
             }
         }
@@ -634,37 +635,40 @@ bool guardarEnFormatoBinario(string nombreArchivo, vector<InfoNodo> caracteres, 
     // Abrir el archivo en modo binario
     ofstream file(nombreArchivo, ios::binary);
     if (!file.is_open()) {
-        cerr << "Error al abrir el archivo binario: " << nombreArchivo << endl;
+        cout << "Error al abrir el archivo binario: " << nombreArchivo << endl;
         return false;
     }
-    try {
-        // Escribir la cantidad de caracteres diferentes presentes en el archivo
-        int n = caracteres.size();
-        file.write(reinterpret_cast<char*>(&n), sizeof(n));
-        // Escribir la información de cada carácter (ci y fi)
-        for (InfoNodo info : caracteres) {
-            // Convertir el ASCII a formato binario
-            string ascii = info.getAscii();
-            file.write(reinterpret_cast<const char *>(&ascii), sizeof(ascii));
-            // Escribir la frecuencia como binario
-            int frecuencia = info.getFrecuencia();
-            file.write(reinterpret_cast<char*>(&frecuencia), sizeof(frecuencia));
-        }
-        // Escribir la longitud del archivo
-        int longitudArchivo = mensajeCodificado.size();
-        file.write(reinterpret_cast<char*>(&longitudArchivo), sizeof(longitudArchivo));
-        // Escribir el mensaje codificado
-        for (int i = 0; i < longitudArchivo; ++i) {
-            file.write(mensajeCodificado[i].c_str(), longitudArchivo);
-        }
 
-        file.close();
-        return true;
-    } catch (exception& e) {
-        cerr << "Error al escribir en el archivo binario: " << e.what() << endl;
-        file.close();
-        return false;
+    // Escribir la cantidad de caracteres diferentes presentes en el archivo N
+    int n = caracteres.size();
+    file.write(reinterpret_cast<const char*>(&n), sizeof(n));
+
+    // Escribir la información de cada carácter (ci y fi)
+    for (InfoNodo info : caracteres) {
+
+        // Convertir el ASCII a formato binario C
+        int ascii = info.getAscii();
+        file.write(reinterpret_cast<char *>(&ascii), sizeof(ascii));
+        file.write(" ", 1);
+
+        // Escribir la frecuencia como binario F
+        int frecuencia = info.getFrecuencia();
+        file.write(reinterpret_cast<char*>(&frecuencia), sizeof(frecuencia));
+        file.write(" ", 1);
     }
+
+    // Escribir la longitud del archivo W
+    int longitudArchivo = mensajeCodificado.size();
+    file.write(reinterpret_cast<char*>(&longitudArchivo), sizeof(longitudArchivo));
+    file.write(" ", 1);
+
+    // Escribir el mensaje codificado
+    for (int i = 0; i < longitudArchivo; ++i) {
+        file.write(mensajeCodificado[i].c_str(), mensajeCodificado[i].size());
+    }
+
+    file.close();
+    return true;
 }
 
 bool guardarEnFormatoBinarioTxt(string nombreArchivo, vector<InfoNodo> caracteres, vector<string> mensajeCodificado) {
@@ -672,7 +676,7 @@ bool guardarEnFormatoBinarioTxt(string nombreArchivo, vector<InfoNodo> caractere
     ofstream file(nombreArchivo);
 
     if (!file.is_open()) {
-        std::cerr << "Error al abrir el archivo binario para escritura.\n";
+        cout << "Error al abrir el archivo binario para escritura.\n";
         return false;
     }
 
@@ -706,8 +710,8 @@ bool guardarEnFormatoBinarioTxt(string nombreArchivo, vector<InfoNodo> caractere
 
 
 
-/*          IMPLEMENTACION DE METODOS CONQUISTAS        */
 
+/*          IMPLEMENTACION DE METODOS CONQUISTAS        */
 void comandoCostoConquista (string terri) {
 
     if (juegoIniciado == false){
@@ -727,7 +731,6 @@ void comandoCostoConquista (string terri) {
 
     }
 }
-
 // Funcion que evalua las condiciones para poder calcular la conquista mas barata para un jugador
 void comandoConquistaBarata(){
 
