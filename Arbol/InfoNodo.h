@@ -29,5 +29,5 @@ protected:
     string ruta;
 };
 
-#include "InfoNodo.cpp"
+//#include "InfoNodo.cxx"
 #endif //RISK_ESTDATOS_INFONODO_H

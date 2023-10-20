@@ -10,9 +10,7 @@
     <option name="reloaded" value="true" />
   </component>
   <component name="CMakeRunConfigurationManager">
-    <generated>
-      <config projectName="Risk_EstDatos" targetName="Risk_EstDatos" />
-    </generated>
+    <generated />
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -20,60 +18,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76551913-65fa-4448-87c7-ef9466885784" name="Changes" comment="">
+    <list default="true" id="4740010e-e4f4-4207-90fa-e66923ae6509" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/c/Master.cxx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/h/Master.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arbol/ArbolHuffman.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/ArbolHuffman.cxx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Arbol/ArbolHuffman.h" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/ArbolHuffman.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arbol/InfoNodo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/InfoNodo.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arbol/InfoNodo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/InfoNodo.cxx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Arbol/InfoNodo.h" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/InfoNodo.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arbol/Nodo.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/Nodo.cxx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/cache-v2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/cmakeFiles-v1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/codemodel-v2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/query/toolchains-v1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cache-v2-747981dc6cc878d2ca4e.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-329a4a7342f9946d6f62.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-cf198fcb97487b6dc912.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/codemodel-v2-24d26da1f9efa7efb72f.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/directory-.-Debug-d0094a50bb2071803777.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-10-11T17-39-27-0161.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/index-2023-10-13T04-11-01-0304.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/target-Risk_EstDatos-Debug-86483209b76ad8a3ca62.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.cmake/api/v1/reply/toolchains-v1-7798abb756c44aa07bb0.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CMakeCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CMakeCXXCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CMakeDetermineCompilerABI_C.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CMakeDetermineCompilerABI_CXX.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CMakeRCCompiler.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CMakeSystem.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdC/CMakeCCompilerId.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdC/a.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdCXX/CMakeCXXCompilerId.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdCXX/a.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeConfigureLog.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Risk_EstDatos.dir/Arbol/ArbolHuffman.cxx.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Risk_EstDatos.dir/Arbol/InfoNodo.cpp.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Risk_EstDatos.dir/Arbol/Nodo.cxx.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Risk_EstDatos.dir/c/Continente.cxx.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Risk_EstDatos.dir/c/Ejercito.cxx.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Risk_EstDatos.dir/c/Jugador.cxx.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Risk_EstDatos.dir/c/Tablero.cxx.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Risk_EstDatos.dir/c/Tarjeta.cxx.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Risk_EstDatos.dir/c/Territorio.cxx.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Risk_EstDatos.dir/main.cpp.obj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-environment.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cmake.check_cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/rules.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arbol/Nodo.h" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/Nodo.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arbol/Valor.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/b3.bin" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/p1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/p3.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/risk.exe" beforeDir="false" afterPath="$PROJECT_DIR$/risk.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,7 +41,6 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -100,76 +56,46 @@
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 1
 }</component>
-  <component name="ProjectId" id="2UP0J3OqPEpuuGJC9h9hTvuDBan" />
+  <component name="ProjectId" id="2WzkApKsO31jBU4aHH1kdzPZ9Qs" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;lorenaBranch&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Lorett/Lorena/4 Semestre/ANTLR4-taller1&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "lorenaBranch",
+    "last_opened_file_path": "C:/Lorett/Lorena/4 Semestre/Estructuras de datos/UnitTestingC++/UnitTestingC++",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Lorett\Lorena\4 Semestre\Estructuras de datos\Proyecto\Risk_EstDatos\Arbol" />
-      <recent name="C:\Lorett\Lorena\4 Semestre\Estructuras de datos\Proyecto\Risk_EstDatos\cxx" />
-      <recent name="C:\Lorett\Lorena\4 Semestre\Estructuras de datos\Proyecto\Risk_EstDatos\h" />
-    </key>
-  </component>
-  <component name="RunManager" selected="CMake Application.Risk_EstDatos">
-    <configuration name="Risk_EstDatos" type="CMakeListConfigurationType" factoryName="CMakeListConfigurationFactory" temporary="true">
-      <method v="2" />
-    </configuration>
-    <configuration name="Risk_EstDatos" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Risk_EstDatos" TARGET_NAME="Risk_EstDatos" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Risk_EstDatos" RUN_TARGET_NAME="Risk_EstDatos">
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <list>
-      <item itemvalue="CMake Application.Risk_EstDatos" />
-      <item itemvalue="CMake Debug.Risk_EstDatos" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="CMake Debug.Risk_EstDatos" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="76551913-65fa-4448-87c7-ef9466885784" name="Changes" comment="" />
-      <created>1692825837293</created>
+      <changelist id="4740010e-e4f4-4207-90fa-e66923ae6509" name="Changes" comment="" />
+      <created>1697742657403</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1692825837293</updated>
-      <workItem from="1692825850973" duration="14000" />
-      <workItem from="1692835125552" duration="39000" />
-      <workItem from="1696884057218" duration="15850000" />
-      <workItem from="1696915009556" duration="813000" />
-      <workItem from="1696955740424" duration="11270000" />
-      <workItem from="1696978160273" duration="51199000" />
-      <workItem from="1697120925129" duration="3700000" />
-      <workItem from="1697153072674" duration="2342000" />
-      <workItem from="1697156542901" duration="8839000" />
-      <workItem from="1697166913338" duration="1464000" />
-      <workItem from="1697168509639" duration="1444000" />
-      <workItem from="1697170748656" duration="13713000" />
+      <updated>1697742657403</updated>
+      <workItem from="1697742662888" duration="1206000" />
+      <workItem from="1697762527521" duration="9906000" />
     </task>
     <servers />
   </component>
@@ -181,16 +107,5 @@
     <isAutomaticCheckingOnLaunch value="false" />
     <isAutomaticFoundErrors value="true" />
     <isAutomaticFoundErrors value="true" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
 </project>

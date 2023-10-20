@@ -1,3 +1,0 @@
-lucia verde 2 4 5 2 5 1 55
-maria azul 3 5 5 3 5 7 5 0
-jose rojo 2 1 5 8 5 2 40 4
