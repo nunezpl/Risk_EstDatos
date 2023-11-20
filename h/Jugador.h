@@ -47,7 +47,7 @@ class Jugador {
 
 
   protected:
-    string nombre;
+    string nombre = "";
     long id;
     string color;
     list<Territorio> terrOcupados;
