@@ -820,23 +820,25 @@ void Master::comandoCostoConquista (string terri) {
     }
 
     else {
+        grafo.deleteArcs();
         crearGrafo(); // Crea el grafo
-        string from = "Argentina";
 
-        vector<Territorio> camino = evaluarCostoConquista(from, terri);
-        string result;
+        evaluarCostoConquista(terri);
+    }
+}
 
-        for (Territorio t: camino) {
-            result += (t.getNombre() + "->");
-        }
 
-        if (result.size() == 0) cout << "No hay camino!!\n";
-        else {
-            cout << "Resultado: \n";
-            result.pop_back();
-            cout << result << endl;
-        }
+void Master::imprimirResultado(vector<Territorio> ts){
+    string result;
 
+    for (Territorio t: ts) {
+        result += (t.getNombre() + ", ");
+    }
+
+    if (result.size() == 0) cout << "No hay camino!!\n";
+    else {
+        result.pop_back();
+        cout << result << endl;
     }
 }
 
@@ -912,22 +914,28 @@ string Master::caminoToString(vector<Territorio> camino){
 }
 
 
-void Master::evaluarCostoConquistaBarata(){
-
-    // Territorios que pueden ser atacados por el jugador actual
-    vector<Territorio> territoriosParaConquistar;
+vector<Territorio> Master::territoriosAConquistar(){
+    vector<Territorio> conquistar;
     for (Continente c : Tablero::tablero) {
         for (Territorio t : c.getTerritorios()) {
             if (t.getOcupante() != proxTurno) {
-                territoriosParaConquistar.push_back(t);
+                conquistar.push_back(t);
             }
         }
     }
-    cout << "\n Puede atacar a "<< territoriosParaConquistar.size() << " territorios.\n" <<endl;
+    cout << "\n Puede atacar a "<< conquistar.size() << " territorios.\n" <<endl;
+    return conquistar;
+}
+
+
+void Master::evaluarCostoConquistaBarata(){
+
+    // Territorios que pueden ser atacados por el jugador actual
+    vector<Territorio> territoriosParaConquistar = territoriosAConquistar();
+
 
     // Almacena todos los caminos posibles desde los territorios del jugador hasta cada territorio objetivo
     vector<pair<int, vector<Territorio>>> caminos;
-
 
     // Calcula cada camino
     for (Territorio t : territoriosParaConquistar) {
@@ -949,12 +957,14 @@ void Master::evaluarCostoConquistaBarata(){
         }
     }
 
-    string cam = caminoToString(caminoMinimo.second);
+    // Confirmar peso del camino
+    //caminoMinimo.first = pesoCamino(caminoMinimo.second);
 
     cout << proxTurno->getNombre() << ": La conquista mas barata es avanzar sobre el territorio ";
     cout << caminoMinimo.second.begin()->getNombre() << " desde el territorio ";
     cout << caminoMinimo.second.back().getNombre() << ". Para conquistar, debe pasar por los territorios " ;
-    cout << cam << "Debe conquistar "<< caminoMinimo.first << " unidades de ejercito."<<endl;
+    imprimirResultado(caminoMinimo.second);
+    cout << "Debe conquistar "<< caminoMinimo.first << " unidades de ejercito."<<endl;
 }
 
 
@@ -969,21 +979,23 @@ int Master::pesoCamino(vector<Territorio> camino){
 }
 
 
-vector<Territorio> Master::evaluarCostoConquista(string from, string to) {
-    vector<int> vertex = this->obtenerPosicionesVertices(from, to);
+void Master::evaluarCostoConquista(string to) {
 
-    if (vertex[0] == -1 || vertex[1] == -1)
-        return {};
+    // Almacena todos los caminos posibles desde los territorios del jugador hasta el territorio objetivo
+    pair<int, vector<Territorio>> camino;
 
-    int n = this->grafo.getVertices().size();
-    vector<long double> dist(n);
-    vector<int> parent(n);
-    this->grafo.Dijkstra(vertex[0], dist, parent);
+    // Calcula camino
+        int aux = obtenerPosicionesVertices(to, "x")[0];
+        camino = (territorioCercano(aux));
 
-    if (dist[vertex[1]] == 1e17)
-        return {};
+    // Confirmar peso del camino
+    //camino.first = pesoCamino(camino.second);
 
-    return this->buildPath(vertex[1], parent);
+    cout << " Para conquistar el territorio"<< camino.second.back().getNombre() << " , debe atacar desde "<< camino.second.begin()->getNombre() ;
+    cout << ", pasando por los territorios ";
+    imprimirResultado(camino.second);
+    cout << "Debe conquistar "<<  camino.first << " unidades de ejercito." <<endl;
+
 }
 
 
@@ -1024,13 +1036,12 @@ pair<int, vector<Territorio>> Master::territorioCercano(int pos) {
     unordered_map<int, bool> visitados;
     visitados[pos] = true; // Marca el nodo inicial como visitado
 
-    int pesoCamino = 0;
+    int peso = 0;
 
     // Cola para realizar un recorrido en amplitud (BFS)
     queue<pair<int, vector<Territorio>>> cola;
     // Inicializa la cola con el nodo inicial y el camino actual
     cola.push({pos, {grafo.getVertices()[pos].getInfo()}});
-    pesoCamino += grafo.getVertices()[pos].getInfo().getCantiEjercitos();
 
     // Realiza un recorrido en amplitud (BFS)
     while (!cola.empty()) {
@@ -1041,8 +1052,10 @@ pair<int, vector<Territorio>> Master::territorioCercano(int pos) {
 
         // Verifica si el territorio actual pertenece al jugador actual
         if (grafo.getVertices()[indiceActual].getInfo().getOcupante() == proxTurno) {
-            pesoCamino += grafo.getVertices()[pos].getInfo().getCantiEjercitos();
-            return {pesoCamino, caminoActual};
+            // Peso del camino
+            peso = pesoCamino(caminoActual);
+
+            return {peso, caminoActual};
         }
 
         // Explora los vecinos del territorio actual
@@ -1055,7 +1068,6 @@ pair<int, vector<Territorio>> Master::territorioCercano(int pos) {
                 // Crea un nuevo camino añadiendo el vecino al camino actual
                 vector<Territorio> nuevoCamino = caminoActual;
                 nuevoCamino.push_back(grafo.getVertices()[id].getInfo());
-                pesoCamino += grafo.getVertices()[pos].getInfo().getCantiEjercitos();
 
                 // Agrega el vecino y su nuevo camino a la cola
                 cola.push({id, nuevoCamino});

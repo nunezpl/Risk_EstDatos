@@ -19,20 +19,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4740010e-e4f4-4207-90fa-e66923ae6509" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Grafo/Grafo.cxx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Grafo/Grafo.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Grafo/NodoGrafo.cxx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Grafo/NodoGrafo.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/Continente.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/c/Continente.cxx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/c/Master.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/c/Master.cxx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/c/Tablero.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/c/Tablero.cxx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/h/Continente.h" beforeDir="false" afterPath="$PROJECT_DIR$/h/Continente.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/h/Jugador.h" beforeDir="false" afterPath="$PROJECT_DIR$/h/Jugador.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/h/Master.h" beforeDir="false" afterPath="$PROJECT_DIR$/h/Master.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/h/Tablero.h" beforeDir="false" afterPath="$PROJECT_DIR$/h/Tablero.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/h/Territorio.h" beforeDir="false" afterPath="$PROJECT_DIR$/h/Territorio.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/risk.exe" beforeDir="false" afterPath="$PROJECT_DIR$/risk.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,9 +71,9 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
     <configuration name="main.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Risk_EstDatos" TARGET_NAME="main.cpp" CONFIG_NAME="main.cpp">
@@ -120,7 +109,8 @@
       <workItem from="1700287427551" duration="9615000" />
       <workItem from="1700297410662" duration="5179000" />
       <workItem from="1700439276698" duration="13987000" />
-      <workItem from="1700454489015" duration="8858000" />
+      <workItem from="1700454489015" duration="12388000" />
+      <workItem from="1700470705982" duration="1086000" />
     </task>
     <servers />
   </component>

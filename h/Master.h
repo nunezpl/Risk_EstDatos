@@ -60,13 +60,15 @@ class Master {
         void comandoCostoConquista (string terri);
         void comandoConquistaBarata();
         void crearGrafo();
-        vector<Territorio> evaluarCostoConquista (string o, string d);
+        void evaluarCostoConquista (string d);
         void evaluarCostoConquistaBarata();
         vector<int> obtenerPosicionesVertices(string from, string to);
         vector<Territorio> buildPath(int start, vector<int> parent);
         string caminoToString(vector<Territorio> camino);
         int pesoCamino(vector<Territorio> camino);
         pair<int, vector<Territorio>> territorioCercano(int pos);
+        vector<Territorio> territoriosAConquistar();
+        void imprimirResultado(vector<Territorio> ts);
 
 protected:
         // Variables globales
