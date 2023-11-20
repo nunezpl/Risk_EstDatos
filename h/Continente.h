@@ -24,8 +24,7 @@ class Continente {
     // otros metodos ...
     void imprimirTerritorios();
     bool ocupadoPorJugador(Jugador& jugador);
-    static void evaluarCostoConquista ();
-    static void evaluarCostoConquistaBarata();
+
   protected:
     string nombre;
     string color;

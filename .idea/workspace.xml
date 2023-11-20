@@ -19,18 +19,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4740010e-e4f4-4207-90fa-e66923ae6509" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/c/Master.cxx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/h/Master.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arbol/ArbolHuffman.h" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/ArbolHuffman.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arbol/InfoNodo.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/InfoNodo.cxx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arbol/InfoNodo.h" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/InfoNodo.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arbol/Nodo.h" beforeDir="false" afterPath="$PROJECT_DIR$/Arbol/Nodo.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arbol/Valor.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/b3.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/p3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/c/Master.cxx" beforeDir="false" afterPath="$PROJECT_DIR$/c/Master.cxx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/h/Master.h" beforeDir="false" afterPath="$PROJECT_DIR$/h/Master.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/risk.exe" beforeDir="false" afterPath="$PROJECT_DIR$/risk.exe" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,30 +52,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "lorenaBranch",
-    "last_opened_file_path": "C:/Lorett/Lorena/4 Semestre/Estructuras de datos/UnitTestingC++/UnitTestingC++",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;lorenaBranch&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Lorett/Lorena/4 Semestre/Estructuras de datos/UnitTestingC++/UnitTestingC++&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
+    <configuration name="main.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Risk_EstDatos" TARGET_NAME="main.cpp" CONFIG_NAME="main.cpp">
+      <option name="sourceFile" value="main.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="C/C++ File.main.cpp" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -95,7 +97,20 @@
       <option name="presentableId" value="Default" />
       <updated>1697742657403</updated>
       <workItem from="1697742662888" duration="1206000" />
-      <workItem from="1697762527521" duration="9906000" />
+      <workItem from="1697762527521" duration="10422000" />
+      <workItem from="1698067499601" duration="1702000" />
+      <workItem from="1698077552630" duration="586000" />
+      <workItem from="1698255755982" duration="89000" />
+      <workItem from="1698785169180" duration="69000" />
+      <workItem from="1698956867688" duration="47000" />
+      <workItem from="1699464380258" duration="160000" />
+      <workItem from="1699563649031" duration="258000" />
+      <workItem from="1700232735329" duration="21942000" />
+      <workItem from="1700287427551" duration="9615000" />
+      <workItem from="1700297410662" duration="5179000" />
+      <workItem from="1700439276698" duration="13987000" />
+      <workItem from="1700454489015" duration="12388000" />
+      <workItem from="1700470705982" duration="1086000" />
     </task>
     <servers />
   </component>

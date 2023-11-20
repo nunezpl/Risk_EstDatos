@@ -448,12 +448,14 @@ void Tablero::enlazarVecinos(){
     (tablero[5].getTerritorios()[3]).setId(42);
 }
 
-Territorio* Tablero::buscarTerritorioNom(int id, int e) {
+Territorio* Tablero::buscarTerritorioNom(int id, int e, Jugador *jugador) {
     // Buscar y retornar el territorio que coincida con el nombre
     for (int i = 0; i < 6; ++i) {
         for (int j = 0; j < (tablero[i].getTerritorios()).size(); ++j) {
             if((tablero[i].getTerritorios()[j]).getId() == id){
                 (tablero[i].getTerritorios()[j]).setCantiEjercitos(e);
+                (tablero[i].getTerritorios()[j]).setOcupado(true);
+                (tablero[i].getTerritorios()[j]).setOcupante(jugador);
                 return &(tablero[i].getTerritorios()[j]);
             }
         }

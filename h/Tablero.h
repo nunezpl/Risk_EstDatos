@@ -18,7 +18,7 @@ class Tablero {
     static void imprimirTablero();
     static void crearTerritorios();
     static void enlazarVecinos();
-    static Territorio* buscarTerritorioNom(int id, int e);
+    static Territorio* buscarTerritorioNom(int id, int e, Jugador *j);
 
     // Maso de tarjetas
     static vector<Tarjeta> maso;

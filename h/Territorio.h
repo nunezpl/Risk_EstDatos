@@ -31,12 +31,12 @@ class Territorio {
     bool esVecino ( Territorio& otroTerritorio);
 
   protected:
-    int id;
-    string nombre;
-    bool ocupado;
-    vector<Territorio*> vecinos;
-    Jugador* ocupante; // Apuntador al jugador ocupante del territorio
-    int cantiEjercitos=0; // Aca podemos saber la cantidad de ejercitos encima.
+        int id;
+        string nombre;
+        bool ocupado;
+        vector<Territorio*> vecinos;
+        Jugador* ocupante = nullptr; // Apuntador al jugador ocupante del territorio
+        int cantiEjercitos=0; // Aca podemos saber la cantidad de ejercitos encima.
 
 };
 
